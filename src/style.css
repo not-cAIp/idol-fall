@@ -16,6 +16,27 @@
   --shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.6);
 }
 
+/* 星潮（仿真微博）页面在这个作用域内用浅色调覆盖上面的暗色变量 */
+.weibo-scope {
+  --bg: #eef0f3;
+  --surface: #ffffff;
+  --surface-2: #f5f6f8;
+  --ink: #14171c;
+  --ink-soft: #565d68;
+  --ink-faint: #8991a0;
+  --line: #e4e6eb;
+  --accent: #d6334c;
+  --accent-ink: #ffffff;
+  --accent-2: #b8862e;
+  --accent-2-soft: #f4e6c9;
+  --danger: #b3413e;
+  --ok: #3d7a5c;
+  --shadow: 0 1px 2px rgba(20, 23, 28, 0.04), 0 8px 24px -12px rgba(20, 23, 28, 0.12);
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100%;
+}
+
 * { box-sizing: border-box; }
 
 body {
@@ -278,6 +299,104 @@ h1, h2, h3 { font-family: "Noto Serif SC", "Noto Serif", serif; margin: 0 0 10px
 .ending-card h2 { margin: 8px 0 12px; }
 .ending-card p { color: var(--ink-soft); font-size: 14px; line-height: 1.7; }
 .reset-link { display: block; text-align: center; margin-top: 16px; color: var(--ink-faint); font-size: 12px; cursor: pointer; }
+
+/* ---------- 星潮 仿真微博 ---------- */
+.wb-header {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px;
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.wb-header .wb-logo { font-weight: 900; font-size: 17px; color: var(--accent); letter-spacing: .02em; flex: none; }
+.wb-search-bar {
+  flex: 1; display: flex; align-items: center; gap: 6px;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: 100px;
+  padding: 7px 14px; color: var(--ink-faint); font-size: 13px; cursor: pointer;
+}
+.wb-search-bar:hover { border-color: var(--accent); color: var(--ink-soft); }
+.wb-dm-btn {
+  flex: none; position: relative;
+  background: none; border: 1px solid var(--line); color: var(--ink-soft);
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 15px; cursor: pointer;
+}
+.wb-dm-btn:hover { border-color: var(--accent); color: var(--accent); }
+.wb-dm-btn .wb-dot {
+  position: absolute; top: 2px; right: 2px; width: 8px; height: 8px;
+  border-radius: 50%; background: var(--accent); border: 1.5px solid var(--surface);
+}
+
+.wb-feed { background: var(--surface); }
+.wb-card {
+  display: flex; gap: 10px; padding: 14px 16px;
+  border-bottom: 1px solid var(--line); cursor: pointer;
+}
+.wb-card:hover { background: var(--surface-2); }
+.wb-card .wb-avatar {
+  width: 42px; height: 42px; border-radius: 50%; flex: none;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+}
+.wb-card .wb-body { flex: 1; min-width: 0; }
+.wb-card .wb-top { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.wb-card .wb-name { font-weight: 700; font-size: 14px; }
+.wb-card .wb-name .verified { color: var(--ok); font-size: 11px; margin-left: 2px; }
+.wb-card .wb-time { font-size: 11.5px; color: var(--ink-faint); font-family: "JetBrains Mono", monospace; }
+.wb-card .wb-text {
+  font-size: 14px; line-height: 1.6; margin-top: 3px;
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+}
+.wb-card .wb-pin { font-size: 11px; color: var(--accent); font-weight: 700; margin-right: 4px; }
+.wb-card .wb-thumb {
+  margin-top: 8px; width: 100%; max-width: 220px; aspect-ratio: 16/10; border-radius: 8px;
+  overflow: hidden; border: 1px solid var(--line);
+}
+.wb-card .wb-thumb .photo-placeholder { padding: 10px; }
+.wb-card .wb-thumb .ph-prompt { font-size: 10px; -webkit-line-clamp: 2; }
+
+.wb-actionbar {
+  display: flex; gap: 22px; margin-top: 8px;
+  font-size: 12px; color: var(--ink-faint); font-family: "JetBrains Mono", monospace;
+}
+.wb-actionbar span { display: inline-flex; align-items: center; gap: 4px; }
+
+.wb-promo {
+  display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+  border-bottom: 1px solid var(--line); background: var(--accent-2-soft);
+  cursor: pointer;
+}
+.wb-promo:hover { filter: brightness(1.03); }
+.wb-promo .wb-promo-icon { font-size: 22px; flex: none; }
+.wb-promo .wb-promo-name { font-weight: 700; font-size: 13.5px; }
+.wb-promo .wb-promo-url {
+  font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--accent-2);
+  margin-top: 2px;
+}
+.wb-promo .wb-promo-tag {
+  margin-left: auto; flex: none; font-size: 11px; color: var(--ink-faint);
+  border: 1px solid var(--line); border-radius: 100px; padding: 3px 9px; background: var(--surface);
+}
+
+.wb-profile-head { display: flex; align-items: flex-start; gap: 14px; padding: 18px 16px; background: var(--surface); }
+.wb-profile-head .wb-avatar-lg {
+  width: 60px; height: 60px; border-radius: 50%; flex: none;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+}
+.wb-profile-head .wb-pname-row { display: flex; align-items: center; gap: 8px; }
+.wb-profile-head .wb-pname { font-weight: 900; font-size: 17px; }
+.wb-follow-btn {
+  font-size: 12px; color: var(--accent-ink); background: var(--accent); border: none;
+  border-radius: 100px; padding: 4px 12px; font-weight: 700;
+}
+.wb-profile-head .wb-handle { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--ink-faint); margin-top: 2px; }
+.wb-profile-head .wb-bio { font-size: 13px; color: var(--ink-soft); margin-top: 8px; line-height: 1.6; }
+.wb-profile-stats {
+  display: flex; flex-wrap: wrap; gap: 6px 14px; padding: 0 16px 14px;
+  border-bottom: 8px solid var(--bg); background: var(--surface); font-size: 12.5px;
+}
+.wb-profile-stats span { color: var(--ink-faint); white-space: nowrap; }
+.wb-profile-stats b { color: var(--ink); font-weight: 700; }
 
 @media (max-width: 460px) {
   body { padding: 0; }

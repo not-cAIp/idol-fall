@@ -4,7 +4,6 @@ const defaultState = () => ({
   expandedReplies: [],
   foundProfiles: [],
   foundClues: [],
-  bubbleDiscovered: false,
   bubbleUnlocked: false,
   bubbleAttempts: 0,
   finalReply: null,

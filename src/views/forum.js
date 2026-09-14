@@ -1,107 +1,94 @@
 import { posts, clues } from "../data.js";
-import { state, save, markClueFound, computeAct } from "../state.js";
+import { state, computeAct } from "../state.js";
 import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 
 export function renderForum(root) {
-  draw(root);
-}
-
-function redraw(root) {
-  const scrollTop = root.scrollTop;
-  root.innerHTML = "";
-  draw(root);
-  root.scrollTop = scrollTop;
-}
-
-function draw(root) {
+  root.className = "weibo-scope";
   const act = computeAct(state);
   const visible = posts.posts
     .filter((p) => p.act <= act)
     .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || a.time.localeCompare(b.time));
 
-  visible.forEach((p) => {
-    if (p.id === "p001") {
-      markClueFound("t02");
-      markClueFound("t05");
-    }
-    if (p.id === "p010") markClueFound("t06");
-  });
-
-  const totalHints = clues.timeline.length;
-  const foundHints = state.foundClues.length;
+  const coreDone = clues.timeline.filter((c) => c.core).every((c) => state.foundClues.includes(c.id));
 
   const header = document.createElement("header");
-  header.className = "view-header";
+  header.className = "wb-header";
   header.innerHTML = `
-    <div class="vh-left"><span class="brand">星潮</span></div>
-    <div class="vh-actions">
-      ${foundHints > 0 ? `<button class="icon-btn" id="btn-reasoning" title="推理">🧭</button>` : ""}
-      ${state.bubbleDiscovered ? `<button class="icon-btn" id="btn-bubble" title="泡泡">🫧</button>` : ""}
-      <button class="icon-btn" id="btn-search" title="搜索">🔍</button>
-    </div>
+    <span class="wb-logo">星潮</span>
+    <div class="wb-search-bar" id="wb-search">🔍 搜索账号 / 昵称 / 关键词</div>
+    <button class="wb-dm-btn" id="wb-dm" title="私信">✉️${coreDone ? '<span class="wb-dot"></span>' : ""}</button>
   `;
   root.appendChild(header);
-  header.querySelector("#btn-search").addEventListener("click", () => goTo("search"));
-  header.querySelector("#btn-bubble")?.addEventListener("click", () => goTo("bubble"));
-  header.querySelector("#btn-reasoning")?.addEventListener("click", () => goTo("reasoning"));
+  header.querySelector("#wb-search").addEventListener("click", () => goTo("search"));
+  header.querySelector("#wb-dm").addEventListener("click", () => goTo("dm"));
 
-  const body = document.createElement("div");
-  body.className = "view-body";
-  body.innerHTML = `<p class="intro">晏星本人超话 · 已发现线索 ${foundHints} / ${totalHints}</p>`;
+  const feed = document.createElement("div");
+  feed.className = "wb-feed";
+
+  feed.appendChild(
+    promoCard({
+      icon: "🧭",
+      name: "案件推理台",
+      url: "case.xingchao.fm/timeline",
+      tag: "站内工具",
+      onClick: () => goTo("reasoning"),
+    })
+  );
+  feed.appendChild(
+    promoCard({
+      icon: "🫧",
+      name: "泡泡 · 偶像通讯",
+      url: "bubble.fan/login",
+      tag: "第三方 App",
+      onClick: () => goTo("bubble"),
+    })
+  );
 
   visible.forEach((p) => {
-    const el = document.createElement("article");
-    el.className = "post" + (p.pinned ? " pinned" : "");
-    el.innerHTML = `
-      <div class="topline">
-        <div>
-          <span class="uname">${p.author}${p.verified ? '<span class="verified">✓ 已认证</span>' : ""}</span>
-          <div class="handle">${p.handle}</div>
+    const card = document.createElement("article");
+    card.className = "wb-card";
+    card.innerHTML = `
+      <div class="wb-avatar"></div>
+      <div class="wb-body">
+        <div class="wb-top">
+          <span class="wb-name">${p.pinned ? '<span class="wb-pin">置顶</span>' : ""}${p.author}${p.verified ? '<span class="verified">✓</span>' : ""}</span>
+          <span class="wb-time mono">${p.time}</span>
         </div>
-        <div class="time mono">${p.time}</div>
+        <div class="wb-text">${p.text}</div>
+        <div class="wb-thumb-slot"></div>
+        <div class="wb-actionbar">
+          <span>👍 ${p.likes || 0}</span>
+          <span>💬 ${p.replies?.length || 0}</span>
+          <span>🔁 ${p.reposts || 0}</span>
+        </div>
       </div>
-      <div class="text">${p.text}</div>
-      <div class="flags">${(p.flags || []).map((f) => `<span class="flag${f.includes("官方") ? " official" : f.includes("存疑") || f.includes("未证实") || f.includes("修改") ? " warn" : ""}">${f}</span>`).join("")}</div>
-      <div class="replies"></div>
     `;
     if (p.image || p.imagePrompt) {
-      el.querySelector(".flags").after(
-        createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption })
-      );
+      const slot = card.querySelector(".wb-thumb-slot");
+      slot.className = "wb-thumb";
+      const thumb = createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption });
+      thumb.addEventListener("click", (e) => e.stopPropagation());
+      slot.appendChild(thumb);
     }
-    const repliesEl = el.querySelector(".replies");
-    (p.replies || []).forEach((r, idx) => {
-      const key = `${p.id}-${idx}`;
-      const revealed = state.expandedReplies.includes(key);
-      const rEl = document.createElement("div");
-      rEl.className = "reply" + (r.buried ? " buried" : "") + (revealed ? " revealed" : "");
-
-      const bodyHtml = r.linkTo
-        ? `<span class="text">${r.text} <a class="link-pill" data-link="${r.linkTo}">${r.linkLabel}</a></span>`
-        : `<span class="text">${r.text}</span>`;
-      rEl.innerHTML = `<b>${r.author}</b>：${bodyHtml}<div class="meta">${r.meta || ""}</div>`;
-
-      if (r.buried && !revealed) {
-        rEl.addEventListener("click", () => {
-          state.expandedReplies.push(key);
-          save();
-          if (p.id === "p006" && idx === 1) markClueFound("t01");
-          redraw(root);
-        });
-      }
-      if (r.linkTo) {
-        rEl.querySelector(".link-pill").addEventListener("click", (e) => {
-          e.stopPropagation();
-          state.bubbleDiscovered = true;
-          save();
-          goTo(r.linkTo);
-        });
-      }
-      repliesEl.appendChild(rEl);
-    });
-    body.appendChild(el);
+    card.addEventListener("click", () => goTo("postDetail", { id: p.id }));
+    feed.appendChild(card);
   });
 
-  root.appendChild(body);
+  root.appendChild(feed);
+}
+
+function promoCard({ icon, name, url, tag, onClick }) {
+  const el = document.createElement("div");
+  el.className = "wb-promo";
+  el.innerHTML = `
+    <span class="wb-promo-icon">${icon}</span>
+    <div>
+      <div class="wb-promo-name">${name}</div>
+      <div class="wb-promo-url mono">${url}</div>
+    </div>
+    <span class="wb-promo-tag">${tag}</span>
+  `;
+  el.addEventListener("click", onClick);
+  return el;
 }

@@ -2,12 +2,13 @@ import { endings } from "../data.js";
 import { state, resetGame } from "../state.js";
 
 export function renderEnding(root) {
+  root.className = "";
   const body = document.createElement("div");
   body.className = "view-body";
 
   const ending = endings.endings.find((e) => e.id === state.finalEnding);
   if (!ending) {
-    body.innerHTML = `<p class="intro">还没有结局——回泡泡里把话说完再来看看。</p>`;
+    body.innerHTML = `<p class="intro">还没有结局——先去私信里把话说完再来看看。</p>`;
     root.appendChild(body);
     return;
   }

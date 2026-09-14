@@ -4,6 +4,8 @@ import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 
 export function renderSearch(root) {
+  root.className = "weibo-scope";
+
   const header = document.createElement("header");
   header.className = "view-header";
   header.innerHTML = `
@@ -50,17 +52,23 @@ export function renderSearch(root) {
     if (profile.id === "shenxi_sunflower") markClueFound("t03");
 
     resultEl.innerHTML = `
-      <div class="profile-card">
-        <div class="avatar"></div>
+      <div class="wb-profile-head">
+        <div class="wb-avatar-lg"></div>
         <div>
-          <div class="name">${profile.name}${profile.verified ? " ✓" : ""}</div>
-          <div class="handle">${profile.handle}</div>
-          <div class="bio">${profile.bio}</div>
-          <div class="stats">${profile.stats.map((s) => `<span>${s}</span>`).join("")}</div>
-          ${profile.locked ? `<div class="locked-note">🔒 ${profile.lockedNote || "部分内容仅粉丝可见"}</div>` : ""}
-          <div class="plist">${profile.posts.map((p) => `<div>· ${p}</div>`).join("")}</div>
-          ${profile.images?.length ? `<div class="photo-gallery"></div>` : ""}
+          <div class="wb-pname-row">
+            <span class="wb-pname">${profile.name}</span>
+            ${profile.verified ? '<span class="verified">✓</span>' : ""}
+            <button class="wb-follow-btn">＋关注</button>
+          </div>
+          <div class="wb-handle mono">${profile.handle}</div>
+          <div class="wb-bio">${profile.bio}</div>
         </div>
+      </div>
+      <div class="wb-profile-stats">${profile.stats.map((s) => `<span><b>${s}</b></span>`).join("")}</div>
+      <div class="view-body" style="padding-top:14px;">
+        ${profile.locked ? `<div class="locked-note">🔒 ${profile.lockedNote || "部分内容仅粉丝可见"}</div>` : ""}
+        <div class="plist">${profile.posts.map((p) => `<div>· ${p}</div>`).join("")}</div>
+        ${profile.images?.length ? `<div class="photo-gallery"></div>` : ""}
       </div>
     `;
 

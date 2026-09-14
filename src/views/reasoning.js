@@ -3,6 +3,7 @@ import { state } from "../state.js";
 import { goTo } from "../router.js";
 
 export function renderReasoning(root) {
+  root.className = "";
   const header = document.createElement("header");
   header.className = "view-header";
   header.innerHTML = `
@@ -23,7 +24,7 @@ export function renderReasoning(root) {
   body.className = "view-body";
   body.innerHTML = `
     <p class="board-progress mono" style="font-size:22px;color:var(--ink);">已查看提示 ${found} / ${total}</p>
-    <p class="intro">${hasAllCore ? "线索已经够多了——也许该回泡泡里问问她。" : "似乎还有些地方说不通，超话和搜索里应该还有没翻到的东西。"}</p>
+    <p class="intro">${hasAllCore ? "线索已经够多了——超话右上角的私信里，有人在等你的答复。" : "似乎还有些地方说不通，超话和搜索里应该还有没翻到的东西。"}</p>
     <div id="found-list"></div>
   `;
   root.appendChild(body);

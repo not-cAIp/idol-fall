@@ -20,6 +20,10 @@ export function findProfile(query) {
   );
 }
 
+export function postById(id) {
+  return posts.posts.find((p) => p.id === id);
+}
+
 export function isBlockedQuery(query) {
   const q = query.trim();
   if (!q) return false;
