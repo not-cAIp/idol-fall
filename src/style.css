@@ -1,0 +1,285 @@
+:root {
+  --bg: #0e1116;
+  --surface: #171b22;
+  --surface-2: #1d222b;
+  --ink: #e7e9ed;
+  --ink-soft: #9aa2ad;
+  --ink-faint: #6b7280;
+  --line: #262b33;
+  --accent: #ff5c72;
+  --accent-ink: #14171c;
+  --accent-2: #e0a542;
+  --accent-2-soft: #2b2413;
+  --danger: #e0645f;
+  --ok: #5fae85;
+  --radius: 14px;
+  --shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #05070a;
+  color: var(--ink);
+  font-family: "Noto Sans SC", "Noto Sans", system-ui, sans-serif;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px 12px;
+}
+
+h1, h2, h3 { font-family: "Noto Serif SC", "Noto Serif", serif; margin: 0 0 10px; }
+.mono { font-family: "JetBrains Mono", monospace; font-variant-numeric: tabular-nums; }
+
+#phone {
+  width: 100%;
+  max-width: 430px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: min(860px, calc(100vh - 48px));
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7);
+}
+
+#view {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.view-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.view-header .vh-left { display: flex; align-items: center; gap: 8px; }
+.view-header .brand { font-weight: 700; color: var(--accent); letter-spacing: .04em; font-size: 15px; }
+.view-header .vh-title { font-weight: 700; font-size: 15px; }
+.view-header .vh-actions { display: flex; align-items: center; gap: 6px; }
+.icon-btn {
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  width: 32px; height: 32px;
+  border-radius: 9px;
+  font-size: 15px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+.icon-btn.back { border: none; font-size: 20px; width: 26px; }
+
+.view-body { padding: 16px; }
+
+.intro {
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+/* ---------- Forum post ---------- */
+.post {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+}
+.post.pinned { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.post .topline { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.post .uname { font-weight: 700; font-size: 14px; }
+.post .uname .verified { color: var(--ok); font-size: 11px; margin-left: 4px; }
+.post .handle { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--ink-faint); }
+.post .time { font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--ink-faint); }
+.post .text { font-size: 14px; line-height: 1.6; }
+.post .flags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.flag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  padding: 2px 7px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  color: var(--ink-faint);
+}
+.flag.warn { color: var(--accent-2); border-color: color-mix(in srgb, var(--accent-2) 45%, transparent); background: var(--accent-2-soft); }
+.flag.official { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, transparent); }
+
+.replies { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); display: flex; flex-direction: column; gap: 8px; }
+.reply { font-size: 12.5px; color: var(--ink-soft); padding-left: 12px; border-left: 2px solid var(--line); }
+.reply b { color: var(--ink); font-weight: 700; }
+.reply .meta { font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--ink-faint); margin-top: 2px; }
+.reply.buried:not(.revealed) { opacity: .45; cursor: pointer; }
+.reply.buried:not(.revealed) .text { filter: blur(3px); user-select: none; }
+.reply.buried:not(.revealed)::before { content: "▾ 已被折叠，点击查看 · "; font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--ink-faint); }
+.reply.buried.revealed { opacity: 1; border-left-color: var(--accent); }
+.reply.buried.revealed::before { content: "▾ 已展开 · "; font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--accent); }
+
+/* ---------- Search / profile ---------- */
+.search-row { display: flex; gap: 8px; margin-bottom: 16px; }
+.search-row input {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: var(--ink);
+  font-size: 14px;
+}
+.search-row button {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: none;
+  border-radius: 10px;
+  padding: 0 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.search-empty { color: var(--ink-faint); font-size: 13.5px; padding: 20px 0; text-align: center; }
+.search-blocked { color: var(--danger); font-size: 13px; padding: 12px 14px; border: 1px solid var(--danger); border-radius: 10px; background: color-mix(in srgb, var(--danger) 12%, transparent); }
+
+.profile-card {
+  display: flex; gap: 14px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 16px; box-shadow: var(--shadow); margin-bottom: 14px;
+}
+.profile-card .avatar {
+  width: 44px; height: 44px; border-radius: 50%; flex: none;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+}
+.profile-card .name { font-weight: 700; font-size: 15px; }
+.profile-card .handle { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--ink-faint); margin-top: 2px; }
+.profile-card .bio { font-size: 13px; color: var(--ink-soft); margin-top: 8px; line-height: 1.6; }
+.profile-card .stats { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 10px; font-size: 11.5px; color: var(--ink-faint); font-family: "JetBrains Mono", monospace; }
+.profile-card .plist { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 12.5px; color: var(--ink-soft); display: flex; flex-direction: column; gap: 6px; }
+.locked-note { font-size: 12px; color: var(--accent-2); margin-top: 8px; }
+
+/* ---------- Bubble app ---------- */
+.lock-app {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 22px; box-shadow: var(--shadow); margin-top: 24px;
+}
+.lock-app .app-name { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+.lock-app .app-sub { font-size: 12.5px; color: var(--ink-faint); margin-bottom: 16px; }
+.lock-app input {
+  width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px;
+  font-size: 13px; color: var(--ink); margin-bottom: 8px; background: var(--surface-2);
+  font-family: "JetBrains Mono", monospace;
+}
+.lock-app button {
+  width: 100%; background: var(--accent); color: var(--accent-ink); border: none; border-radius: 8px;
+  padding: 10px; text-align: center; font-size: 13px; font-weight: 700; margin-top: 6px; cursor: pointer;
+}
+.lock-app .lock-hint { font-size: 11.5px; color: var(--accent-2); margin-top: 10px; }
+.lock-app .lock-error { font-size: 11.5px; color: var(--danger); margin-top: 10px; }
+
+.bubble-tabs { display: flex; gap: 6px; margin-bottom: 12px; }
+.bubble-tabs button {
+  flex: 1; background: var(--surface-2); border: 1px solid var(--line); color: var(--ink-soft);
+  border-radius: 8px; padding: 8px; font-size: 12.5px; cursor: pointer;
+}
+.bubble-tabs button.active { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; }
+
+.bubble-thread { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
+.bubble-msg { max-width: 82%; border-radius: 14px; padding: 9px 13px; font-size: 13.5px; margin-bottom: 10px; }
+.bubble-msg.out { background: var(--surface-2); border: 1px solid var(--line); }
+.bubble-msg.priv { background: var(--accent-2-soft); border: 1px dashed var(--accent-2); }
+.bubble-msg .tag { display: block; font-family: "JetBrains Mono", monospace; font-size: 10px; opacity: .75; margin-bottom: 3px; }
+
+.link-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  color: var(--accent); text-decoration: none;
+  border-bottom: 1px dashed var(--accent);
+  font-family: "JetBrains Mono", monospace; font-size: 12.5px;
+  cursor: pointer;
+}
+
+.photo-overlay {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(5, 7, 10, 0.92);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.photo-panel { width: 100%; max-width: 380px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.photo-panel-head { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+.photo-frame {
+  width: 100%; aspect-ratio: 3 / 2; overflow: hidden;
+  border-radius: 14px; border: 1px solid var(--line); background: #000;
+}
+.photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-caption { font-size: 12.5px; color: var(--ink-soft); text-align: center; margin: 0; }
+
+.photo-placeholder {
+  width: 100%; height: 100%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px; padding: 18px;
+  text-align: center; background: var(--surface-2);
+  background-image: repeating-linear-gradient(135deg, color-mix(in srgb, var(--line) 60%, transparent) 0 2px, transparent 2px 10px);
+}
+.photo-placeholder .ph-icon { font-size: 22px; opacity: .6; }
+.photo-placeholder .ph-prompt { font-size: 12px; line-height: 1.6; color: var(--ink-soft); margin: 0; }
+.photo-placeholder .ph-tag {
+  font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: .04em;
+  color: var(--accent-2); border: 1px solid color-mix(in srgb, var(--accent-2) 45%, transparent);
+  border-radius: 100px; padding: 2px 8px;
+}
+
+.photo-thumb {
+  margin-top: 10px; width: 100%; aspect-ratio: 16 / 9; overflow: hidden;
+  border-radius: 10px; border: 1px solid var(--line); cursor: pointer; background: #000;
+}
+.photo-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-thumb .ph-prompt { -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+.photo-thumb .ph-icon { font-size: 16px; }
+.photo-thumb .ph-prompt { font-size: 10.5px; }
+
+.photo-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.photo-gallery .photo-thumb { margin-top: 0; aspect-ratio: 1 / 1; }
+
+.reply-options { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+.reply-options button {
+  text-align: left;
+  background: var(--surface); border: 1px solid var(--line); color: var(--ink);
+  border-radius: 10px; padding: 10px 12px; font-size: 13px; cursor: pointer;
+}
+.reply-options button:hover { border-color: var(--accent); }
+.chat-sent { align-self: flex-end; }
+
+/* ---------- Timeline / corkboard ---------- */
+.tl-item {
+  position: relative; padding: 12px 14px 12px 16px; margin-bottom: 10px;
+  background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent);
+  border-radius: 10px;
+}
+.tl-item.locked { border-left-color: var(--line); color: var(--ink-faint); }
+.tl-item .t { font-family: "JetBrains Mono", monospace; font-size: 12.5px; color: var(--ink-faint); }
+.tl-item h3 { font-size: 14px; margin: 3px 0 4px; }
+.tl-item .src { font-size: 12px; color: var(--ink-faint); }
+.tl-item .conflict-note { font-size: 12px; color: var(--danger); margin-top: 6px; }
+.board-progress { font-size: 12.5px; color: var(--ink-faint); margin-bottom: 14px; }
+
+/* ---------- Report ---------- */
+.ending-card {
+  background: var(--surface); border: 1px solid var(--accent); border-radius: var(--radius);
+  padding: 20px; text-align: center; box-shadow: var(--shadow);
+}
+.ending-card .tag { font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--accent); letter-spacing: .1em; }
+.ending-card h2 { margin: 8px 0 12px; }
+.ending-card p { color: var(--ink-soft); font-size: 14px; line-height: 1.7; }
+.reset-link { display: block; text-align: center; margin-top: 16px; color: var(--ink-faint); font-size: 12px; cursor: pointer; }
+
+@media (max-width: 460px) {
+  body { padding: 0; }
+  #phone { height: 100vh; border-radius: 0; border: none; max-width: 100%; }
+}
