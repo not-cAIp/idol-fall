@@ -417,6 +417,7 @@ body.desktop-mode #view {
 
 /* ---- 中间栏：信息流卡片 ---- */
 .wfeed { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+.wfeed-more { text-align: center; padding: 16px 0 6px; color: #b3b6bb; font-size: 12.5px; }
 .wfeed-card { background: #fff; border-radius: 8px; padding: 18px 20px; cursor: pointer; }
 .wfeed-card:hover { box-shadow: 0 2px 14px rgba(20, 20, 20, 0.07); }
 .wfeed-card .frow1 { display: flex; align-items: center; gap: 10px; }

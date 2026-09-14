@@ -5,6 +5,7 @@ import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
 
 const TABS = ["热门", "最新", "精华", "公告"];
+const FEED_CAP = 10;
 let activeTab = "热门";
 
 function parseCount(str) {
@@ -79,9 +80,17 @@ export function renderForum(root) {
   function renderFeed() {
     feed.innerHTML = "";
     const act = computeAct(state);
-    postsForTab(activeTab, act).forEach((p) => feed.appendChild(postCard(p)));
+    const all = postsForTab(activeTab, act);
+    all.slice(0, FEED_CAP).forEach((p) => feed.appendChild(postCard(p)));
     if (!feed.children.length) {
       feed.innerHTML = `<div class="wfeed-card" style="cursor:default;color:var(--ink-faint);text-align:center;">这里还没有内容</div>`;
+      return;
+    }
+    if (all.length > FEED_CAP) {
+      const more = document.createElement("div");
+      more.className = "wfeed-more";
+      more.textContent = `还有 ${all.length - FEED_CAP} 条微博，暂不展示`;
+      feed.appendChild(more);
     }
   }
 
