@@ -1,13 +1,13 @@
 {
-  "_说明": "个人主页搜索系统。searchKeywords 是玩家在搜索框里输入、能命中该账号的词；discoveredVia 说明这些关键词是从哪条线索里第一次出现的。苏昭的账号不能靠搜『苏昭』本名找到——真实姓名要到后期才会在别的地方被证实。",
+  "_说明": "个人主页搜索系统。searchKeywords 是玩家在搜索框里输入、能命中该账号的词；discoveredVia 说明这些关键词是从哪条线索里第一次出现的。苏昭的账号不能靠搜『苏昭』本名找到——真实姓名要到后期才会在别的地方被证实。id 字段是内部键，不对玩家显示，改名后未同步重命名也不影响逻辑。人物改名：晏星→周晏星（Daniel Zhou），陆延→林安（Ryan），CP 名→星安理得。",
   "profiles": [
     {
       "id": "yanxing_official",
-      "searchKeywords": ["晏星", "顾晏", "yanxing"],
-      "name": "晏星STUDIO",
-      "handle": "@yanxing_studio",
+      "searchKeywords": ["周晏星", "zhouyanxing", "daniel"],
+      "name": "周晏星STUDIO",
+      "handle": "@zhouyanxing_studio",
       "verified": true,
-      "bio": "演员 / 歌手 顾晏 官方账号",
+      "bio": "演员 / 歌手 周晏星 官方账号",
       "stats": ["粉丝 2140万", "注册 5年"],
       "locked": false,
       "discoveredVia": "开局默认可搜",
@@ -27,9 +27,9 @@
     },
     {
       "id": "shenxi_sunflower",
-      "searchKeywords": ["晏晏的向日葵", "yy_sunflower", "沈溪"],
-      "name": "晏晏的向日葵",
-      "handle": "@yy_sunflower",
+      "searchKeywords": ["晏星今天早点睡", "沈溪"],
+      "name": "晏星今天早点睡",
+      "handle": "@晏星今天早点睡",
       "verified": false,
       "bio": "陪他到出道第1827天。「他这个人怀旧起来能死抠，连泡泡密码都设成他们俩分手那天的日子，笑死，都不知道跟谁怄气」——置顶帖第3条评论下的一句吐槽，无意间被截图放大转发",
       "stats": ["帖子 1204 条", "关注 3 人", "粉丝 8.9万（多为吃瓜关注）"],
@@ -40,7 +40,7 @@
         "09-13 20:20：今天他没按通稿走的路线，车拐去了别的方向",
         "09-13 20:31：在xx小区地库外面，车牌尾号我认得，是经纪人的车"
       ],
-      "devNote": "她的证词细节最完整，但她本人的主观解读（嫉妒/占有欲）会混进客观记录里，需要玩家自己剥离。"
+      "devNote": "她的证词细节最完整，但她本人的主观解读（嫉妒/占有欲）会混进客观记录里，需要玩家自己剥离。真实姓名『沈溪』仅作为幕后设定，玩家搜不到这个词也能靠账号名找到她——保留在 searchKeywords 里是为了方便测试。"
     },
     {
       "id": "shiguang_neko",
@@ -72,9 +72,9 @@
     },
     {
       "id": "luyan_zy",
-      "searchKeywords": ["陆延", "晏延"],
-      "name": "陆延",
-      "handle": "@luyan_zy",
+      "searchKeywords": ["林安", "星安理得"],
+      "name": "林安",
+      "handle": "@linan_ryan",
       "verified": true,
       "bio": "同组合成员。主页内容清一色是官方通告转发，没有任何私人表达。",
       "stats": ["粉丝 640万"],

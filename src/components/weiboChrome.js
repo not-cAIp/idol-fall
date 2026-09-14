@@ -84,7 +84,7 @@ export function renderRightbar() {
     </div>
     <div class="wwidget">
       <h5>相关推荐 <span class="refresh">⟳ 换一换</span></h5>
-      <div class="witem" id="w-luyan"><div class="wicon-box">🎤</div><div class="wtxt"><div class="t1">陆延超话</div><div class="t2">同组队友</div></div></div>
+      <div class="witem" id="w-luyan"><div class="wicon-box">🎤</div><div class="wtxt"><div class="t1">星安理得超话</div><div class="t2">CP 超话</div></div></div>
       <div class="witem" id="w-chenyu"><div class="wicon-box">🏢</div><div class="wtxt"><div class="t1">银河星途</div><div class="t2">经纪公司</div></div></div>
       <div class="witem"><div class="wicon-box">💬</div><div class="wtxt"><div class="t1">塌房 超话</div><div class="t2">791万阅读</div></div></div>
     </div>

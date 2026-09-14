@@ -30,7 +30,7 @@ export function renderForum(root) {
       <div class="wbanner-id">
         <div class="wbanner-avatar"></div>
         <div class="wbanner-name">
-          <div class="n">晏星本人超话 <span class="badge">超话</span></div>
+          <div class="n">周晏星本人超话 <span class="badge">超话</span></div>
           <div class="stats">11.2万 帖子 ｜ 89.4万 粉丝</div>
         </div>
       </div>
@@ -57,7 +57,7 @@ export function renderForum(root) {
           <div class="fmeta">${p.time} · 来自 iPhone客户端</div>
         </div>
       </div>
-      <span class="ftag"># 晏星本人超话 #</span>
+      <span class="ftag"># 周晏星本人超话 #</span>
       <div class="fbody">${p.text}</div>
       <div class="fthumb-slot"></div>
       <div class="factions">
