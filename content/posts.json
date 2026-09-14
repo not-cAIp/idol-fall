@@ -1,5 +1,5 @@
 {
-  "_说明": "超话楼层内容，走仿真微博样式：首页只显示卡片（头像/正文摘要/互动栏），点进详情页才看到完整评论。act 字段表示解锁阶段：1=开局可见，2=在超话拼出『拾光』关键词并搜到沈溪账号后解锁，3=登入泡泡后解锁。clueOnOpen 表示打开详情页时应标记的线索 id。buried 的回复权重低、容易被玩家划过，但往往是关键线索。人物改名后：晏星→周晏星（英文名 Daniel Zhou），陆延→林安（英文名 Ryan），CP 名『晏延』→『星安理得』。周晏星唯粉与星安理得 CP 粉的微博 ID 刻意分成两套不同风格，且故意不追求整齐划一，更像真实饭圈。评论数量按帖子话题的争议/情绪强度分配，不是均匀铺的——公告类和实锤类评论最多，纯背景资料类保持一两条。不再用 flags 徽标标注『官方/存疑/实锤』这类元信息，重点信息直接在 text/reply 里用 <b> 加粗。",
+  "_说明": "超话楼层内容，走仿真微博样式：首页只显示卡片（头像/正文摘要/互动栏），点进详情页才看到完整评论。act 字段表示解锁阶段：1=开局可见，2=在超话拼出『拾光』关键词并搜到沈溪账号后解锁，3=登入泡泡后解锁。clueOnOpen 表示打开详情页时应标记的线索 id。buried 的回复权重低、容易被玩家划过，但往往是关键线索。人物改名后：晏星→周晏星（英文名 Daniel Zhou），陆延→林安（英文名 Ryan），CP 名『晏延』→『星安理得』。周晏星唯粉与星安理得 CP 粉的微博 ID 刻意分成两套不同风格，且故意不追求整齐划一，更像真实饭圈。评论数量按帖子话题的争议/情绪强度分配，不是均匀铺的——公告类和实锤类评论最多，纯背景资料类保持一两条。不再用 flags 徽标标注『官方/存疑/实锤』这类元信息，重点信息直接在 text/reply 里用 <b> 加粗。\n\nsection 字段区分帖子归属的标签页：省略/'essence' 的原有 10 条真·线索帖归『精华』（继续走 act 解锁）；'flavor' 是纯水贴（粉丝哀悼、死前的花痴/磕CP旧帖），只出现在『热门』『最新』，不参与解谜、不受 act 限制。『公告』标签页会自动收录所有 verified:true 的账号发的帖（目前是 p001）。admin01 是置顶在『热门』『最新』顶部的超话管理员提示帖，纯说明文字，告诉玩家精华区是重点内容所在。",
   "posts": [
     {
       "id": "p001",
@@ -186,6 +186,138 @@
         { "author": "小星芒", "text": "姐姐说得对，我们不做二次伤害的人", "meta": "2800 赞" },
         { "author": "DanielZ的小行星", "text": "支持，希望大家都能冷静一点", "meta": "1400 赞" }
       ]
+    },
+    {
+      "id": "admin01",
+      "section": "flavor",
+      "pinned": true,
+      "thread": "周晏星本人超话",
+      "author": "超话管理员",
+      "handle": "@topic_admin",
+      "verified": false,
+      "time": "08-01 09:00",
+      "text": "【超话公告】欢迎来到周晏星本人超话～ 官方账号的动态、以及大家顶上去的热门讨论，我们都会陆续移到「精华」区，方便大家不错过重要信息，请多多关注精华区哦～",
+      "likes": "890",
+      "reposts": "120",
+      "replies": []
+    },
+    {
+      "id": "w01",
+      "section": "flavor",
+      "pinned": false,
+      "thread": "周晏星本人超话",
+      "author": "小周同学观察日记",
+      "handle": "@小周同学观察日记",
+      "verified": false,
+      "time": "09-14 03:00",
+      "text": "点了根蜡烛，什么都不想说了。",
+      "likes": "3200",
+      "reposts": "210",
+      "replies": []
+    },
+    {
+      "id": "w02",
+      "section": "flavor",
+      "pinned": false,
+      "thread": "周晏星本人超话",
+      "author": "晏星的草莓汽水",
+      "handle": "@晏星的草莓汽水",
+      "verified": false,
+      "time": "09-14 04:12",
+      "text": "冰箱里还有你上次直播说想喝的草莓汽水，我拿它怎么办",
+      "likes": "5600",
+      "reposts": "340",
+      "replies": [
+        { "author": "小星芒", "text": "抱抱，我们都很难过", "meta": "890 赞" }
+      ]
+    },
+    {
+      "id": "w03",
+      "section": "flavor",
+      "pinned": false,
+      "thread": "周晏星本人超话",
+      "author": "DanielZ_0721",
+      "handle": "@DanielZ_0721",
+      "verified": false,
+      "time": "09-14 05:30",
+      "text": "循环了一晚上你的歌，真的撑不住了",
+      "likes": "2100",
+      "reposts": "120",
+      "replies": []
+    },
+    {
+      "id": "w04",
+      "section": "flavor",
+      "pinned": false,
+      "thread": "周晏星本人超话",
+      "author": "周晏星颜粉bot",
+      "handle": "@周晏星颜粉bot",
+      "verified": false,
+      "time": "08-20 21:15",
+      "text": "今天的直拍打光也太绝了，工作人员求求多拍点",
+      "likes": "8800",
+      "reposts": "1200",
+      "replies": [
+        { "author": "Daniel的小星芒", "text": "这个侧脸角度杀我", "meta": "560 赞" }
+      ]
+    },
+    {
+      "id": "w05",
+      "section": "flavor",
+      "pinned": false,
+      "thread": "周晏星本人超话",
+      "author": "周晏星你争点气",
+      "handle": "@周晏星你争点气",
+      "verified": false,
+      "time": "08-15 10:00",
+      "text": "机场图瘦了一整圈，争点气，好好吃饭啊",
+      "likes": "4300",
+      "reposts": "210",
+      "replies": []
+    },
+    {
+      "id": "w06",
+      "section": "flavor",
+      "pinned": false,
+      "thread": "周晏星本人超话",
+      "author": "Daniel的小星芒",
+      "handle": "@Daniel的小星芒",
+      "verified": false,
+      "time": "07-30 19:00",
+      "text": "这次的舞台造型是谁设计的，颁奖！",
+      "likes": "3900",
+      "reposts": "480",
+      "replies": []
+    },
+    {
+      "id": "w07",
+      "section": "flavor",
+      "pinned": false,
+      "thread": "周晏星本人超话",
+      "author": "DanielRyan_Focus",
+      "handle": "@DanielRyan_Focus",
+      "verified": false,
+      "time": "08-05 15:40",
+      "text": "后台候场抓拍，两人对着镜头一起笑了，糖来了",
+      "likes": "1.2万",
+      "reposts": "3300",
+      "replies": [
+        { "author": "星安理得糖点记录", "text": "存图", "meta": "670 赞" }
+      ]
+    },
+    {
+      "id": "w08",
+      "section": "flavor",
+      "pinned": false,
+      "thread": "周晏星本人超话",
+      "author": "星安理得糖点记录",
+      "handle": "@星安理得糖点记录",
+      "verified": false,
+      "time": "08-25 12:20",
+      "text": "今天两人衣服颜色又莫名其妙撞了，是心有灵犀还是工作室故意的",
+      "likes": "9600",
+      "reposts": "1800",
+      "replies": []
     }
   ]
 }

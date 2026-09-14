@@ -4,12 +4,37 @@ import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
 
+const TABS = ["热门", "最新", "精华", "公告"];
+let activeTab = "热门";
+
+function parseCount(str) {
+  if (!str) return 0;
+  const s = String(str);
+  if (s.includes("万")) return parseFloat(s) * 10000;
+  return parseFloat(s) || 0;
+}
+
+function postsForTab(tab, act) {
+  if (tab === "精华") {
+    return posts.posts
+      .filter((p) => (!p.section || p.section === "essence") && p.act <= act)
+      .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || a.time.localeCompare(b.time));
+  }
+  if (tab === "公告") {
+    return posts.posts.filter((p) => p.verified);
+  }
+  const flavor = posts.posts.filter((p) => p.section === "flavor");
+  if (tab === "热门") {
+    return flavor.sort(
+      (a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || parseCount(b.likes) - parseCount(a.likes)
+    );
+  }
+  // 最新
+  return flavor.sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || b.time.localeCompare(a.time));
+}
+
 export function renderForum(root) {
   root.className = "weibo-scope";
-  const act = computeAct(state);
-  const visible = posts.posts
-    .filter((p) => p.act <= act)
-    .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || a.time.localeCompare(b.time));
 
   renderTopNav(root);
 
@@ -36,46 +61,61 @@ export function renderForum(root) {
       </div>
       <div class="wbanner-chips"><span>娱乐超话 No.3</span><span>今日发帖 8400</span></div>
     </div>
-    <div class="wtabs">
-      <span class="active">热门</span>
-      <span>最新</span>
-      <span>精华</span>
-      <span>公告</span>
-    </div>
+    <div class="wtabs">${TABS.map((t) => `<span data-tab="${t}"${t === activeTab ? ' class="active"' : ""}>${t}</span>`).join("")}</div>
     <div class="wfeed" id="wfeed"></div>
   `;
 
+  const tabEls = main.querySelectorAll(".wtabs span");
   const feed = main.querySelector("#wfeed");
-  visible.forEach((p) => {
-    const card = document.createElement("article");
-    card.className = "wfeed-card";
-    card.innerHTML = `
-      <div class="frow1">
-        <div class="favatar"></div>
-        <div>
-          <div class="fname">${p.pinned ? '<span class="fpin">置顶</span>' : ""}${p.author}${p.verified ? '<span class="verified">✓</span>' : ""}<span class="ffollow">＋关注</span></div>
-          <div class="fmeta">${p.time} · 来自 iPhone客户端</div>
-        </div>
-      </div>
-      <span class="ftag"># 周晏星本人超话 #</span>
-      <div class="fbody">${p.text}</div>
-      <div class="fthumb-slot"></div>
-      <div class="factions">
-        <span>🔁 ${p.reposts || 0}</span>
-        <span>💬 ${p.replies?.length || 0}</span>
-        <span>👍 ${p.likes || 0}</span>
-      </div>
-    `;
-    if (p.image || p.imagePrompt) {
-      const slot = card.querySelector(".fthumb-slot");
-      slot.className = "fthumb";
-      const thumb = createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption });
-      thumb.addEventListener("click", (e) => e.stopPropagation());
-      slot.appendChild(thumb);
-    }
-    card.addEventListener("click", () => goTo("postDetail", { id: p.id }));
-    feed.appendChild(card);
+
+  tabEls.forEach((el) => {
+    el.addEventListener("click", () => {
+      activeTab = el.dataset.tab;
+      tabEls.forEach((t) => t.classList.toggle("active", t.dataset.tab === activeTab));
+      renderFeed();
+    });
   });
 
+  function renderFeed() {
+    feed.innerHTML = "";
+    const act = computeAct(state);
+    postsForTab(activeTab, act).forEach((p) => feed.appendChild(postCard(p)));
+    if (!feed.children.length) {
+      feed.innerHTML = `<div class="wfeed-card" style="cursor:default;color:var(--ink-faint);text-align:center;">这里还没有内容</div>`;
+    }
+  }
+
+  renderFeed();
   layout.appendChild(renderRightbar());
+}
+
+function postCard(p) {
+  const card = document.createElement("article");
+  card.className = "wfeed-card";
+  card.innerHTML = `
+    <div class="frow1">
+      <div class="favatar"></div>
+      <div>
+        <div class="fname">${p.pinned ? '<span class="fpin">置顶</span>' : ""}${p.author}${p.verified ? '<span class="verified">✓</span>' : ""}<span class="ffollow">＋关注</span></div>
+        <div class="fmeta">${p.time} · 来自 iPhone客户端</div>
+      </div>
+    </div>
+    <span class="ftag"># 周晏星本人超话 #</span>
+    <div class="fbody">${p.text}</div>
+    <div class="fthumb-slot"></div>
+    <div class="factions">
+      <span>🔁 ${p.reposts || 0}</span>
+      <span>💬 ${p.replies?.length || 0}</span>
+      <span>👍 ${p.likes || 0}</span>
+    </div>
+  `;
+  if (p.image || p.imagePrompt) {
+    const slot = card.querySelector(".fthumb-slot");
+    slot.className = "fthumb";
+    const thumb = createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption });
+    thumb.addEventListener("click", (e) => e.stopPropagation());
+    slot.appendChild(thumb);
+  }
+  card.addEventListener("click", () => goTo("postDetail", { id: p.id }));
+  return card;
 }

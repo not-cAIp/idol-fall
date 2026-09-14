@@ -411,7 +411,8 @@ body.desktop-mode #view {
   display: flex; gap: 26px; background: #fff; border-radius: 0 0 8px 8px;
   padding: 0 20px; overflow-x: auto;
 }
-.wtabs span { padding: 13px 2px; font-size: 14px; color: #666; cursor: default; white-space: nowrap; }
+.wtabs span { padding: 13px 2px; font-size: 14px; color: #666; cursor: pointer; white-space: nowrap; }
+.wtabs span:hover:not(.active) { color: #333; }
 .wtabs span.active { color: #222; font-weight: 700; border-bottom: 2px solid var(--accent); }
 
 /* ---- 中间栏：信息流卡片 ---- */
