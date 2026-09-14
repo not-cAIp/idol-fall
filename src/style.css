@@ -146,17 +146,7 @@ body.desktop-mode #view {
 .post .handle { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--ink-faint); }
 .post .time { font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--ink-faint); }
 .post .text { font-size: 14px; line-height: 1.6; }
-.post .flags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
-.flag {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 10.5px;
-  padding: 2px 7px;
-  border-radius: 6px;
-  border: 1px solid var(--line);
-  color: var(--ink-faint);
-}
-.flag.warn { color: var(--accent-2); border-color: color-mix(in srgb, var(--accent-2) 45%, transparent); background: var(--accent-2-soft); }
-.flag.official { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, transparent); }
+.post .text b, .reply .text b { font-weight: 700; }
 
 .replies { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); display: flex; flex-direction: column; gap: 8px; }
 .reply { font-size: 12.5px; color: var(--ink-soft); padding-left: 12px; border-left: 2px solid var(--line); }

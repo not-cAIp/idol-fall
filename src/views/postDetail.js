@@ -44,7 +44,6 @@ export function renderPostDetail(root, { id } = {}) {
       <div class="time mono">${p.time}</div>
     </div>
     <div class="text">${p.text}</div>
-    <div class="flags">${(p.flags || []).map((f) => `<span class="flag${f.includes("官方") ? " official" : f.includes("存疑") || f.includes("未证实") || f.includes("修改") ? " warn" : ""}">${f}</span>`).join("")}</div>
     <div class="wb-actionbar" style="margin-top:10px;display:flex;gap:22px;font-size:12px;color:var(--ink-faint);font-family:'JetBrains Mono',monospace;">
       <span>👍 ${p.likes || 0}</span>
       <span>💬 ${p.replies?.length || 0}</span>
@@ -52,7 +51,7 @@ export function renderPostDetail(root, { id } = {}) {
     </div>
   `;
   if (p.image || p.imagePrompt) {
-    post.querySelector(".flags").after(
+    post.querySelector(".text").after(
       createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption })
     );
   }
