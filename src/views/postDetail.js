@@ -83,7 +83,7 @@ export function renderPostDetail(root, { id } = {}) {
       rEl.addEventListener("click", () => {
         state.expandedReplies.push(key);
         save();
-        if (p.id === "p006" && idx === 1) markClueFound("t01");
+        if (p.id === "p006") markClueFound("t01");
         renderAgain();
       });
     }
