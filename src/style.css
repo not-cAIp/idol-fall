@@ -25,7 +25,7 @@
   --ink-soft: #565d68;
   --ink-faint: #8991a0;
   --line: #e4e6eb;
-  --accent: #d6334c;
+  --accent: #ff8200;
   --accent-ink: #ffffff;
   --accent-2: #b8862e;
   --accent-2-soft: #f4e6c9;
@@ -69,6 +69,26 @@ h1, h2, h3 { font-family: "Noto Serif SC", "Noto Serif", serif; margin: 0 0 10px
 #view {
   flex: 1;
   overflow-y: auto;
+}
+
+/* 桌面端仿真微博模式：#phone 从"手机壳"变成普通网页容器 */
+body.desktop-mode {
+  display: block;
+  padding: 0;
+  background: #f4f5f7;
+}
+body.desktop-mode #phone {
+  max-width: none;
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: #f4f5f7;
+}
+body.desktop-mode #view {
+  overflow: visible;
 }
 
 .view-header {
@@ -300,105 +320,168 @@ h1, h2, h3 { font-family: "Noto Serif SC", "Noto Serif", serif; margin: 0 0 10px
 .ending-card p { color: var(--ink-soft); font-size: 14px; line-height: 1.7; }
 .reset-link { display: block; text-align: center; margin-top: 16px; color: var(--ink-faint); font-size: 12px; cursor: pointer; }
 
-/* ---------- 星潮 仿真微博 ---------- */
-.wb-header {
-  position: sticky; top: 0; z-index: 5;
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 16px;
-  background: color-mix(in srgb, var(--surface) 94%, transparent);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--line);
-}
-.wb-header .wb-logo { font-weight: 900; font-size: 17px; color: var(--accent); letter-spacing: .02em; flex: none; }
-.wb-search-bar {
-  flex: 1; display: flex; align-items: center; gap: 6px;
-  background: var(--surface-2); border: 1px solid var(--line); border-radius: 100px;
-  padding: 7px 14px; color: var(--ink-faint); font-size: 13px; cursor: pointer;
-}
-.wb-search-bar:hover { border-color: var(--accent); color: var(--ink-soft); }
-.wb-dm-btn {
-  flex: none; position: relative;
-  background: none; border: 1px solid var(--line); color: var(--ink-soft);
-  width: 34px; height: 34px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; font-size: 15px; cursor: pointer;
-}
-.wb-dm-btn:hover { border-color: var(--accent); color: var(--accent); }
-.wb-dm-btn .wb-dot {
-  position: absolute; top: 2px; right: 2px; width: 8px; height: 8px;
-  border-radius: 50%; background: var(--accent); border: 1.5px solid var(--surface);
-}
+/* ================= 星潮（仿真微博桌面端）================= */
 
-.wb-feed { background: var(--surface); }
-.wb-card {
-  display: flex; gap: 10px; padding: 14px 16px;
-  border-bottom: 1px solid var(--line); cursor: pointer;
+/* ---- 顶部导航条 ---- */
+.wtop {
+  background: #fff; border-bottom: 1px solid #eee;
+  display: flex; align-items: center; gap: 20px;
+  padding: 0 28px; height: 60px;
+  position: sticky; top: 0; z-index: 20;
 }
-.wb-card:hover { background: var(--surface-2); }
-.wb-card .wb-avatar {
-  width: 42px; height: 42px; border-radius: 50%; flex: none;
+.wtop .wsearch-icon {
+  width: 34px; height: 34px; border-radius: 50%; border: 1px solid #e4e6eb;
+  display: flex; align-items: center; justify-content: center; color: #666; cursor: pointer; flex: none;
+}
+.wtop .wsearch-icon:hover { border-color: var(--accent); color: var(--accent); }
+.wtop .wordmark { display: flex; align-items: center; gap: 8px; cursor: pointer; flex: none; }
+.wtop .wordmark .wmark {
+  width: 26px; height: 26px; border-radius: 7px; background: var(--accent);
+  color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900;
+}
+.wtop .wordmark b { color: var(--accent); font-size: 19px; font-weight: 900; letter-spacing: .01em; }
+.wtop .wordmark .wsub { color: #aaa; font-size: 12px; }
+.wtop .wnav { display: flex; align-items: center; gap: 4px; margin-left: 8px; }
+.wtop .wnav button {
+  width: 38px; height: 38px; border-radius: 8px; border: none; background: none;
+  color: #999; font-size: 17px; display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
+.wtop .wnav button.active { color: var(--accent); }
+.wtop .wnav button:hover { background: #f5f5f6; }
+.wtop .wspacer { flex: 1; }
+.wtop .wright { display: flex; align-items: center; gap: 14px; flex: none; }
+.wtop .wavatar {
+  width: 30px; height: 30px; border-radius: 50%;
   background: linear-gradient(135deg, var(--accent-2), var(--accent));
 }
-.wb-card .wb-body { flex: 1; min-width: 0; }
-.wb-card .wb-top { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
-.wb-card .wb-name { font-weight: 700; font-size: 14px; }
-.wb-card .wb-name .verified { color: var(--ok); font-size: 11px; margin-left: 2px; }
-.wb-card .wb-time { font-size: 11.5px; color: var(--ink-faint); font-family: "JetBrains Mono", monospace; }
-.wb-card .wb-text {
-  font-size: 14px; line-height: 1.6; margin-top: 3px;
-  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+.wtop .wmsg-btn { position: relative; background: none; border: none; font-size: 17px; color: #666; cursor: pointer; }
+.wtop .wmsg-btn .wb-dot {
+  position: absolute; top: -4px; right: -6px; min-width: 15px; height: 15px; padding: 0 3px;
+  border-radius: 100px; background: #ff4141; color: #fff; font-size: 9.5px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
 }
-.wb-card .wb-pin { font-size: 11px; color: var(--accent); font-weight: 700; margin-right: 4px; }
-.wb-card .wb-thumb {
-  margin-top: 8px; width: 100%; max-width: 220px; aspect-ratio: 16/10; border-radius: 8px;
-  overflow: hidden; border: 1px solid var(--line);
+.wtop .wicon { background: none; border: none; font-size: 16px; color: #999; cursor: pointer; }
+.wtop .wcompose {
+  width: 30px; height: 30px; border-radius: 8px; background: var(--accent); color: #fff;
+  display: flex; align-items: center; justify-content: center; font-size: 14px; border: none; cursor: pointer;
 }
-.wb-card .wb-thumb .photo-placeholder { padding: 10px; }
-.wb-card .wb-thumb .ph-prompt { font-size: 10px; -webkit-line-clamp: 2; }
+.wtop .wa11y { font-size: 12.5px; color: #999; }
 
-.wb-actionbar {
-  display: flex; gap: 22px; margin-top: 8px;
-  font-size: 12px; color: var(--ink-faint); font-family: "JetBrains Mono", monospace;
+/* ---- 三栏布局 ---- */
+.wlayout {
+  display: grid; grid-template-columns: 220px minmax(0, 1fr) 300px;
+  gap: 18px; max-width: 1360px; margin: 18px auto; padding: 0 20px; align-items: start;
 }
-.wb-actionbar span { display: inline-flex; align-items: center; gap: 4px; }
-
-.wb-promo {
-  display: flex; align-items: center; gap: 12px; padding: 12px 16px;
-  border-bottom: 1px solid var(--line); background: var(--accent-2-soft);
-  cursor: pointer;
-}
-.wb-promo:hover { filter: brightness(1.03); }
-.wb-promo .wb-promo-icon { font-size: 22px; flex: none; }
-.wb-promo .wb-promo-name { font-weight: 700; font-size: 13.5px; }
-.wb-promo .wb-promo-url {
-  font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--accent-2);
-  margin-top: 2px;
-}
-.wb-promo .wb-promo-tag {
-  margin-left: auto; flex: none; font-size: 11px; color: var(--ink-faint);
-  border: 1px solid var(--line); border-radius: 100px; padding: 3px 9px; background: var(--surface);
+.wlayout.no-leftnav { grid-template-columns: minmax(0, 1fr) 300px; }
+@media (max-width: 1100px) {
+  .wlayout, .wlayout.no-leftnav { grid-template-columns: minmax(0, 1fr); max-width: 720px; }
+  .wleftnav, .wrightbar { display: none; }
 }
 
-.wb-profile-head { display: flex; align-items: flex-start; gap: 14px; padding: 18px 16px; background: var(--surface); }
-.wb-profile-head .wb-avatar-lg {
-  width: 60px; height: 60px; border-radius: 50%; flex: none;
+/* ---- 左侧导航 ---- */
+.wleftnav { background: #fff; border-radius: 8px; padding: 10px 0; position: sticky; top: 78px; }
+.wleftnav .wln-item {
+  display: flex; align-items: center; gap: 10px; padding: 10px 20px;
+  color: #333; font-size: 14px; cursor: pointer;
+}
+.wleftnav .wln-item .ic { width: 18px; text-align: center; }
+.wleftnav .wln-item.active { color: var(--accent); background: #fff4ea; border-right: 3px solid var(--accent); font-weight: 700; }
+.wleftnav .wln-item:hover:not(.active) { background: #fafafa; }
+.wleftnav h4 { font-size: 12.5px; color: #aaa; font-weight: 500; padding: 14px 20px 6px; margin: 0; }
+
+/* ---- 中间栏：横幅（超话 / 个人主页通用）---- */
+.wbanner {
+  position: relative; border-radius: 8px; overflow: hidden; min-height: 210px;
+  background: linear-gradient(135deg, #3a2432, #1c1520); padding: 20px 24px 20px;
+  display: flex; flex-direction: column;
+}
+.wbanner .wbanner-top { display: flex; justify-content: flex-end; gap: 8px; }
+.wbanner .wbanner-btn {
+  background: rgba(255, 255, 255, 0.16); color: #fff; border: none; border-radius: 6px;
+  padding: 7px 16px; font-size: 12.5px; cursor: default;
+}
+.wbanner .wbanner-btn.primary { background: var(--accent); }
+.wbanner-id { display: flex; align-items: flex-end; gap: 16px; margin-top: auto; padding-top: 90px; }
+.wbanner-avatar {
+  width: 84px; height: 84px; border-radius: 14px; border: 3px solid #fff; flex: none;
   background: linear-gradient(135deg, var(--accent-2), var(--accent));
 }
-.wb-profile-head .wb-pname-row { display: flex; align-items: center; gap: 8px; }
-.wb-profile-head .wb-pname { font-weight: 900; font-size: 17px; }
-.wb-follow-btn {
-  font-size: 12px; color: var(--accent-ink); background: var(--accent); border: none;
-  border-radius: 100px; padding: 4px 12px; font-weight: 700;
+.wbanner-avatar.round { border-radius: 50%; width: 76px; height: 76px; }
+.wbanner-name .n { display: flex; align-items: center; gap: 8px; color: #fff; font-size: 21px; font-weight: 900; }
+.wbanner-name .n .badge {
+  font-size: 11px; font-weight: 700; color: #7a5a10; background: linear-gradient(135deg, #ffe9b0, #f0c869);
+  border-radius: 5px; padding: 2px 7px;
 }
-.wb-profile-head .wb-handle { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--ink-faint); margin-top: 2px; }
-.wb-profile-head .wb-bio { font-size: 13px; color: var(--ink-soft); margin-top: 8px; line-height: 1.6; }
-.wb-profile-stats {
-  display: flex; flex-wrap: wrap; gap: 6px 14px; padding: 0 16px 14px;
-  border-bottom: 8px solid var(--bg); background: var(--surface); font-size: 12.5px;
+.wbanner-name .stats { font-size: 13px; color: rgba(255, 255, 255, 0.72); margin-top: 4px; }
+.wbanner-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.wbanner-chips span { background: #fff; border-radius: 6px; padding: 4px 10px; font-size: 11.5px; color: #666; }
+
+/* ---- 中间栏：标签页 ---- */
+.wtabs {
+  display: flex; gap: 26px; background: #fff; border-radius: 0 0 8px 8px;
+  padding: 0 20px; overflow-x: auto;
 }
-.wb-profile-stats span { color: var(--ink-faint); white-space: nowrap; }
-.wb-profile-stats b { color: var(--ink); font-weight: 700; }
+.wtabs span { padding: 13px 2px; font-size: 14px; color: #666; cursor: default; white-space: nowrap; }
+.wtabs span.active { color: #222; font-weight: 700; border-bottom: 2px solid var(--accent); }
+
+/* ---- 中间栏：信息流卡片 ---- */
+.wfeed { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+.wfeed-card { background: #fff; border-radius: 8px; padding: 18px 20px; cursor: pointer; }
+.wfeed-card:hover { box-shadow: 0 2px 14px rgba(20, 20, 20, 0.07); }
+.wfeed-card .frow1 { display: flex; align-items: center; gap: 10px; }
+.wfeed-card .favatar {
+  width: 44px; height: 44px; border-radius: 50%; flex: none;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+}
+.wfeed-card .fname { font-weight: 700; font-size: 15px; color: #222; }
+.wfeed-card .fname .verified { color: var(--ok); font-size: 12px; margin-left: 2px; }
+.wfeed-card .ffollow {
+  border: 1px solid var(--accent); color: var(--accent); border-radius: 4px;
+  padding: 1px 9px; font-size: 11.5px; margin-left: 8px;
+}
+.wfeed-card .fmeta { font-size: 12px; color: #999; margin-top: 2px; }
+.wfeed-card .ftag { color: var(--accent); font-size: 13px; margin: 10px 0 2px; display: block; }
+.wfeed-card .fbody { font-size: 14.5px; color: #222; line-height: 1.75; margin-top: 8px; }
+.wfeed-card .fpin { font-size: 11px; color: var(--accent); font-weight: 700; border: 1px solid var(--accent); border-radius: 4px; padding: 0 5px; margin-right: 6px; }
+.wfeed-card .fthumb {
+  margin-top: 10px; width: 100%; max-width: 320px; aspect-ratio: 16/10; border-radius: 6px;
+  overflow: hidden; border: 1px solid #eee;
+}
+.wfeed-card .factions { display: flex; gap: 34px; margin-top: 14px; color: #999; font-size: 13px; }
+.wfeed-card .factions span { display: inline-flex; align-items: center; gap: 5px; }
+
+/* ---- 右侧栏 ---- */
+.wrightbar .wwidget { background: #fff; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+.wrightbar .wwidget h5 {
+  font-size: 14.5px; margin: 0 0 12px; display: flex; align-items: center; justify-content: space-between;
+  color: #222;
+}
+.wrightbar .wwidget h5 .refresh { font-size: 12px; color: #999; font-weight: 400; cursor: default; }
+.wrightbar .witem {
+  display: flex; align-items: center; gap: 10px; padding: 8px 0; cursor: pointer; border-radius: 6px;
+}
+.wrightbar .witem:hover { background: #fafafa; }
+.wrightbar .witem .wicon-box {
+  width: 34px; height: 34px; border-radius: 8px; flex: none;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff;
+}
+.wrightbar .witem .wtxt .t1 { font-size: 13.5px; color: #222; font-weight: 600; }
+.wrightbar .witem .wtxt .t2 { font-size: 11.5px; color: #999; margin-top: 1px; font-family: "JetBrains Mono", monospace; }
+.wrightbar .witem .wbtn {
+  margin-left: auto; font-size: 11.5px; border: 1px solid var(--accent); color: var(--accent);
+  border-radius: 100px; padding: 3px 10px; flex: none;
+}
+.wrightbar .wfooter { font-size: 12px; color: #b3b6bb; line-height: 2; }
+
+/* ---- 详情页返回条（桌面模式，嵌在中间栏内）---- */
+.wback-row {
+  display: flex; align-items: center; gap: 6px; color: #666; font-size: 13.5px;
+  cursor: pointer; margin-bottom: 12px;
+}
+.wback-row:hover { color: var(--accent); }
 
 @media (max-width: 460px) {
-  body { padding: 0; }
-  #phone { height: 100vh; border-radius: 0; border: none; max-width: 100%; }
+  body:not(.desktop-mode) { padding: 0; }
+  body:not(.desktop-mode) #phone { height: 100vh; border-radius: 0; border: none; max-width: 100%; }
 }

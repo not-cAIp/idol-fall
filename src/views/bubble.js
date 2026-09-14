@@ -6,6 +6,7 @@ let activeTab = "broadcast";
 
 export function renderBubble(root) {
   root.className = "";
+  document.body.classList.remove("desktop-mode");
 
   const header = document.createElement("header");
   header.className = "view-header";

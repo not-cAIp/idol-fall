@@ -1,24 +1,32 @@
 import { clues, endings } from "../data.js";
 import { state, save } from "../state.js";
 import { goTo } from "../router.js";
+import { renderTopNav } from "../components/weiboChrome.js";
 
 export function renderDm(root) {
   root.className = "weibo-scope";
+  renderTopNav(root);
 
-  const header = document.createElement("header");
-  header.className = "view-header";
-  header.innerHTML = `
-    <div class="vh-left">
-      <button class="icon-btn back" id="btn-back">‹</button>
-      <span class="vh-title">私信 · 陪你走到最后</span>
-    </div>
-  `;
-  root.appendChild(header);
-  header.querySelector("#btn-back").addEventListener("click", () => goTo("forum"));
+  const layout = document.createElement("div");
+  layout.className = "wlayout no-leftnav";
+  layout.style.gridTemplateColumns = "minmax(0, 1fr)";
+  layout.style.maxWidth = "640px";
+  root.appendChild(layout);
 
-  const body = document.createElement("div");
-  body.className = "view-body";
-  root.appendChild(body);
+  const main = document.createElement("main");
+  layout.appendChild(main);
+
+  const back = document.createElement("div");
+  back.className = "wback-row";
+  back.innerHTML = "‹ 返回超话";
+  back.addEventListener("click", () => goTo("forum"));
+  main.appendChild(back);
+
+  const panel = document.createElement("div");
+  panel.className = "wfeed-card";
+  panel.style.cursor = "default";
+  panel.innerHTML = `<h3 style="margin:0 0 14px;font-size:15px;">私信 · 陪你走到最后</h3>`;
+  main.appendChild(panel);
 
   const coreClues = clues.timeline.filter((c) => c.core);
   const hasAllCore = coreClues.every((c) => state.foundClues.includes(c.id));
@@ -26,7 +34,7 @@ export function renderDm(root) {
 
   const thread = document.createElement("div");
   thread.className = "bubble-thread";
-  body.appendChild(thread);
+  panel.appendChild(thread);
 
   if (!hasAllCore) {
     thread.innerHTML = `
@@ -46,7 +54,7 @@ export function renderDm(root) {
     link.className = "reset-link";
     link.textContent = "查看结案结果 ›";
     link.addEventListener("click", () => goTo("ending"));
-    body.appendChild(link);
+    panel.appendChild(link);
     return;
   }
 
@@ -63,7 +71,7 @@ export function renderDm(root) {
     });
     optionsEl.appendChild(btn);
   });
-  body.appendChild(optionsEl);
+  panel.appendChild(optionsEl);
 }
 
 function computeEnding(replyId) {

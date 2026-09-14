@@ -4,6 +4,7 @@ import { goTo } from "../router.js";
 
 export function renderReasoning(root) {
   root.className = "";
+  document.body.classList.remove("desktop-mode");
   const header = document.createElement("header");
   header.className = "view-header";
   header.innerHTML = `

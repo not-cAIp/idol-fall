@@ -18,6 +18,7 @@ export function goTo(name, params = {}) {
   currentParams = params;
   render();
   root.scrollTop = 0;
+  window.scrollTo(0, 0);
 }
 
 export function getParams() {

@@ -2,34 +2,36 @@ import { postById } from "../data.js";
 import { state, save, markClueFound } from "../state.js";
 import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
+import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
 
 export function renderPostDetail(root, { id } = {}) {
   root.className = "weibo-scope";
+  renderTopNav(root);
+
+  const layout = document.createElement("div");
+  layout.className = "wlayout no-leftnav";
+  root.appendChild(layout);
+
+  const main = document.createElement("main");
+  layout.appendChild(main);
+  layout.appendChild(renderRightbar());
+
+  const back = document.createElement("div");
+  back.className = "wback-row";
+  back.innerHTML = "‹ 返回超话";
+  back.addEventListener("click", () => goTo("forum"));
+  main.appendChild(back);
+
   const p = postById(id);
-
-  const header = document.createElement("header");
-  header.className = "view-header";
-  header.innerHTML = `
-    <div class="vh-left">
-      <button class="icon-btn back" id="btn-back">‹</button>
-      <span class="vh-title">微博正文</span>
-    </div>
-  `;
-  root.appendChild(header);
-  header.querySelector("#btn-back").addEventListener("click", () => goTo("forum"));
-
   if (!p) {
-    const body = document.createElement("div");
-    body.className = "view-body";
-    body.innerHTML = `<p class="intro">这条微博已被删除。</p>`;
-    root.appendChild(body);
+    const empty = document.createElement("div");
+    empty.className = "wfeed-card";
+    empty.textContent = "这条微博已被删除。";
+    main.appendChild(empty);
     return;
   }
 
-  (p.clueOnOpen || []).forEach((id) => markClueFound(id));
-
-  const body = document.createElement("div");
-  body.className = "view-body";
+  (p.clueOnOpen || []).forEach((clueId) => markClueFound(clueId));
 
   const post = document.createElement("article");
   post.className = "post" + (p.pinned ? " pinned" : "");
@@ -43,7 +45,7 @@ export function renderPostDetail(root, { id } = {}) {
     </div>
     <div class="text">${p.text}</div>
     <div class="flags">${(p.flags || []).map((f) => `<span class="flag${f.includes("官方") ? " official" : f.includes("存疑") || f.includes("未证实") || f.includes("修改") ? " warn" : ""}">${f}</span>`).join("")}</div>
-    <div class="wb-actionbar" style="margin-top:10px;">
+    <div class="wb-actionbar" style="margin-top:10px;display:flex;gap:22px;font-size:12px;color:var(--ink-faint);font-family:'JetBrains Mono',monospace;">
       <span>👍 ${p.likes || 0}</span>
       <span>💬 ${p.replies?.length || 0}</span>
       <span>🔁 ${p.reposts || 0}</span>
@@ -54,12 +56,12 @@ export function renderPostDetail(root, { id } = {}) {
       createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption })
     );
   }
-  body.appendChild(post);
+  main.appendChild(post);
 
   const commentsTitle = document.createElement("h3");
   commentsTitle.style.cssText = "font-size:14px;margin:18px 0 10px;color:var(--ink-soft);";
   commentsTitle.textContent = `全部评论 ${p.replies?.length || 0}`;
-  body.appendChild(commentsTitle);
+  main.appendChild(commentsTitle);
 
   const list = document.createElement("div");
   list.className = "post";
@@ -68,7 +70,7 @@ export function renderPostDetail(root, { id } = {}) {
   repliesEl.style.borderTop = "none";
   repliesEl.style.paddingTop = "0";
   list.appendChild(repliesEl);
-  body.appendChild(list);
+  main.appendChild(list);
 
   (p.replies || []).forEach((r, idx) => {
     const key = `${p.id}-${idx}`;
@@ -88,12 +90,10 @@ export function renderPostDetail(root, { id } = {}) {
     repliesEl.appendChild(rEl);
   });
 
-  root.appendChild(body);
-
   function renderAgain() {
-    const scrollTop = root.scrollTop;
+    const scrollTop = window.scrollY;
     root.innerHTML = "";
     renderPostDetail(root, { id });
-    root.scrollTop = scrollTop;
+    window.scrollTo(0, scrollTop);
   }
 }

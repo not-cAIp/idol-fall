@@ -3,6 +3,7 @@ import { state, resetGame } from "../state.js";
 
 export function renderEnding(root) {
   root.className = "";
+  document.body.classList.remove("desktop-mode");
   const body = document.createElement("div");
   body.className = "view-body";
 

@@ -1,7 +1,8 @@
-import { posts, clues } from "../data.js";
+import { posts } from "../data.js";
 import { state, computeAct } from "../state.js";
 import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
+import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
 
 export function renderForum(root) {
   root.className = "weibo-scope";
@@ -10,63 +11,64 @@ export function renderForum(root) {
     .filter((p) => p.act <= act)
     .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || a.time.localeCompare(b.time));
 
-  const coreDone = clues.timeline.filter((c) => c.core).every((c) => state.foundClues.includes(c.id));
+  renderTopNav(root);
 
-  const header = document.createElement("header");
-  header.className = "wb-header";
-  header.innerHTML = `
-    <span class="wb-logo">星潮</span>
-    <div class="wb-search-bar" id="wb-search">🔍 搜索账号 / 昵称 / 关键词</div>
-    <button class="wb-dm-btn" id="wb-dm" title="私信">✉️${coreDone ? '<span class="wb-dot"></span>' : ""}</button>
+  const layout = document.createElement("div");
+  layout.className = "wlayout no-leftnav";
+  root.appendChild(layout);
+
+  const main = document.createElement("main");
+  layout.appendChild(main);
+
+  main.innerHTML = `
+    <div class="wbanner">
+      <div class="wbanner-top">
+        <button class="wbanner-btn">✎ 发帖</button>
+        <button class="wbanner-btn primary">已关注</button>
+        <button class="wbanner-btn">签到</button>
+      </div>
+      <div class="wbanner-id">
+        <div class="wbanner-avatar"></div>
+        <div class="wbanner-name">
+          <div class="n">晏星本人超话 <span class="badge">超话</span></div>
+          <div class="stats">11.2万 帖子 ｜ 89.4万 粉丝</div>
+        </div>
+      </div>
+      <div class="wbanner-chips"><span>娱乐超话 No.3</span><span>今日发帖 8400</span></div>
+    </div>
+    <div class="wtabs">
+      <span class="active">热门</span>
+      <span>最新</span>
+      <span>精华</span>
+      <span>公告</span>
+    </div>
+    <div class="wfeed" id="wfeed"></div>
   `;
-  root.appendChild(header);
-  header.querySelector("#wb-search").addEventListener("click", () => goTo("search"));
-  header.querySelector("#wb-dm").addEventListener("click", () => goTo("dm"));
 
-  const feed = document.createElement("div");
-  feed.className = "wb-feed";
-
-  feed.appendChild(
-    promoCard({
-      icon: "🧭",
-      name: "案件推理台",
-      url: "case.xingchao.fm/timeline",
-      tag: "站内工具",
-      onClick: () => goTo("reasoning"),
-    })
-  );
-  feed.appendChild(
-    promoCard({
-      icon: "🫧",
-      name: "泡泡 · 偶像通讯",
-      url: "bubble.fan/login",
-      tag: "第三方 App",
-      onClick: () => goTo("bubble"),
-    })
-  );
-
+  const feed = main.querySelector("#wfeed");
   visible.forEach((p) => {
     const card = document.createElement("article");
-    card.className = "wb-card";
+    card.className = "wfeed-card";
     card.innerHTML = `
-      <div class="wb-avatar"></div>
-      <div class="wb-body">
-        <div class="wb-top">
-          <span class="wb-name">${p.pinned ? '<span class="wb-pin">置顶</span>' : ""}${p.author}${p.verified ? '<span class="verified">✓</span>' : ""}</span>
-          <span class="wb-time mono">${p.time}</span>
+      <div class="frow1">
+        <div class="favatar"></div>
+        <div>
+          <div class="fname">${p.pinned ? '<span class="fpin">置顶</span>' : ""}${p.author}${p.verified ? '<span class="verified">✓</span>' : ""}<span class="ffollow">＋关注</span></div>
+          <div class="fmeta">${p.time} · 来自 iPhone客户端</div>
         </div>
-        <div class="wb-text">${p.text}</div>
-        <div class="wb-thumb-slot"></div>
-        <div class="wb-actionbar">
-          <span>👍 ${p.likes || 0}</span>
-          <span>💬 ${p.replies?.length || 0}</span>
-          <span>🔁 ${p.reposts || 0}</span>
-        </div>
+      </div>
+      <span class="ftag"># 晏星本人超话 #</span>
+      <div class="fbody">${p.text}</div>
+      <div class="fthumb-slot"></div>
+      <div class="factions">
+        <span>🔁 ${p.reposts || 0}</span>
+        <span>💬 ${p.replies?.length || 0}</span>
+        <span>👍 ${p.likes || 0}</span>
       </div>
     `;
     if (p.image || p.imagePrompt) {
-      const slot = card.querySelector(".wb-thumb-slot");
-      slot.className = "wb-thumb";
+      const slot = card.querySelector(".fthumb-slot");
+      slot.className = "fthumb";
       const thumb = createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption });
       thumb.addEventListener("click", (e) => e.stopPropagation());
       slot.appendChild(thumb);
@@ -75,20 +77,5 @@ export function renderForum(root) {
     feed.appendChild(card);
   });
 
-  root.appendChild(feed);
-}
-
-function promoCard({ icon, name, url, tag, onClick }) {
-  const el = document.createElement("div");
-  el.className = "wb-promo";
-  el.innerHTML = `
-    <span class="wb-promo-icon">${icon}</span>
-    <div>
-      <div class="wb-promo-name">${name}</div>
-      <div class="wb-promo-url mono">${url}</div>
-    </div>
-    <span class="wb-promo-tag">${tag}</span>
-  `;
-  el.addEventListener("click", onClick);
-  return el;
+  layout.appendChild(renderRightbar());
 }
