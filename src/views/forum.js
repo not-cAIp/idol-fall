@@ -3,6 +3,7 @@ import { state, computeAct } from "../state.js";
 import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
+import { icon, verifiedBadge } from "../components/icons.js";
 
 const TABS_CLICKABLE = ["最新", "精华"];
 const TABS_STATIC = ["安利帖", "图文产出", "绝美舞台", "水贴专区"];
@@ -37,7 +38,7 @@ export function renderForum(root) {
   main.innerHTML = `
     <div class="wbanner">
       <div class="wbanner-top">
-        <button class="wbanner-btn">✎ 发帖</button>
+        <button class="wbanner-btn">${icon("pencil", { size: 13 })} 发帖</button>
         <button class="wbanner-btn primary">已关注</button>
         <button class="wbanner-btn">签到</button>
       </div>
@@ -96,7 +97,7 @@ function postCard(p) {
     <div class="frow1">
       <div class="favatar"></div>
       <div>
-        <div class="fname">${p.pinned ? '<span class="fpin">置顶</span>' : ""}${p.author}${p.verified ? '<span class="verified">✓</span>' : ""}<span class="ffollow">＋关注</span></div>
+        <div class="fname">${p.pinned ? '<span class="fpin">置顶</span>' : ""}${p.author}${p.verified ? `<span class="verified">${verifiedBadge({ size: 13 })}</span>` : ""}<span class="ffollow">＋关注</span></div>
         <div class="fmeta">${p.time} · 来自 iPhone客户端</div>
       </div>
     </div>
@@ -104,9 +105,9 @@ function postCard(p) {
     <div class="fbody">${p.text}</div>
     <div class="fthumb-slot"></div>
     <div class="factions">
-      <span>🔁 ${p.reposts || 0}</span>
-      <span>💬 ${p.replies?.length || 0}</span>
-      <span>👍 ${p.likes || 0}</span>
+      <span>${icon("repost", { size: 14 })} ${p.reposts || 0}</span>
+      <span>${icon("chat", { size: 14 })} ${p.replies?.length || 0}</span>
+      <span>${icon("like", { size: 14 })} ${p.likes || 0}</span>
     </div>
   `;
   if (p.image || p.imagePrompt) {

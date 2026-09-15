@@ -3,6 +3,7 @@ import { state, save, markClueFound } from "../state.js";
 import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
+import { icon, verifiedBadge } from "../components/icons.js";
 
 export function renderPostDetail(root, { id } = {}) {
   root.className = "weibo-scope";
@@ -38,16 +39,16 @@ export function renderPostDetail(root, { id } = {}) {
   post.innerHTML = `
     <div class="topline">
       <div>
-        <span class="uname">${p.author}${p.verified ? '<span class="verified">✓ 已认证</span>' : ""}</span>
+        <span class="uname">${p.author}${p.verified ? `<span class="verified">${verifiedBadge({ size: 13 })} 已认证</span>` : ""}</span>
         <div class="handle">${p.handle}</div>
       </div>
       <div class="time mono">${p.time}</div>
     </div>
     <div class="text">${p.text}</div>
     <div class="wb-actionbar" style="margin-top:10px;display:flex;gap:22px;font-size:12px;color:var(--ink-faint);font-family:'JetBrains Mono',monospace;">
-      <span>👍 ${p.likes || 0}</span>
-      <span>💬 ${p.replies?.length || 0}</span>
-      <span>🔁 ${p.reposts || 0}</span>
+      <span style="display:inline-flex;align-items:center;gap:5px;">${icon("like", { size: 14 })} ${p.likes || 0}</span>
+      <span style="display:inline-flex;align-items:center;gap:5px;">${icon("chat", { size: 14 })} ${p.replies?.length || 0}</span>
+      <span style="display:inline-flex;align-items:center;gap:5px;">${icon("repost", { size: 14 })} ${p.reposts || 0}</span>
     </div>
   `;
   if (p.image || p.imagePrompt) {

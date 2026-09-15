@@ -280,6 +280,8 @@ body.desktop-mode #view {
 
 /* ================= 星潮（仿真微博桌面端）================= */
 
+.wicon-svg { display: inline-block; vertical-align: middle; flex: none; }
+
 /* ---- 顶部导航条 ---- */
 .wtop {
   background: #fff; border-bottom: 1px solid #eee;
@@ -418,7 +420,7 @@ body.desktop-mode #view {
   font-size: 14.5px; margin: 0 0 12px; display: flex; align-items: center; justify-content: space-between;
   color: #222;
 }
-.wrightbar .wwidget h5 .refresh { font-size: 12px; color: #999; font-weight: 400; cursor: default; }
+.wrightbar .wwidget h5 .refresh { font-size: 12px; color: #999; font-weight: 400; cursor: default; display: inline-flex; align-items: center; gap: 3px; }
 .wrightbar .witem {
   display: flex; align-items: center; gap: 10px; padding: 8px 0; cursor: pointer; border-radius: 6px;
 }

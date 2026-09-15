@@ -2,6 +2,7 @@ import { findProfile, isBlockedQuery } from "../data.js";
 import { markProfileFound, markClueFound } from "../state.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderLeftNav, renderRightbar } from "../components/weiboChrome.js";
+import { icon } from "../components/icons.js";
 
 export function renderSearch(root) {
   root.className = "weibo-scope";
@@ -69,7 +70,7 @@ export function renderSearch(root) {
       <div class="wfeed-card" style="cursor:default;margin-top:12px;">
         <p style="font-size:14px;color:var(--ink-soft);line-height:1.7;margin:0;">${profile.bio}</p>
         <div class="factions" style="margin-top:12px;">${profile.stats.map((s) => `<span>${s}</span>`).join("")}</div>
-        ${profile.locked ? `<div class="locked-note" style="margin-top:10px;">🔒 ${profile.lockedNote || "部分内容仅粉丝可见"}</div>` : ""}
+        ${profile.locked ? `<div class="locked-note" style="margin-top:10px;display:flex;align-items:center;gap:5px;">${icon("lock", { size: 13 })} ${profile.lockedNote || "部分内容仅粉丝可见"}</div>` : ""}
       </div>
       <div class="wfeed-card" style="cursor:default;margin-top:12px;">
         <div class="plist">${profile.posts.map((p) => `<div>· ${p}</div>`).join("")}</div>
