@@ -414,6 +414,8 @@ body.desktop-mode #view {
 .wtabs span { padding: 13px 2px; font-size: 14px; color: #666; cursor: pointer; white-space: nowrap; }
 .wtabs span:hover:not(.active) { color: #333; }
 .wtabs span.active { color: #222; font-weight: 700; border-bottom: 2px solid var(--accent); }
+.wtabs span.static { cursor: default; }
+.wtabs span.static:hover { color: #666; }
 
 /* ---- 中间栏：信息流卡片 ---- */
 .wfeed { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }

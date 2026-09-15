@@ -4,7 +4,9 @@ import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
 
-const TABS = ["最新", "精华", "公告"];
+const TABS_CLICKABLE = ["最新", "精华"];
+const TABS_STATIC = ["安利帖", "图文产出", "绝美舞台", "水贴专区"];
+const TABS = [...TABS_CLICKABLE, ...TABS_STATIC];
 const FEED_CAP = 10;
 let activeTab = "最新";
 
@@ -13,9 +15,6 @@ function postsForTab(tab, act) {
     return posts.posts
       .filter((p) => (!p.section || p.section === "essence") && p.act <= act)
       .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || a.time.localeCompare(b.time));
-  }
-  if (tab === "公告") {
-    return posts.posts.filter((p) => p.verified);
   }
   // 最新：纯水贴池，不含线索
   return posts.posts
@@ -51,7 +50,9 @@ export function renderForum(root) {
       </div>
       <div class="wbanner-chips"><span>娱乐超话 No.3</span><span>今日发帖 8400</span></div>
     </div>
-    <div class="wtabs">${TABS.map((t) => `<span data-tab="${t}"${t === activeTab ? ' class="active"' : ""}>${t}</span>`).join("")}</div>
+    <div class="wtabs">${TABS.map(
+      (t) => `<span data-tab="${t}" class="${t === activeTab ? "active" : ""}${TABS_CLICKABLE.includes(t) ? "" : " static"}">${t}</span>`
+    ).join("")}</div>
     <div class="wfeed" id="wfeed"></div>
   `;
 
@@ -59,6 +60,7 @@ export function renderForum(root) {
   const feed = main.querySelector("#wfeed");
 
   tabEls.forEach((el) => {
+    if (!TABS_CLICKABLE.includes(el.dataset.tab)) return;
     el.addEventListener("click", () => {
       activeTab = el.dataset.tab;
       tabEls.forEach((t) => t.classList.toggle("active", t.dataset.tab === activeTab));
