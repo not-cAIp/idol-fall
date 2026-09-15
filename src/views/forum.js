@@ -4,16 +4,9 @@ import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
 
-const TABS = ["热门", "最新", "精华", "公告"];
+const TABS = ["最新", "精华", "公告"];
 const FEED_CAP = 10;
-let activeTab = "热门";
-
-function parseCount(str) {
-  if (!str) return 0;
-  const s = String(str);
-  if (s.includes("万")) return parseFloat(s) * 10000;
-  return parseFloat(s) || 0;
-}
+let activeTab = "最新";
 
 function postsForTab(tab, act) {
   if (tab === "精华") {
@@ -24,14 +17,10 @@ function postsForTab(tab, act) {
   if (tab === "公告") {
     return posts.posts.filter((p) => p.verified);
   }
-  const flavor = posts.posts.filter((p) => p.section === "flavor");
-  if (tab === "热门") {
-    return flavor.sort(
-      (a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || parseCount(b.likes) - parseCount(a.likes)
-    );
-  }
-  // 最新
-  return flavor.sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || b.time.localeCompare(a.time));
+  // 最新：纯水贴池，不含线索
+  return posts.posts
+    .filter((p) => p.section === "flavor")
+    .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || b.time.localeCompare(a.time));
 }
 
 export function renderForum(root) {
@@ -89,7 +78,7 @@ export function renderForum(root) {
     if (all.length > FEED_CAP) {
       const more = document.createElement("div");
       more.className = "wfeed-more";
-      more.textContent = `还有 ${all.length - FEED_CAP} 条微博，暂不展示`;
+      more.textContent = "更多帖子已被折叠";
       feed.appendChild(more);
     }
   }
