@@ -21,8 +21,11 @@ export function renderPostDetail(root, { id } = {}) {
 
   const back = document.createElement("div");
   back.className = "wback-row";
-  back.innerHTML = "‹ 返回超话";
-  back.addEventListener("click", () => goTo("forum", { thread: p?.thread }));
+  back.innerHTML = p?.profile ? "‹ 返回主页" : "‹ 返回超话";
+  back.addEventListener("click", () => {
+    if (p?.profile) goTo("search", { profile: p.profile });
+    else goTo("forum", { thread: p?.thread });
+  });
   main.appendChild(back);
 
   if (!p) {
@@ -40,7 +43,7 @@ export function renderPostDetail(root, { id } = {}) {
   post.innerHTML = `
     <div class="topline">
       <div>
-        <span class="uname">${p.author}${p.verified ? `<span class="verified">${verifiedBadge({ size: 13 })} 已认证</span>` : ""}</span>
+        <span class="uname">${p.author}${p.verified ? `<span class="verified">${verifiedBadge({ size: 13 })} 已认证</span>` : ""}${p.tag ? `<span class="ftag-status">${p.tag}</span>` : ""}</span>
         <div class="handle">${p.handle}</div>
       </div>
       <div class="time mono">${p.time}</div>

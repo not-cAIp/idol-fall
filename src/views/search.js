@@ -1,10 +1,11 @@
-import { findProfile, isBlockedQuery } from "../data.js";
+import { findProfile, isBlockedQuery, posts, profiles } from "../data.js";
 import { markProfileFound, markClueFound } from "../state.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
+import { goTo } from "../router.js";
 import { renderTopNav, renderLeftNav, renderRightbar } from "../components/weiboChrome.js";
-import { icon } from "../components/icons.js";
+import { icon, verifiedBadge } from "../components/icons.js";
 
-export function renderSearch(root) {
+export function renderSearch(root, { profile: profileId } = {}) {
   root.className = "weibo-scope";
   renderTopNav(root);
 
@@ -32,28 +33,9 @@ export function renderSearch(root) {
   const input = main.querySelector("#search-input");
   const resultEl = main.querySelector("#search-result");
 
-  function runSearch() {
-    const q = input.value;
-    resultEl.innerHTML = "";
-    if (!q.trim()) return;
-
-    if (isBlockedQuery(q)) {
-      resultEl.innerHTML = `<div class="wfeed-card" style="cursor:default;"><div class="search-blocked">搜索结果存在风险，已隐藏。</div></div>`;
-      return;
-    }
-
-    const profile = findProfile(q);
-    if (!profile) {
-      resultEl.innerHTML = `<div class="wfeed-card" style="cursor:default;"><div class="search-empty">没有找到"${escapeHtml(q)}"相关的账号。</div></div>`;
-      return;
-    }
-
+  function showProfile(profile) {
     markProfileFound(profile.id);
     if (profile.clueOnFound) markClueFound(profile.clueOnFound);
-
-    const allBlocks = profile.blocks || [];
-    const infoLines = allBlocks.filter((b) => b.info);
-    const postBlocks = allBlocks.filter((b) => !b.info);
 
     resultEl.innerHTML = `
       <div class="wbanner" style="min-height:170px;background:linear-gradient(135deg,#2b3242,#171b22);">
@@ -74,47 +56,82 @@ export function renderSearch(root) {
       <div class="wfeed-card" style="cursor:default;margin-top:12px;">
         <p style="font-size:14px;color:var(--ink-soft);line-height:1.7;margin:0;">${profile.bio}</p>
         <div class="factions" style="margin-top:12px;">${profile.stats.map((s) => `<span>${s}</span>`).join("")}</div>
-        ${infoLines.length ? `<div class="plist">${infoLines.map((b) => `<div>· ${b.text}</div>`).join("")}</div>` : ""}
         ${profile.locked ? `<div class="locked-note" style="margin-top:10px;display:flex;align-items:center;gap:5px;">${icon("lock", { size: 13 })} ${profile.lockedNote || "部分内容仅粉丝可见"}</div>` : ""}
       </div>
       <div class="wfeed" id="profile-feed" style="margin-top:12px;"></div>
     `;
 
-    infoLines.forEach((b) => { if (b.clueId) markClueFound(b.clueId); });
-
     const feedEl = resultEl.querySelector("#profile-feed");
-    postBlocks.forEach((b) => {
-      feedEl.appendChild(profilePostCard(profile, b));
-      if (b.clueId) markClueFound(b.clueId);
-    });
+    const ownPosts = posts.posts
+      .filter((p) => p.profile === profile.id)
+      .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || b.time.localeCompare(a.time));
+    ownPosts.forEach((p) => feedEl.appendChild(profilePostCard(p)));
+    if (!ownPosts.length) {
+      feedEl.innerHTML = `<div class="wfeed-card" style="cursor:default;color:var(--ink-faint);text-align:center;">这里还没有内容</div>`;
+    }
+  }
+
+  function runSearch() {
+    const q = input.value;
+    resultEl.innerHTML = "";
+    if (!q.trim()) return;
+
+    if (isBlockedQuery(q)) {
+      resultEl.innerHTML = `<div class="wfeed-card" style="cursor:default;"><div class="search-blocked">搜索结果存在风险，已隐藏。</div></div>`;
+      return;
+    }
+
+    const profile = findProfile(q);
+    if (!profile) {
+      resultEl.innerHTML = `<div class="wfeed-card" style="cursor:default;"><div class="search-empty">没有找到"${escapeHtml(q)}"相关的账号。</div></div>`;
+      return;
+    }
+
+    showProfile(profile);
   }
 
   main.querySelector("#search-btn").addEventListener("click", runSearch);
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") runSearch();
   });
+
+  if (profileId) {
+    const profile = profiles.profiles.find((p) => p.id === profileId);
+    if (profile) {
+      input.value = profile.searchKeywords[0];
+      showProfile(profile);
+    }
+  }
 }
 
-function profilePostCard(profile, block) {
+function profilePostCard(p) {
   const card = document.createElement("article");
   card.className = "wfeed-card";
-  card.style.cursor = "default";
   card.innerHTML = `
     <div class="frow1">
       <div class="favatar"></div>
       <div>
-        <div class="fname">${profile.name}${block.tag ? `<span class="ftag-status">${block.tag}</span>` : ""}</div>
-        <div class="fmeta">${block.time ? `${block.time} · ` : ""}来自 iPhone客户端</div>
+        <div class="fname">${p.author}${p.verified ? `<span class="verified">${verifiedBadge({ size: 13 })}</span>` : ""}${p.tag ? `<span class="ftag-status">${p.tag}</span>` : ""}</div>
+        <div class="fmeta">${p.time ? `${p.time} · ` : ""}来自 iPhone客户端</div>
       </div>
     </div>
-    <div class="fbody">${block.text}</div>
+    <div class="fbody">${p.text}</div>
     <div class="fthumb-slot"></div>
+    <div class="factions">
+      <span>${icon("repost", { size: 14 })} ${p.reposts || 0}</span>
+      <span>${icon("chat", { size: 14 })} ${p.replies?.length || 0}</span>
+      <span>${icon("like", { size: 14 })} ${p.likes || 0}</span>
+    </div>
   `;
-  if (block.imagePrompt || block.image) {
+  if (p.image || p.imagePrompt) {
     const slot = card.querySelector(".fthumb-slot");
     slot.className = "fthumb";
-    slot.appendChild(createPhotoThumb({ src: block.image, imagePrompt: block.imagePrompt, imageCaption: block.imageCaption }));
+    const thumb = createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption });
+    thumb.addEventListener("click", (e) => e.stopPropagation());
+    slot.appendChild(thumb);
   }
+  card.querySelectorAll(".fbody a").forEach((a) => a.addEventListener("click", (e) => e.stopPropagation()));
+  card.addEventListener("click", () => goTo("postDetail", { id: p.id }));
   return card;
 }
 
