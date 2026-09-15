@@ -1,5 +1,5 @@
 {
-  "_说明": "密信 App「泡泡」。这不是周晏星本人的账号，是一个普通粉丝账号（#0412，也就是苏昭）的登录——玩家是在冒充/借用她的账号看她的消息记录，不是后台管理员视角。账号即她的泡泡粉丝编号，密码来自她自己的习惯，两者都能在 profiles.shiguang_neko 里拼出来。",
+  "_说明": "⚠️ 这份文件本身不再被 idol-fall 这个 App 读取——泡泡现在是独立站点（github.com/saraliuxt-coder/paopao，线上地址 saraliuxt-coder.github.io/paopao/），数据被复制进了那个仓库自己的 index.html 里（写死在一段 <script> 里，没有单独的 JSON）。这份文件留着只是当文档用，方便以后改登录信息/消息内容时知道要同步改哪两个地方。玩家在超话里通过一条早期帖子（p008）里的真实链接跳转过去，不是这个 App 内部路由。这不是周晏星本人的账号，是一个普通粉丝账号（#0412，也就是苏昭）的登录——账号即她的泡泡粉丝编号，密码来自她自己的习惯，两者都能在 profiles.shiguang_neko 里拼出来。登进专属消息后，泡泡站点会带着 ?clue=t04 把玩家带回 idol-fall，idol-fall 在 main.js 启动时读这个参数来补上线索。",
   "login": {
     "username": "0412",
     "usernameSource": "profiles.shiguang_neko —— 主页资料里写着『泡泡粉丝编号 #0412』，就是登录账号",

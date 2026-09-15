@@ -116,6 +116,7 @@ function postCard(p) {
     thumb.addEventListener("click", (e) => e.stopPropagation());
     slot.appendChild(thumb);
   }
+  card.querySelectorAll(".fbody a").forEach((a) => a.addEventListener("click", (e) => e.stopPropagation()));
   card.addEventListener("click", () => goTo("postDetail", { id: p.id }));
   return card;
 }

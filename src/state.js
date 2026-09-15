@@ -4,8 +4,6 @@ const defaultState = () => ({
   expandedReplies: [],
   foundProfiles: [],
   foundClues: [],
-  bubbleUnlocked: false,
-  bubbleAttempts: 0,
   finalReply: null,
   finalEnding: null,
 });
@@ -50,7 +48,7 @@ export function resetGame() {
 }
 
 export function computeAct(s) {
-  if (s.bubbleUnlocked) return 3;
+  if (s.foundClues.includes("t04")) return 3;
   if (s.foundClues.includes("t01") || s.foundClues.includes("t03")) return 2;
   return 1;
 }

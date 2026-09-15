@@ -147,6 +147,7 @@ body.desktop-mode #view {
 .post .time { font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--ink-faint); }
 .post .text { font-size: 14px; line-height: 1.6; }
 .post .text b, .reply .text b { font-weight: 700; }
+.post .text a, .wfeed-card .fbody a { color: var(--accent); text-decoration: underline; word-break: break-all; }
 
 .replies { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); display: flex; flex-direction: column; gap: 8px; }
 .reply { font-size: 12.5px; color: var(--ink-soft); padding-left: 12px; border-left: 2px solid var(--line); }
@@ -197,45 +198,12 @@ body.desktop-mode #view {
 .profile-card .plist { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 12.5px; color: var(--ink-soft); display: flex; flex-direction: column; gap: 6px; }
 .locked-note { font-size: 12px; color: var(--accent-2); margin-top: 8px; }
 
-/* ---------- Bubble app ---------- */
-.lock-app {
-  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
-  padding: 22px; box-shadow: var(--shadow); margin-top: 24px;
-}
-.lock-app .app-name { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
-.lock-app .app-sub { font-size: 12.5px; color: var(--ink-faint); margin-bottom: 16px; }
-.lock-app input {
-  width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px;
-  font-size: 13px; color: var(--ink); margin-bottom: 8px; background: var(--surface-2);
-  font-family: "JetBrains Mono", monospace;
-}
-.lock-app button {
-  width: 100%; background: var(--accent); color: var(--accent-ink); border: none; border-radius: 8px;
-  padding: 10px; text-align: center; font-size: 13px; font-weight: 700; margin-top: 6px; cursor: pointer;
-}
-.lock-app .lock-hint { font-size: 11.5px; color: var(--accent-2); margin-top: 10px; }
-.lock-app .lock-error { font-size: 11.5px; color: var(--danger); margin-top: 10px; }
-
-.bubble-tabs { display: flex; gap: 6px; margin-bottom: 12px; }
-.bubble-tabs button {
-  flex: 1; background: var(--surface-2); border: 1px solid var(--line); color: var(--ink-soft);
-  border-radius: 8px; padding: 8px; font-size: 12.5px; cursor: pointer;
-}
-.bubble-tabs button.active { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; }
-
+/* ---------- 私信对话（陪你走到最后）复用的气泡样式 ---------- */
 .bubble-thread { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
 .bubble-msg { max-width: 82%; border-radius: 14px; padding: 9px 13px; font-size: 13.5px; margin-bottom: 10px; }
 .bubble-msg.out { background: var(--surface-2); border: 1px solid var(--line); }
 .bubble-msg.priv { background: var(--accent-2-soft); border: 1px dashed var(--accent-2); }
 .bubble-msg .tag { display: block; font-family: "JetBrains Mono", monospace; font-size: 10px; opacity: .75; margin-bottom: 3px; }
-
-.link-pill {
-  display: inline-flex; align-items: center; gap: 4px;
-  color: var(--accent); text-decoration: none;
-  border-bottom: 1px dashed var(--accent);
-  font-family: "JetBrains Mono", monospace; font-size: 12.5px;
-  cursor: pointer;
-}
 
 .photo-overlay {
   position: fixed; inset: 0; z-index: 50;

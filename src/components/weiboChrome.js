@@ -71,11 +71,6 @@ export function renderRightbar() {
   aside.innerHTML = `
     <div class="wwidget">
       <h5>常用功能</h5>
-      <div class="witem" id="w-bubble">
-        <div class="wicon-box">🫧</div>
-        <div class="wtxt"><div class="t1">泡泡 · 偶像通讯</div><div class="t2">bubble.fan/login</div></div>
-        <span class="wbtn">打开</span>
-      </div>
       <div class="witem" id="w-reasoning">
         <div class="wicon-box">🧭</div>
         <div class="wtxt"><div class="t1">案件推理台</div><div class="t2">case.xingchao.fm</div></div>
@@ -93,7 +88,6 @@ export function renderRightbar() {
       星潮工作室 出品 · 本页面内容均为虚构
     </div>
   `;
-  aside.querySelector("#w-bubble").addEventListener("click", () => goTo("bubble"));
   aside.querySelector("#w-reasoning").addEventListener("click", () => goTo("reasoning"));
   aside.querySelector("#w-luyan").addEventListener("click", () => goTo("search"));
   aside.querySelector("#w-chenyu").addEventListener("click", () => goTo("search"));
