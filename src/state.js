@@ -1,17 +1,19 @@
 const STORAGE_KEY = "tafang-anjuan-save";
 
 export const CLUE_TOTAL = 34;
-// 私信里出现回复选项的最低门槛——不再要求集满 34/34。降到一个小数字
-// 是刻意的：玩家可以带着远不完整的信息就跑去回答，选错、或者选中
-// 但手上没有对应证据，都会实打实地降级成结局 D，这样"选哪句话"才是
-// 一个真正有风险的决定，而不是走完全部内容后的例行公事。
+// 私信里出现「结案」选项的最低门槛——不再要求集满 34/34。降到一个小
+// 数字是刻意的：玩家可以带着远不完整的信息就去指认凶手，选错人、或者
+// 选对了人但处理方式不当，都会得到不一样（通常更差）的结局，这样
+// "选谁、怎么处理"才是一个真正有风险的决定，不是走完全部内容后的
+// 例行公事。
 export const MIN_TO_TALK = 5;
 
 const defaultState = () => ({
   expandedReplies: [],
   foundProfiles: [],
   foundClues: [],
-  finalReply: null,
+  finalSuspect: null,
+  finalAction: null,
   finalEnding: null,
 });
 

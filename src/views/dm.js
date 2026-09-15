@@ -30,7 +30,6 @@ export function renderDm(root) {
 
   const found = state.foundClues.length;
   const ready = found >= MIN_TO_TALK;
-  const { conclusionChoices } = endings.reportOptions;
 
   const thread = document.createElement("div");
   thread.className = "bubble-thread";
@@ -51,12 +50,18 @@ export function renderDm(root) {
 
   thread.innerHTML = `
     <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你是不是也觉得这件事不对？</div>
-    <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>看你这几天查了不少东西。方便说说，你手上到底有什么，打算怎么处理吗？</div>
+    <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>看你这几天查了不少东西。你觉得，那晚真正该为这件事负责的人是谁？</div>
   `;
 
+  // 已经结案过了：直接展示当初选的两步，附一个查看结果的链接。
   if (state.finalEnding) {
-    const chosen = conclusionChoices.find((c) => c.id === state.finalReply);
-    thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${chosen ? chosen.text : ""}</div>`;
+    const suspect = endings.suspects.find((s) => s.id === state.finalSuspect);
+    const action = endings.actions.find((a) => a.id === state.finalAction);
+    thread.innerHTML += `
+      <div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${suspect ? suspect.label : ""}</div>
+      <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>那你打算怎么处理？</div>
+      <div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${action ? action.label : ""}</div>
+    `;
     const link = document.createElement("div");
     link.className = "reset-link";
     link.textContent = "查看结案结果 ›";
@@ -65,28 +70,49 @@ export function renderDm(root) {
     return;
   }
 
-  const optionsEl = document.createElement("div");
-  optionsEl.className = "reply-options";
-  conclusionChoices.forEach((opt) => {
-    const btn = document.createElement("button");
-    btn.textContent = opt.text;
-    btn.addEventListener("click", () => {
-      state.finalReply = opt.id;
-      state.finalEnding = computeEnding(opt.id);
-      save();
-      goTo("ending");
+  const stepEl = document.createElement("div");
+  stepEl.className = "reply-options";
+  panel.appendChild(stepEl);
+
+  renderSuspectStep();
+
+  function renderSuspectStep() {
+    stepEl.innerHTML = "";
+    endings.suspects.forEach((s) => {
+      const btn = document.createElement("button");
+      btn.textContent = s.label;
+      btn.addEventListener("click", () => {
+        state.finalSuspect = s.id;
+        save();
+        thread.innerHTML += `
+          <div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${s.label}</div>
+          <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>那你打算怎么处理？</div>
+        `;
+        renderActionStep();
+      });
+      stepEl.appendChild(btn);
     });
-    optionsEl.appendChild(btn);
-  });
-  panel.appendChild(optionsEl);
+  }
+
+  function renderActionStep() {
+    stepEl.innerHTML = "";
+    endings.actions.forEach((a) => {
+      const btn = document.createElement("button");
+      btn.textContent = a.label;
+      btn.addEventListener("click", () => {
+        state.finalAction = a.id;
+        state.finalEnding = computeEndingKey(state.finalSuspect, a.id);
+        save();
+        goTo("ending");
+      });
+      stepEl.appendChild(btn);
+    });
+  }
 }
 
-function computeEnding(replyId) {
-  if (replyId === "c_expose_su") return "D";
-  const hasHistory = state.foundClues.includes("c20") && state.foundClues.includes("c21");
-  const hasPressure = state.foundClues.includes("c03") && state.foundClues.includes("c05");
-  if (replyId === "c_company") return hasHistory ? "A" : "D";
-  if (replyId === "c_pressure") return hasPressure ? "B" : "D";
-  if (replyId === "c_protect") return "C";
-  return "D";
+function computeEndingKey(suspectId, actionId) {
+  if (suspectId === "unclear") return "unclear";
+  const suspect = endings.suspects.find((s) => s.id === suspectId);
+  const bucket = suspect?.correct ? "correct" : "wrong";
+  return `${bucket}_${actionId}`;
 }
