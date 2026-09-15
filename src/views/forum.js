@@ -1,4 +1,4 @@
-import { posts } from "../data.js";
+import { posts, avatarFor, resolveSrc } from "../data.js";
 import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
@@ -12,9 +12,26 @@ import { icon, verifiedBadge } from "../components/icons.js";
 // 不会混进纯水贴里，但代码也不会替玩家把线索挑出来单独列一份
 // "证据清单"，精华里一样是帖子和评论的原始形态。
 export const THREADS = {
-  yanxing: { name: "周晏星本人超话", stats: "892.4万 帖子 ｜ 2140万 粉丝", chip: "娱乐超话 No.1" },
-  linan: { name: "林安本人超话", stats: "215万 帖子 ｜ 640万 粉丝", chip: "娱乐超话 No.8" },
-  xinganlide: { name: "星安理得超话", stats: "430万 帖子 ｜ 158万 粉丝", chip: "CP超话 No.2" },
+  yanxing: {
+    name: "周晏星本人超话",
+    stats: "892.4万 帖子 ｜ 2140万 粉丝",
+    chip: "娱乐超话 No.1",
+    banner: "/images/banner-yanxing-supertopic.jpg",
+    avatar: "/images/avatar-yanxing-studio.jpg",
+  },
+  linan: {
+    name: "林安本人超话",
+    stats: "215万 帖子 ｜ 640万 粉丝",
+    chip: "娱乐超话 No.8",
+    banner: "/images/banner-linan-supertopic.jpg",
+    avatar: "/images/avatar-linan-official.jpg",
+  },
+  xinganlide: {
+    name: "星安理得超话",
+    stats: "430万 帖子 ｜ 158万 粉丝",
+    chip: "CP超话 No.2",
+    banner: "/images/banner-xingan-cp.jpg",
+  },
 };
 
 const TABS_CLICKABLE = ["最新", "精华"];
@@ -44,14 +61,14 @@ export function renderForum(root, { thread, tab } = {}) {
   layout.appendChild(main);
 
   main.innerHTML = `
-    <div class="wbanner">
+    <div class="wbanner" style="${info.banner ? `background:linear-gradient(0deg, rgba(20,14,18,.55), rgba(20,14,18,.15)), url(${resolveSrc(info.banner)}) center/cover;` : ""}">
       <div class="wbanner-top">
         <button class="wbanner-btn">${icon("pencil", { size: 13 })} 发帖</button>
         <button class="wbanner-btn primary">已关注</button>
         <button class="wbanner-btn">签到</button>
       </div>
       <div class="wbanner-id">
-        <div class="wbanner-avatar"></div>
+        <div class="wbanner-avatar" style="${info.avatar ? `background:url(${resolveSrc(info.avatar)}) center/cover;` : ""}"></div>
         <div class="wbanner-name">
           <div class="n">${info.name} <span class="badge">超话</span></div>
           <div class="stats">${info.stats}</div>
@@ -96,7 +113,7 @@ function postCard(p) {
   const threadName = THREADS[p.thread]?.name || "";
   card.innerHTML = `
     <div class="frow1">
-      <div class="favatar"></div>
+      <div class="favatar" style="background:${avatarFor(p)};"></div>
       <div>
         <div class="fname">${p.pinned ? '<span class="fpin">置顶</span>' : ""}${p.author}${p.verified ? `<span class="verified">${verifiedBadge({ size: 13 })}</span>` : ""}<span class="ffollow">＋关注</span></div>
         <div class="fmeta">${p.time} · 来自 iPhone客户端</div>

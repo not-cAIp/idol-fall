@@ -1,4 +1,4 @@
-import { findProfile, isBlockedQuery, posts, profiles } from "../data.js";
+import { findProfile, isBlockedQuery, posts, profiles, avatarFor, resolveSrc } from "../data.js";
 import { markProfileFound, markClueFound } from "../state.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { goTo } from "../router.js";
@@ -45,7 +45,7 @@ export function renderSearch(root, { profile: profileId } = {}) {
           <button class="wbanner-btn">•••</button>
         </div>
         <div class="wbanner-id" style="padding-top:60px;">
-          <div class="wbanner-avatar round"></div>
+          <div class="wbanner-avatar round" style="${profile.avatarImage ? `background:url(${resolveSrc(profile.avatarImage)}) center/cover;` : ""}"></div>
           <div class="wbanner-name">
             <div class="n">${profile.name}${profile.verified ? '<span class="badge">认证</span>' : ""}</div>
             <div class="stats mono">${profile.handle}</div>
@@ -109,7 +109,7 @@ function profilePostCard(p) {
   card.className = "wfeed-card";
   card.innerHTML = `
     <div class="frow1">
-      <div class="favatar"></div>
+      <div class="favatar" style="background:${avatarFor(p)};"></div>
       <div>
         <div class="fname">${p.author}${p.verified ? `<span class="verified">${verifiedBadge({ size: 13 })}</span>` : ""}${p.tag ? `<span class="ftag-status">${p.tag}</span>` : ""}</div>
         <div class="fmeta">${p.time ? `${p.time} · ` : ""}来自 iPhone客户端</div>

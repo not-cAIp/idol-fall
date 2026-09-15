@@ -342,7 +342,8 @@ body.desktop-mode #view {
 /* ---- 中间栏：横幅（超话 / 个人主页通用）---- */
 .wbanner {
   position: relative; border-radius: 8px; overflow: hidden; min-height: 210px;
-  background: linear-gradient(135deg, #3a2432, #1c1520); padding: 20px 24px 20px;
+  background: linear-gradient(135deg, #3a2432, #1c1520); background-size: cover; background-position: center;
+  padding: 20px 24px 20px;
   display: flex; flex-direction: column;
 }
 .wbanner .wbanner-top { display: flex; justify-content: flex-end; gap: 8px; }
@@ -354,7 +355,7 @@ body.desktop-mode #view {
 .wbanner-id { display: flex; align-items: flex-end; gap: 16px; margin-top: auto; padding-top: 90px; }
 .wbanner-avatar {
   width: 84px; height: 84px; border-radius: 14px; border: 3px solid #fff; flex: none;
-  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  background: linear-gradient(135deg, var(--accent-2), var(--accent)); background-size: cover; background-position: center;
 }
 .wbanner-avatar.round { border-radius: 50%; width: 76px; height: 76px; }
 .wbanner-name .n { display: flex; align-items: center; gap: 8px; color: #fff; font-size: 21px; font-weight: 900; }
@@ -385,7 +386,7 @@ body.desktop-mode #view {
 .wfeed-card .frow1 { display: flex; align-items: center; gap: 10px; }
 .wfeed-card .favatar {
   width: 44px; height: 44px; border-radius: 50%; flex: none;
-  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  background: linear-gradient(135deg, var(--accent-2), var(--accent)); background-size: cover; background-position: center;
 }
 .wfeed-card .fname { font-weight: 700; font-size: 15px; color: #222; }
 .wfeed-card .fname .verified { color: var(--ok); font-size: 12px; margin-left: 2px; }

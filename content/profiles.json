@@ -3,96 +3,153 @@
   "profiles": [
     {
       "id": "yanxing_official",
-      "searchKeywords": ["周晏星", "zhouyanxing", "daniel"],
+      "searchKeywords": [
+        "周晏星",
+        "zhouyanxing",
+        "daniel"
+      ],
       "name": "周晏星STUDIO",
       "handle": "@zhouyanxing_studio",
       "verified": true,
       "bio": "演员 / 歌手 周晏星 官方账号",
-      "stats": ["粉丝 2140万", "注册 5年"],
+      "stats": [
+        "粉丝 2140万",
+        "注册 5年"
+      ],
       "locked": false,
-      "discoveredVia": "开局默认可搜"
+      "discoveredVia": "开局默认可搜",
+      "avatarImage": "/images/avatar-yanxing-studio.jpg"
     },
     {
       "id": "galaxy_agency",
-      "searchKeywords": ["银河星途", "经纪公司", "galaxy_agency"],
+      "searchKeywords": [
+        "银河星途",
+        "经纪公司",
+        "galaxy_agency"
+      ],
       "name": "银河星途",
       "handle": "@galaxy_agency",
       "verified": true,
       "bio": "银河星途文化传媒 官方认证账号",
-      "stats": ["粉丝 860万"],
+      "stats": [
+        "粉丝 860万"
+      ],
       "locked": false,
-      "discoveredVia": "开局默认可搜"
+      "discoveredVia": "开局默认可搜",
+      "avatarImage": "/images/avatar-galaxy-agency.jpg"
     },
     {
       "id": "shenxi_sunflower",
-      "searchKeywords": ["晏星今天早点睡", "沈溪"],
+      "searchKeywords": [
+        "晏星今天早点睡",
+        "沈溪"
+      ],
       "name": "晏星今天早点睡",
       "handle": "@晏星今天早点睡",
       "verified": false,
       "bio": "陪他到出道第1827天。",
-      "stats": ["帖子 1204 条", "关注 3 人", "粉丝 8.9万（多为吃瓜关注）"],
+      "stats": [
+        "帖子 1204 条",
+        "关注 3 人",
+        "粉丝 8.9万（多为吃瓜关注）"
+      ],
       "locked": false,
       "discoveredVia": "act1 · p005 被 @ 后自己出面",
-      "devNote": "她的 11 条帖子（id 前缀 sx，见 posts.json）里有一条『有的人真的很喜欢拿结束的日子当纪念日』（sx07），是从苏昭主页四个候选日期（04-12/06-22/08-17/11-03）里排除出 06-22 的关键一环，要配合苏昭主页 sg03 的追加评论『你俩后来还联系吗』和周晏星超话 p020 旧采访『最不喜欢六月』一起看才成立——故意不点破是分手纪念日、也不出现任何数字，详见 shiguang_neko 的 devNote。属于解谜线索不计入正式的 34 条。她一共承担 7 条正式线索（c04,c05,c06,c17,c18,c23,c24）。"
+      "devNote": "她的 12 条帖子（id 前缀 sx，见 posts.json）里有一条『有的人真的很喜欢拿结束的日子当纪念日』（sx07），是从苏昭主页四个候选日期（04-12/06-22/08-17/11-03）里排除出 06-22 的关键一环，要配合苏昭主页 sg03 的追加评论『你俩后来还联系吗』和周晏星超话 p020 旧采访『最不喜欢六月』一起看才成立——故意不点破是分手纪念日、也不出现任何数字，详见 shiguang_neko 的 devNote。属于解谜线索不计入正式的 34 条。她一共承担 7 条正式线索（c04,c05,c06,c17,c18,c23,c24）。sx12 是另一条独立于正式线索之外的支线——她自己炫耀登进了周晏星的智能手环账号（zhouyx0721 / aurora2019），是 AURORA 站点那条 PT1 证据链的钥匙，见 aurora_official 的 devNote。",
+      "avatarImage": "/images/avatar-shenxi-sunflower.jpg"
     },
     {
       "id": "shiguang_neko",
-      "searchKeywords": ["拾光", "拾光の猫", "年糕不吃猫粮"],
+      "searchKeywords": [
+        "拾光",
+        "拾光の猫",
+        "年糕不吃猫粮"
+      ],
       "name": "拾光の猫",
       "handle": "@shiguang_neko",
       "verified": false,
       "bio": "AI 生成头像。简介只有一句：「年糕不吃猫粮」。",
-      "stats": ["帖子 12 条（2 条仅粉丝可见）", "关注 12 人"],
+      "stats": [
+        "帖子 12 条（2 条仅粉丝可见）",
+        "关注 12 人"
+      ],
       "locked": true,
       "lockedNote": "2 条帖子设了仅粉丝可见，缩略图仍可见。",
       "discoveredVia": "act3 · 从 p003『拾光』杯套 + p009『年糕』桥接词 拼出搜索词",
       "clueOnFound": "c07",
-      "devNote": "Bubble ID 的完整拼法（之前直接靠『年糕』推英文单词 ricecake 对玩家不公平，补了真实confirm）：①sg09——她自己被吐槽用户名幼稚时回怼『ricecake怎么了』，白纸黑字确认用户名里真的有英文单词 ricecake，评论区『后面那四位也不换』进一步确认结构是『ricecake + 一串四位数字』；②sg02——裁切截图显示用户名残缺片段『ricec••••12』，确认前缀拼法和末两位数字；③sg01『04-12』纪念帖 + 评论『你当年就是这天抽中的吧』，暗示 04/12 是个有意义的编号来源；④p019（泡泡老用户冷知识：内测那批编号前四位=第一次抽中日期）把 04-12 这个日期和『四位数字』对上号；⑤四条放在一起：ricecake + 04 + 12 = ricecake0412，玩家自己拼，游戏里任何一处都不会把完整 ID 写出来。\n\nPIN 的歧义设计：主页上一共有 4 个反复/明显被强调的日期，玩家要自己排除掉 3 个才能锁定正确答案——①04-12（Bubble 抽中日，已经被 Bubble ID 那条链占用，逻辑上不太可能重复用作 PIN，但游戏不会替玩家排除）；②06-22（sg03/sg04/sg05，语义模糊的『今天不养年糕』『第二年』『第三年』，唯一一条带来实质排除信息的是 sg03 的追加评论『你俩后来还联系吗』——『你俩』暗示这是两个人之间的事，不是宠物也不是抽奖）；③08-17（sg10，『年糕生日快乐』，明确是宠物生日，最容易被误当成 PIN 的干扰项）；④11-03（sg11/sg12，『又是这天啊』『还是老样子』，语义同样模糊，没有任何解释，纯粹的干扰项，不对应任何真实事件）。真正把 06-22 从这四个里挑出来的证据来自沈溪主页 sx07『有的人真的很喜欢拿结束的日子当纪念日』+ 周晏星超话 p020 旧采访『最不喜欢六月，发生过不太好的事』——两条放在一起，06-22 才被确认是『一段关系结束』的日子，而不是生日、中奖日或另一条不明纪念帖。游戏里任何地方都不会出现『密码』『PIN』或『分手纪念日是0622』这类直给的字眼。这一整条链不算正式线索，是解谜本身。"
+      "devNote": "Bubble ID 的完整拼法（之前直接靠『年糕』推英文单词 ricecake 对玩家不公平，补了真实confirm）：①sg09——她自己被吐槽用户名幼稚时回怼『ricecake怎么了』，白纸黑字确认用户名里真的有英文单词 ricecake，评论区『后面那四位也不换』进一步确认结构是『ricecake + 一串四位数字』；②sg02——裁切截图显示用户名残缺片段『ricec••••12』，确认前缀拼法和末两位数字；③sg01『04-12』纪念帖 + 评论『你当年就是这天抽中的吧』，暗示 04/12 是个有意义的编号来源；④p019（泡泡老用户冷知识：内测那批编号前四位=第一次抽中日期）把 04-12 这个日期和『四位数字』对上号；⑤四条放在一起：ricecake + 04 + 12 = ricecake0412，玩家自己拼，游戏里任何一处都不会把完整 ID 写出来。\n\nPIN 的歧义设计：主页上一共有 4 个反复/明显被强调的日期，玩家要自己排除掉 3 个才能锁定正确答案——①04-12（Bubble 抽中日，已经被 Bubble ID 那条链占用，逻辑上不太可能重复用作 PIN，但游戏不会替玩家排除）；②06-22（sg03/sg04/sg05，语义模糊的『今天不养年糕』『第二年』『第三年』，唯一一条带来实质排除信息的是 sg03 的追加评论『你俩后来还联系吗』——『你俩』暗示这是两个人之间的事，不是宠物也不是抽奖）；③08-17（sg10，『年糕生日快乐』，明确是宠物生日，最容易被误当成 PIN 的干扰项）；④11-03（sg11/sg12，『又是这天啊』『还是老样子』，语义同样模糊，没有任何解释，纯粹的干扰项，不对应任何真实事件）。真正把 06-22 从这四个里挑出来的证据来自沈溪主页 sx07『有的人真的很喜欢拿结束的日子当纪念日』+ 周晏星超话 p020 旧采访『最不喜欢六月，发生过不太好的事』——两条放在一起，06-22 才被确认是『一段关系结束』的日子，而不是生日、中奖日或另一条不明纪念帖。游戏里任何地方都不会出现『密码』『PIN』或『分手纪念日是0622』这类直给的字眼。这一整条链不算正式线索，是解谜本身。",
+      "avatarImage": "/images/avatar-shiguang-cat.jpg"
     },
     {
       "id": "luyan_zy",
-      "searchKeywords": ["林安", "星安理得"],
+      "searchKeywords": [
+        "林安",
+        "星安理得"
+      ],
       "name": "林安",
       "handle": "@linan_ryan",
       "verified": true,
       "bio": "同组合成员。主页内容清一色是官方通告转发，没有任何私人表达。",
-      "stats": ["粉丝 640万"],
+      "stats": [
+        "粉丝 640万"
+      ],
       "locked": false,
       "discoveredVia": "act1 · p006 CP 话题楼层",
-      "devNote": "撤回记录本身不显示原图/文字内容，只显示『该帖已撤回』与撤回时间——这是唯一能确认他事后删过东西的证据。"
+      "devNote": "撤回记录本身不显示原图/文字内容，只显示『该帖已撤回』与撤回时间——这是唯一能确认他事后删过东西的证据。",
+      "avatarImage": "/images/avatar-linan-official.jpg"
     },
     {
       "id": "chenyu_public",
-      "searchKeywords": ["陈屿"],
+      "searchKeywords": [
+        "陈屿"
+      ],
       "name": "陈屿",
       "handle": "@chenyu_official",
       "verified": false,
       "bio": "周晏星工作室 经纪人。账号内容干净，全部是工作向转发，几乎不发表个人意见。",
-      "stats": ["粉丝 4.2万"],
+      "stats": [
+        "粉丝 4.2万"
+      ],
       "locked": false,
       "discoveredVia": "act8 · p018 评论链里被提及『陈屿的备忘录』",
-      "devNote": "这个干净的公开号本身没有线索，唯一作用是被搜到、确认『陈屿』这个人存在——下一步搜索词『陈屿的备忘录』来自 p018 的真实评论链，不再靠旁白提示。"
+      "devNote": "这个干净的公开号本身没有线索，唯一作用是被搜到、确认『陈屿』这个人存在——下一步搜索词『陈屿的备忘录』来自 p018 的真实评论链，不再靠旁白提示。",
+      "avatarImage": "/images/avatar-chenyu-manager.jpg"
     },
     {
       "id": "aurora_official",
-      "searchKeywords": ["运动手环", "极光手环", "极光运动", "aurora", "AURORA"],
+      "searchKeywords": [
+        "运动手环",
+        "极光手环",
+        "极光运动",
+        "aurora",
+        "AURORA"
+      ],
       "name": "极光运动AURORA",
       "handle": "@aurora_fit",
       "verified": true,
       "bio": "智能穿戴设备品牌官方账号 | 极光手环三代火热发售中",
-      "stats": ["粉丝 210万"],
+      "stats": [
+        "粉丝 210万"
+      ],
       "locked": false,
       "discoveredVia": "搜『运动手环』直接可搜到，跟艺人无关的正常品牌号",
-      "devNote": "au01 的官网链接是这条 PT1 支线唯一的入口——真正的手环同步数据不再直接写在微博里，藏在官网登录后的设备后台，见 p027（私生泄露的登录截图，账号 zhouyx0721 / 密码 aurora2019）。这条链不算正式线索，属于解谜过程。"
+      "devNote": "au01 的官网链接是这条 PT1 支线唯一的入口——真正的手环同步数据不再直接写在微博里，藏在官网登录后的设备后台，见沈溪主页 sx12（她自己炫耀登进了这个账号，配图顶部能看到账号名 zhouyx0721，密码 aurora2019 是她自己在评论区回复出来的）。这条链不算正式线索，属于解谜过程。",
+      "avatarImage": "/images/avatar-aurora-brand.jpg"
     },
     {
       "id": "chenyu_memo",
-      "searchKeywords": ["陈屿的备忘录", "cy_notes"],
+      "searchKeywords": [
+        "陈屿的备忘录",
+        "cy_notes"
+      ],
       "name": "陈屿的备忘录",
       "handle": "@cy_notes（私人小号）",
       "verified": false,
       "bio": "陈屿的个人小号，平时用来记工作琐事，粉丝极少，几乎无人关注。",
-      "stats": ["帖子 340 条（多为私密日记体）", "粉丝 6 人"],
+      "stats": [
+        "帖子 340 条（多为私密日记体）",
+        "粉丝 6 人"
+      ],
       "locked": true,
       "lockedNote": "大部分内容不可见，唯一泄露出来的是几条被朋友截图转发的记录。",
       "discoveredVia": "act8 · 从 p018 顺藤摸瓜挖到这个小号",

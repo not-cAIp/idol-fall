@@ -1,9 +1,5 @@
 import { icon } from "./icons.js";
-
-function resolveSrc(src) {
-  if (/^(https?:)?\/\//.test(src)) return src;
-  return import.meta.env.BASE_URL + src.replace(/^\//, "");
-}
+import { resolveSrc } from "../data.js";
 
 function photoInnerHtml({ src, imagePrompt }) {
   if (src) {

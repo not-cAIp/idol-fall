@@ -143,7 +143,8 @@
           "meta": "12 赞"
         }
       ],
-      "section": "hot"
+      "section": "hot",
+      "image": "/images/p003-shiguang-cup.jpg"
     },
     {
       "id": "p004",
@@ -1421,7 +1422,8 @@
           "text": "杭州场我抢到票了！！",
           "meta": "1600 赞"
         }
-      ]
+      ],
+      "image": "/images/yx01-tour-poster.jpg"
     },
     {
       "id": "ga01",
@@ -1447,7 +1449,8 @@
           "text": "公司这个营业力度是真的会做生意",
           "meta": "1200 赞"
         }
-      ]
+      ],
+      "image": "/images/ga01-cp-merch.jpg"
     },
     {
       "id": "sx01",
@@ -1477,7 +1480,8 @@
           "text": "姐一直很用心，辛苦了",
           "meta": "210 赞"
         }
-      ]
+      ],
+      "image": "/images/sx01-tracking-timeline.jpg"
     },
     {
       "id": "sx02",
@@ -1558,7 +1562,8 @@
           "text": "习惯了，我从来不太在意这个",
           "meta": "45 赞"
         }
-      ]
+      ],
+      "image": "/images/sx04-b3-garage.jpg"
     },
     {
       "id": "sx05",
@@ -1707,7 +1712,8 @@
           "text": "这个点了还亮着灯，是不是没休息",
           "meta": "210 赞"
         }
-      ]
+      ],
+      "image": "/images/sx10-lit-window.jpg"
     },
     {
       "id": "sx11",
@@ -1780,7 +1786,8 @@
           "text": "新头像换得好看",
           "meta": "4 赞"
         }
-      ]
+      ],
+      "image": "/images/sg02-cropped-profile.jpg"
     },
     {
       "id": "sg03",
@@ -1854,7 +1861,8 @@
       "reposts": "0",
       "imagePrompt": "写实摄影风格，深夜从室内隔着窗户拍摄的城市夜景。近景是窗台一角和半拉开的薄纱窗帘，远处能看到几栋写字楼轮廓和一小片正在施工的脚手架。冷色调，以深蓝、墨黑为主，几处路灯与窗户透出暖黄色光点缀。构图略微倾斜，像是随手举手机拍的，画面右下角有一点反光。",
       "imageCaption": "仅粉丝可见 · 09-13 21:02",
-      "replies": []
+      "replies": [],
+      "image": "/images/sg06-night-window.jpg"
     },
     {
       "id": "sg07",
@@ -1870,7 +1878,8 @@
       "reposts": "0",
       "imagePrompt": "写实摄影风格，雨天街拍，隔着咖啡店玻璃窗向外拍摄的湿漉漉街道。玻璃上有细密雨珠和轻微雾气，街对面是一家亮着灯的小店，招牌字迹被雨水模糊到无法辨认，路面反射着路灯与车灯的光斑。整体色调阴冷潮湿，构图随意，带点忧郁的电影感。",
       "imageCaption": "仅粉丝可见 · 无配文",
-      "replies": []
+      "replies": [],
+      "image": "/images/sg07-rainy-cafe.jpg"
     },
     {
       "id": "sg08",
@@ -1888,7 +1897,8 @@
       ],
       "imagePrompt": "写实摄影风格，便利店小票特写，随手放在桌面上拍摄。小票上印着时间戳和店铺名称局部可见『徐汇...店』字样，其余文字模糊不可辨认，背景是便利店常见的塑料袋和随手放的饮料瓶，色温偏冷、便利店日光灯质感，业余手机随拍构图。",
       "imageCaption": "配图：一张便利店小票，隐约可见『徐汇』字样",
-      "replies": []
+      "replies": [],
+      "image": "/images/sg08-xuhui-receipt.jpg"
     },
     {
       "id": "sg09",
@@ -2186,7 +2196,8 @@
           "text": "这条要是被看到不得爆炸",
           "meta": "3 赞"
         }
-      ]
+      ],
+      "image": "/images/cm03-private-note.jpg"
     },
     {
       "id": "cm04",
@@ -2296,7 +2307,8 @@
           "meta": "560 赞"
         }
       ],
-      "section": "hot"
+      "section": "hot",
+      "image": "/images/p025-echo-account.jpg"
     },
     {
       "id": "p026",
@@ -2355,44 +2367,8 @@
           "text": "没事了，折腾了一晚上",
           "meta": "5 赞"
         }
-      ]
-    },
-    {
-      "id": "p027",
-      "thread": "yanxing",
-      "pinned": false,
-      "author": "科技考古组",
-      "handle": "@科技考古组",
-      "verified": false,
-      "time": "06-10 22:40",
-      "text": "翻到一张三个月前的截图，当时有个私生说自己蹭进了工作室给艺人配的智能手环账号后台，还截图炫耀，现在回头看着有点不寒而栗——不知道后来改密码了没。",
-      "likes": "4100",
-      "reposts": "980",
-      "imagePrompt": "写实摄影风格，手机截图，智能手环App的账号登录/设备管理页面，浅色界面。屏幕上能看到一个用户名输入框，里面填着「zhouyx0721」，密码输入框是黑色圆点，但输入框正下方有一行小字手写体风格的备注「aurora2019」——像是当时截图的人自己手写标注方便记住。界面右上角是常见的心率图标和一个已连接设备的缩略图，整体是业余手机截图转发多次的画质，带明显压缩噪点。",
-      "imageCaption": "截图里账号一栏填着「zhouyx0721」，密码框下方有行小字手写备注「aurora2019」",
-      "replies": [
-        {
-          "author": "想看数据的路人",
-          "text": "账号发一下呗，我也想看看",
-          "meta": "980 赞"
-        },
-        {
-          "author": "理智吧唯粉",
-          "text": "别问了，这已经是侵犯别人隐私了，别再传这种东西了",
-          "meta": "2200 赞"
-        },
-        {
-          "author": "反私生联盟",
-          "text": "已举报，这种行为真的很可怕，希望平台严查",
-          "meta": "1600 赞"
-        },
-        {
-          "author": "路人观察员",
-          "text": "楼上说得对，看看就行别当瓜吃",
-          "meta": "890 赞"
-        }
       ],
-      "section": "hot"
+      "image": "/images/sg14-vet-record.jpg"
     },
     {
       "id": "au01",
@@ -2481,6 +2457,47 @@
         }
       ],
       "section": "hot"
+    },
+    {
+      "id": "sx12",
+      "profile": "shenxi_sunflower",
+      "pinned": false,
+      "author": "晏星今天早点睡",
+      "handle": "@晏星今天早点睡",
+      "verified": false,
+      "time": "06-10 22:40",
+      "text": "无聊试了试，居然真的登进去了他的手环账号，主页顶上就写着账号名，这种感觉真的很奇妙。",
+      "likes": "410",
+      "reposts": "60",
+      "image": "/images/p027-aurora-login.jpg",
+      "imageCaption": "账号页面截图，顶部能看到登录的账号名",
+      "replies": [
+        {
+          "author": "只看周晏星",
+          "text": "啊？？这是真的假的",
+          "meta": "890 赞"
+        },
+        {
+          "author": "想看数据的路人",
+          "text": "密码呢，能给一下吗",
+          "meta": "620 赞"
+        },
+        {
+          "author": "晏星今天早点睡",
+          "text": "aurora2019，不谢",
+          "meta": "340 赞"
+        },
+        {
+          "author": "理智吧唯粉",
+          "text": "求你们别学，这已经是违法边缘了",
+          "meta": "2200 赞"
+        },
+        {
+          "author": "反私生联盟",
+          "text": "已经举报，希望平台重视",
+          "meta": "1600 赞"
+        }
+      ]
     }
   ]
 }

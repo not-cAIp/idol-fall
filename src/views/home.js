@@ -1,4 +1,4 @@
-import { posts } from "../data.js";
+import { posts, avatarFor } from "../data.js";
 import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav } from "../components/weiboChrome.js";
@@ -115,7 +115,7 @@ function memeCard(m) {
   card.style.cursor = "default";
   card.innerHTML = `
     <div class="frow1">
-      <div class="favatar"></div>
+      <div class="favatar" style="background:${avatarFor({ author: m.author, handle: m.handle })};"></div>
       <div>
         <div class="fname">${m.author}<span class="ffollow">＋关注</span></div>
         <div class="fmeta">${m.time} · 来自 微博 weibo.com</div>
@@ -137,7 +137,7 @@ function trendingCard(p) {
   const threadName = THREADS[p.thread]?.name || "";
   card.innerHTML = `
     <div class="frow1">
-      <div class="favatar"></div>
+      <div class="favatar" style="background:${avatarFor(p)};"></div>
       <div>
         <div class="fname">${p.author}${p.verified ? `<span class="verified">${verifiedBadge({ size: 13 })}</span>` : ""}<span class="ffollow">＋关注</span></div>
         <div class="fmeta">${p.time} · 来自 iPhone客户端</div>
