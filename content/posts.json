@@ -44,6 +44,11 @@
           "author": "小周今天营业了吗",
           "text": "不接受只有『意外』两个字，我们要真相",
           "meta": "5200 赞"
+        },
+        {
+          "author": "科技区吃瓜怪",
+          "text": "不是，这个会不会跟之前那次运动手环账号泄露有点像啊……有没有懂数码的姐妹去看看",
+          "meta": "3400 赞"
         }
       ],
       "section": "hot"
@@ -2232,41 +2237,6 @@
       ]
     },
     {
-      "id": "p023",
-      "thread": "yanxing",
-      "pinned": false,
-      "author": "深夜爆料站",
-      "handle": "@深夜爆料站",
-      "verified": false,
-      "time": "09-14 18:05",
-      "text": "拿到一张流出的智能手环健康数据同步截图，托人核对过时间戳没有被动过手脚：\n<b>23:47｜心率同步成功｜状态：活动中</b>\n<b>23:52｜同步中断</b>\n如果这个是真的，官方说的『约23:20发生意外』根本立不住——23:47人还活着。",
-      "likes": "9.7万",
-      "reposts": "5.8万",
-      "clueOnOpen": [
-        "c35"
-      ],
-      "imagePrompt": "写实摄影风格，手机健康类App的心率同步记录截图，深色模式。屏幕上是一条简单的时间轴日志，两行高亮条目分别标注23:47和23:52，中间夹着普通的心率波形缩略图，界面是常见智能手环App的默认样式，无品牌logo，屏幕有轻微反光和转发水印痕迹。",
-      "imageCaption": "流出的手环数据同步记录截图",
-      "replies": [
-        {
-          "author": "只看周晏星",
-          "text": "如果是真的，这个时间差太致命了",
-          "meta": "4200 赞"
-        },
-        {
-          "author": "理智吧唯粉",
-          "text": "求验真，别是p的",
-          "meta": "1600 赞"
-        },
-        {
-          "author": "深夜爆料站",
-          "text": "我这边核实了三个独立信源，暂时看不出p痕迹",
-          "meta": "3300 赞"
-        }
-      ],
-      "section": "hot"
-    },
-    {
       "id": "p024",
       "thread": "yanxing",
       "pinned": false,
@@ -2384,6 +2354,94 @@
           "author": "拾光の猫",
           "text": "没事了，折腾了一晚上",
           "meta": "5 赞"
+        }
+      ]
+    },
+    {
+      "id": "p027",
+      "thread": "yanxing",
+      "pinned": false,
+      "author": "科技考古组",
+      "handle": "@科技考古组",
+      "verified": false,
+      "time": "06-10 22:40",
+      "text": "翻到一张三个月前的截图，当时有个私生说自己蹭进了工作室给艺人配的智能手环账号后台，还截图炫耀，现在回头看着有点不寒而栗——不知道后来改密码了没。",
+      "likes": "4100",
+      "reposts": "980",
+      "imagePrompt": "写实摄影风格，手机截图，智能手环App的账号登录/设备管理页面，浅色界面。屏幕上能看到一个用户名输入框，里面填着「zhouyx0721」，密码输入框是黑色圆点，但输入框正下方有一行小字手写体风格的备注「aurora2019」——像是当时截图的人自己手写标注方便记住。界面右上角是常见的心率图标和一个已连接设备的缩略图，整体是业余手机截图转发多次的画质，带明显压缩噪点。",
+      "imageCaption": "截图里账号一栏填着「zhouyx0721」，密码框下方有行小字手写备注「aurora2019」",
+      "replies": [
+        {
+          "author": "想看数据的路人",
+          "text": "账号发一下呗，我也想看看",
+          "meta": "980 赞"
+        },
+        {
+          "author": "理智吧唯粉",
+          "text": "别问了，这已经是侵犯别人隐私了，别再传这种东西了",
+          "meta": "2200 赞"
+        },
+        {
+          "author": "反私生联盟",
+          "text": "已举报，这种行为真的很可怕，希望平台严查",
+          "meta": "1600 赞"
+        },
+        {
+          "author": "路人观察员",
+          "text": "楼上说得对，看看就行别当瓜吃",
+          "meta": "890 赞"
+        }
+      ],
+      "section": "hot"
+    },
+    {
+      "id": "au01",
+      "profile": "aurora_official",
+      "pinned": true,
+      "author": "极光运动AURORA",
+      "handle": "@aurora_fit",
+      "verified": true,
+      "time": "03-01 10:00",
+      "text": "极光手环三代正式发售，7×24小时心率与睡眠监测，续航14天。更多产品信息和售后支持请见官网：<a href=\"https://saraliuxt-coder.github.io/aurora-fit/\" target=\"_blank\" rel=\"noopener\">官网</a>",
+      "likes": "3200",
+      "reposts": "540",
+      "replies": [
+        {
+          "author": "数码测评小张",
+          "text": "续航这次终于给力了",
+          "meta": "410 赞"
+        }
+      ]
+    },
+    {
+      "id": "au02",
+      "profile": "aurora_official",
+      "pinned": false,
+      "author": "极光运动AURORA",
+      "handle": "@aurora_fit",
+      "verified": true,
+      "time": "05-20 09:30",
+      "text": "618预热：即日起绑定新设备可享专属折扣，戴上极光，记录每一次心跳。",
+      "likes": "1800",
+      "reposts": "320",
+      "replies": []
+    },
+    {
+      "id": "au03",
+      "profile": "aurora_official",
+      "pinned": false,
+      "author": "极光运动AURORA",
+      "handle": "@aurora_fit",
+      "verified": true,
+      "time": "07-15 14:00",
+      "text": "新配色「暮霭灰」上线，官方商城和各大平台旗舰店同步发售。",
+      "likes": "960",
+      "reposts": "150",
+      "replies": [
+        {
+          "author": "颜控购买力",
+          "text": "这个灰色好看，下单了",
+          "meta": "230 赞"
         }
       ]
     }

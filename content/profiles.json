@@ -74,6 +74,18 @@
       "devNote": "这个干净的公开号本身没有线索，唯一作用是被搜到、确认『陈屿』这个人存在——下一步搜索词『陈屿的备忘录』来自 p018 的真实评论链，不再靠旁白提示。"
     },
     {
+      "id": "aurora_official",
+      "searchKeywords": ["运动手环", "极光手环", "极光运动", "aurora", "AURORA"],
+      "name": "极光运动AURORA",
+      "handle": "@aurora_fit",
+      "verified": true,
+      "bio": "智能穿戴设备品牌官方账号 | 极光手环三代火热发售中",
+      "stats": ["粉丝 210万"],
+      "locked": false,
+      "discoveredVia": "搜『运动手环』直接可搜到，跟艺人无关的正常品牌号",
+      "devNote": "au01 的官网链接是这条 PT1 支线唯一的入口——真正的手环同步数据不再直接写在微博里，藏在官网登录后的设备后台，见 p027（私生泄露的登录截图，账号 zhouyx0721 / 密码 aurora2019）。这条链不算正式线索，属于解谜过程。"
+    },
+    {
       "id": "chenyu_memo",
       "searchKeywords": ["陈屿的备忘录", "cy_notes"],
       "name": "陈屿的备忘录",
