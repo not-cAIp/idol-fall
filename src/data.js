@@ -1,10 +1,9 @@
 import posts from "../content/posts.json";
 import profiles from "../content/profiles.json";
-import bubble from "../content/bubble.json";
 import clues from "../content/clues.json";
 import endings from "../content/endings.json";
 
-export { posts, profiles, bubble, clues, endings };
+export { posts, profiles, clues, endings };
 
 export function findProfile(query) {
   const q = query.trim().toLowerCase();
@@ -18,6 +17,10 @@ export function findProfile(query) {
     ) ||
     null
   );
+}
+
+export function postById(id) {
+  return posts.posts.find((p) => p.id === id);
 }
 
 export function isBlockedQuery(query) {

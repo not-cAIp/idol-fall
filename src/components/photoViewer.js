@@ -1,3 +1,5 @@
+import { icon } from "./icons.js";
+
 function resolveSrc(src) {
   if (/^(https?:)?\/\//.test(src)) return src;
   return import.meta.env.BASE_URL + src.replace(/^\//, "");
@@ -9,7 +11,7 @@ function photoInnerHtml({ src, imagePrompt }) {
   }
   return `
     <div class="photo-placeholder">
-      <div class="ph-icon">🖼</div>
+      <div class="ph-icon">${icon("image", { size: 22 })}</div>
       <p class="ph-prompt">${imagePrompt || "（暂无图片描述）"}</p>
       <span class="ph-tag">AI 生成图片 · 待补充</span>
     </div>
@@ -31,7 +33,7 @@ export function openPhotoViewer({ src, imagePrompt, caption }) {
     <div class="photo-panel">
       <div class="photo-panel-head">
         <span class="vh-title">证据照片</span>
-        <button class="icon-btn" id="photo-close">✕</button>
+        <button class="icon-btn" id="photo-close">${icon("close", { size: 16 })}</button>
       </div>
       <div class="photo-frame">${photoInnerHtml({ src, imagePrompt })}</div>
       ${caption ? `<p class="photo-caption">${caption}</p>` : ""}

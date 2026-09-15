@@ -1,107 +1,122 @@
-import { posts, clues } from "../data.js";
-import { state, save, markClueFound, computeAct } from "../state.js";
+import { posts } from "../data.js";
+import { isUnlocked } from "../state.js";
 import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
+import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
+import { icon, verifiedBadge } from "../components/icons.js";
+
+const TABS_CLICKABLE = ["最新", "精华"];
+const TABS_STATIC = ["安利帖", "图文产出", "绝美舞台", "水贴专区"];
+const TABS = [...TABS_CLICKABLE, ...TABS_STATIC];
+const FEED_CAP = 10;
+let activeTab = "最新";
+
+function postsForTab(tab) {
+  if (tab === "精华") {
+    return posts.posts
+      .filter((p) => (!p.section || p.section === "essence") && isUnlocked(p.requires))
+      .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || a.time.localeCompare(b.time));
+  }
+  // 最新：纯水贴池，不含线索
+  return posts.posts
+    .filter((p) => p.section === "flavor")
+    .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || b.time.localeCompare(a.time));
+}
 
 export function renderForum(root) {
-  draw(root);
-}
+  root.className = "weibo-scope";
 
-function redraw(root) {
-  const scrollTop = root.scrollTop;
-  root.innerHTML = "";
-  draw(root);
-  root.scrollTop = scrollTop;
-}
+  renderTopNav(root);
 
-function draw(root) {
-  const act = computeAct(state);
-  const visible = posts.posts
-    .filter((p) => p.act <= act)
-    .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || a.time.localeCompare(b.time));
+  const layout = document.createElement("div");
+  layout.className = "wlayout no-leftnav";
+  root.appendChild(layout);
 
-  visible.forEach((p) => {
-    if (p.id === "p001") {
-      markClueFound("t02");
-      markClueFound("t05");
-    }
-    if (p.id === "p010") markClueFound("t06");
+  const main = document.createElement("main");
+  layout.appendChild(main);
+
+  main.innerHTML = `
+    <div class="wbanner">
+      <div class="wbanner-top">
+        <button class="wbanner-btn">${icon("pencil", { size: 13 })} 发帖</button>
+        <button class="wbanner-btn primary">已关注</button>
+        <button class="wbanner-btn">签到</button>
+      </div>
+      <div class="wbanner-id">
+        <div class="wbanner-avatar"></div>
+        <div class="wbanner-name">
+          <div class="n">周晏星本人超话 <span class="badge">超话</span></div>
+          <div class="stats">11.2万 帖子 ｜ 89.4万 粉丝</div>
+        </div>
+      </div>
+      <div class="wbanner-chips"><span>娱乐超话 No.3</span><span>今日发帖 8400</span></div>
+    </div>
+    <div class="wtabs">${TABS.map(
+      (t) => `<span data-tab="${t}" class="${t === activeTab ? "active" : ""}${TABS_CLICKABLE.includes(t) ? "" : " static"}">${t}</span>`
+    ).join("")}</div>
+    <div class="wfeed" id="wfeed"></div>
+  `;
+
+  const tabEls = main.querySelectorAll(".wtabs span");
+  const feed = main.querySelector("#wfeed");
+
+  tabEls.forEach((el) => {
+    if (!TABS_CLICKABLE.includes(el.dataset.tab)) return;
+    el.addEventListener("click", () => {
+      activeTab = el.dataset.tab;
+      tabEls.forEach((t) => t.classList.toggle("active", t.dataset.tab === activeTab));
+      renderFeed();
+    });
   });
 
-  const totalHints = clues.timeline.length;
-  const foundHints = state.foundClues.length;
+  function renderFeed() {
+    feed.innerHTML = "";
+    const all = postsForTab(activeTab);
+    all.slice(0, FEED_CAP).forEach((p) => feed.appendChild(postCard(p)));
+    if (!feed.children.length) {
+      feed.innerHTML = `<div class="wfeed-card" style="cursor:default;color:var(--ink-faint);text-align:center;">这里还没有内容</div>`;
+      return;
+    }
+    if (all.length > FEED_CAP) {
+      const more = document.createElement("div");
+      more.className = "wfeed-more";
+      more.textContent = "更多帖子已被折叠";
+      feed.appendChild(more);
+    }
+  }
 
-  const header = document.createElement("header");
-  header.className = "view-header";
-  header.innerHTML = `
-    <div class="vh-left"><span class="brand">星潮</span></div>
-    <div class="vh-actions">
-      ${foundHints > 0 ? `<button class="icon-btn" id="btn-reasoning" title="推理">🧭</button>` : ""}
-      ${state.bubbleDiscovered ? `<button class="icon-btn" id="btn-bubble" title="泡泡">🫧</button>` : ""}
-      <button class="icon-btn" id="btn-search" title="搜索">🔍</button>
+  renderFeed();
+  layout.appendChild(renderRightbar());
+}
+
+function postCard(p) {
+  const card = document.createElement("article");
+  card.className = "wfeed-card";
+  card.innerHTML = `
+    <div class="frow1">
+      <div class="favatar"></div>
+      <div>
+        <div class="fname">${p.pinned ? '<span class="fpin">置顶</span>' : ""}${p.author}${p.verified ? `<span class="verified">${verifiedBadge({ size: 13 })}</span>` : ""}<span class="ffollow">＋关注</span></div>
+        <div class="fmeta">${p.time} · 来自 iPhone客户端</div>
+      </div>
+    </div>
+    <span class="ftag"># 周晏星本人超话 #</span>
+    <div class="fbody">${p.text}</div>
+    <div class="fthumb-slot"></div>
+    <div class="factions">
+      <span>${icon("repost", { size: 14 })} ${p.reposts || 0}</span>
+      <span>${icon("chat", { size: 14 })} ${p.replies?.length || 0}</span>
+      <span>${icon("like", { size: 14 })} ${p.likes || 0}</span>
     </div>
   `;
-  root.appendChild(header);
-  header.querySelector("#btn-search").addEventListener("click", () => goTo("search"));
-  header.querySelector("#btn-bubble")?.addEventListener("click", () => goTo("bubble"));
-  header.querySelector("#btn-reasoning")?.addEventListener("click", () => goTo("reasoning"));
-
-  const body = document.createElement("div");
-  body.className = "view-body";
-  body.innerHTML = `<p class="intro">晏星本人超话 · 已发现线索 ${foundHints} / ${totalHints}</p>`;
-
-  visible.forEach((p) => {
-    const el = document.createElement("article");
-    el.className = "post" + (p.pinned ? " pinned" : "");
-    el.innerHTML = `
-      <div class="topline">
-        <div>
-          <span class="uname">${p.author}${p.verified ? '<span class="verified">✓ 已认证</span>' : ""}</span>
-          <div class="handle">${p.handle}</div>
-        </div>
-        <div class="time mono">${p.time}</div>
-      </div>
-      <div class="text">${p.text}</div>
-      <div class="flags">${(p.flags || []).map((f) => `<span class="flag${f.includes("官方") ? " official" : f.includes("存疑") || f.includes("未证实") || f.includes("修改") ? " warn" : ""}">${f}</span>`).join("")}</div>
-      <div class="replies"></div>
-    `;
-    if (p.image || p.imagePrompt) {
-      el.querySelector(".flags").after(
-        createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption })
-      );
-    }
-    const repliesEl = el.querySelector(".replies");
-    (p.replies || []).forEach((r, idx) => {
-      const key = `${p.id}-${idx}`;
-      const revealed = state.expandedReplies.includes(key);
-      const rEl = document.createElement("div");
-      rEl.className = "reply" + (r.buried ? " buried" : "") + (revealed ? " revealed" : "");
-
-      const bodyHtml = r.linkTo
-        ? `<span class="text">${r.text} <a class="link-pill" data-link="${r.linkTo}">${r.linkLabel}</a></span>`
-        : `<span class="text">${r.text}</span>`;
-      rEl.innerHTML = `<b>${r.author}</b>：${bodyHtml}<div class="meta">${r.meta || ""}</div>`;
-
-      if (r.buried && !revealed) {
-        rEl.addEventListener("click", () => {
-          state.expandedReplies.push(key);
-          save();
-          if (p.id === "p006" && idx === 1) markClueFound("t01");
-          redraw(root);
-        });
-      }
-      if (r.linkTo) {
-        rEl.querySelector(".link-pill").addEventListener("click", (e) => {
-          e.stopPropagation();
-          state.bubbleDiscovered = true;
-          save();
-          goTo(r.linkTo);
-        });
-      }
-      repliesEl.appendChild(rEl);
-    });
-    body.appendChild(el);
-  });
-
-  root.appendChild(body);
+  if (p.image || p.imagePrompt) {
+    const slot = card.querySelector(".fthumb-slot");
+    slot.className = "fthumb";
+    const thumb = createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption });
+    thumb.addEventListener("click", (e) => e.stopPropagation());
+    slot.appendChild(thumb);
+  }
+  card.querySelectorAll(".fbody a").forEach((a) => a.addEventListener("click", (e) => e.stopPropagation()));
+  card.addEventListener("click", () => goTo("postDetail", { id: p.id }));
+  return card;
 }
