@@ -52,7 +52,8 @@ export function renderSearch(root) {
     if (profile.clueOnFound) markClueFound(profile.clueOnFound);
 
     const visibleBlocks = (profile.blocks || []).filter((b) => isUnlocked(b.requires));
-    const visibleImages = (profile.images || []).filter((im) => isUnlocked(im.requires));
+    const infoLines = visibleBlocks.filter((b) => b.info);
+    const postBlocks = visibleBlocks.filter((b) => !b.info);
 
     resultEl.innerHTML = `
       <div class="wbanner" style="min-height:170px;background:linear-gradient(135deg,#2b3242,#171b22);">
@@ -73,26 +74,48 @@ export function renderSearch(root) {
       <div class="wfeed-card" style="cursor:default;margin-top:12px;">
         <p style="font-size:14px;color:var(--ink-soft);line-height:1.7;margin:0;">${profile.bio}</p>
         <div class="factions" style="margin-top:12px;">${profile.stats.map((s) => `<span>${s}</span>`).join("")}</div>
+        ${infoLines.length ? `<div class="plist">${infoLines.map((b) => `<div>· ${b.text}</div>`).join("")}</div>` : ""}
         ${profile.locked ? `<div class="locked-note" style="margin-top:10px;display:flex;align-items:center;gap:5px;">${icon("lock", { size: 13 })} ${profile.lockedNote || "部分内容仅粉丝可见"}</div>` : ""}
       </div>
-      <div class="wfeed-card" style="cursor:default;margin-top:12px;">
-        <div class="plist">${visibleBlocks.map((b) => `<div>· ${b.text}${b.meta ? ` <span class="b-meta">（${b.meta}）</span>` : ""}</div>`).join("")}</div>
-        ${visibleImages.length ? `<div class="photo-gallery"></div>` : ""}
-      </div>
+      <div class="wfeed" id="profile-feed" style="margin-top:12px;"></div>
     `;
 
-    visibleBlocks.forEach((b) => { if (b.clueId) markClueFound(b.clueId); });
+    infoLines.forEach((b) => { if (b.clueId) markClueFound(b.clueId); });
 
-    const galleryEl = resultEl.querySelector(".photo-gallery");
-    if (galleryEl) {
-      visibleImages.forEach((img) => galleryEl.appendChild(createPhotoThumb(img)));
-    }
+    const feedEl = resultEl.querySelector("#profile-feed");
+    postBlocks.forEach((b) => {
+      feedEl.appendChild(profilePostCard(profile, b));
+      if (b.clueId) markClueFound(b.clueId);
+    });
   }
 
   main.querySelector("#search-btn").addEventListener("click", runSearch);
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") runSearch();
   });
+}
+
+function profilePostCard(profile, block) {
+  const card = document.createElement("article");
+  card.className = "wfeed-card";
+  card.style.cursor = "default";
+  card.innerHTML = `
+    <div class="frow1">
+      <div class="favatar"></div>
+      <div>
+        <div class="fname">${profile.name}${block.tag ? `<span class="ftag-status">${block.tag}</span>` : ""}</div>
+        <div class="fmeta">${block.time ? `${block.time} · ` : ""}来自 iPhone客户端</div>
+      </div>
+    </div>
+    <div class="fbody">${block.text}</div>
+    <div class="fthumb-slot"></div>
+  `;
+  if (block.imagePrompt || block.image) {
+    const slot = card.querySelector(".fthumb-slot");
+    slot.className = "fthumb";
+    slot.appendChild(createPhotoThumb({ src: block.image, imagePrompt: block.imagePrompt, imageCaption: block.imageCaption }));
+  }
+  return card;
 }
 
 function escapeHtml(s) {
