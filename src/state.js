@@ -2,14 +2,17 @@ const STORAGE_KEY = "tafang-anjuan-save";
 
 export const CLUE_TOTAL = 41;
 
-// PT1（死亡时间推理）通过条件：玩家必须提交『23:43 之后仍然活着』这个
-// 判断，并且手上真的有证据支撑——c35（流出的手环同步记录，23:47 仍在
-// 活动）是决定性证据，c23/c24（沈溪 23:31/23:43 仍在附近的帖子）证明
-// 案发地点当时仍有活动迹象。三项凑齐才算真的推翻了官方 23:20 死亡口径，
-// 不是瞎蒙对了选项就算数。
+// PT1 分三步：①先问『公司公布的死亡时间是否成立』，选『不成立，23:43
+// 之后仍然活着』才会往下走；②再直接问『几点』——答案『23:52之后』要靠
+// AURORA 手环同步记录撑住（c35，23:47仍在同步、23:52才中断）；③再问
+// 『哪里』——答案『自己住所』要靠沈溪主页 23:31/23:43 仍在附近的帖子
+// 撑住（c23/c24：如果他真去了杭州，不会有人在住所附近看到他）。三个
+// 判断 + 两项证据全部凑齐才算真的推翻了官方口径，不是瞎蒙对了选项就算数。
 export function canUnlockPt2(s) {
   return (
-    s.deathTimeAnswer === "after_2343" &&
+    s.officialTimeAnswer === "after_2343" &&
+    s.deathTimeAnswer === "after_2352" &&
+    s.deathLocationAnswer === "residence" &&
     s.foundClues.includes("c35") &&
     (s.foundClues.includes("c23") || s.foundClues.includes("c24"))
   );
@@ -34,7 +37,9 @@ export function canConvictHeXun(s) {
 const defaultState = () => ({
   foundProfiles: [],
   foundClues: [],
+  officialTimeAnswer: null,
   deathTimeAnswer: null,
+  deathLocationAnswer: null,
   finalSuspect: null,
   finalAction: null,
   finalEnding: null,

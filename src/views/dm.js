@@ -43,7 +43,7 @@ export function renderDm(root) {
   }
 
   thread.innerHTML = `
-    <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>如果23:47他还活着，公司说的那个时间就站不住了。</div>
+    <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>如果他是23:52之后在自己住所去世的，公司的说法就站不住了。</div>
     <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你查了这么多，那你觉得，那晚真正该为这件事负责的人是谁？</div>
   `;
 
@@ -69,9 +69,24 @@ export function renderDm(root) {
   renderSuspectStep(thread, stepEl);
 }
 
-const PT1_OPTIONS = [
+// PT1 分三步：①先问『公司公布的死亡时间是否成立』，选『不成立，23:43
+// 之后仍然活着』才往下走，选别的只给一句轻推回，停在这一步反复问；
+// ②过了①，再直接问『几点』——答案『23:52之后』要靠 AURORA 手环同步
+// 记录撑住；③再问『哪里』——答案『自己住所』要靠沈溪主页的帖子撑住
+// （如果他真去了杭州，不会有人在住所附近看到他）。
+const PT1_GATE_OPTIONS = [
   { id: "at_2320", label: "成立，约23:20死亡" },
   { id: "after_2343", label: "不成立，23:43之后仍然活着" },
+  { id: "unsure", label: "无法判断" },
+];
+const PT1_TIME_OPTIONS = [
+  { id: "before_2320", label: "23:20 之前（官方口径）" },
+  { id: "after_2352", label: "23:52 之后" },
+  { id: "unsure", label: "无法判断" },
+];
+const PT1_LOCATION_OPTIONS = [
+  { id: "hangzhou", label: "杭州（官方原定行程地）" },
+  { id: "residence", label: "自己住所" },
   { id: "unsure", label: "无法判断" },
 ];
 
@@ -79,42 +94,94 @@ function renderPt1(panel, thread, found) {
   thread.innerHTML = `
     <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>先别急着下结论，多查查清楚，别搞错了伤到不相干的人。</div>
     <p class="clue-progress mono">目前掌握线索：${found} / ${CLUE_TOTAL}</p>
-    <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>公司公布的死亡时间是否成立？</div>
   `;
-
-  if (state.deathTimeAnswer) {
-    const label = PT1_OPTIONS.find((o) => o.id === state.deathTimeAnswer)?.label || "";
-    thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${label}</div>`;
-  }
-
-  // 注意：canUnlockPt2(state) 在这里必然是 false——一旦为 true，
-  // renderDm() 顶层就已经直接路由到 PT2 分支，根本不会调用 renderPt1()。
-  // 『推翻死亡时间』成功后的那句反馈文案和陈屿文件夹链接，放在 PT2
-  // 分支开头显示（见 renderDm 里 pt2Open 分支），这里不用重复处理。
-  if (state.deathTimeAnswer === "after_2343") {
-    thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>光有判断还不够，你手上得先有能撑住这个判断的证据。</div>`;
-  } else if (state.deathTimeAnswer) {
-    thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你确定吗？先别急着下结论，多找找能撑住判断的证据。</div>`;
-  }
 
   const stepEl = document.createElement("div");
   stepEl.className = "reply-options";
-  panel.appendChild(stepEl);
 
-  PT1_OPTIONS.forEach((o) => {
+  thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>公司公布的死亡时间是否成立？</div>`;
+  if (state.officialTimeAnswer !== "after_2343") {
+    if (state.officialTimeAnswer) {
+      thread.innerHTML += `
+        <div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${optLabel(PT1_GATE_OPTIONS, state.officialTimeAnswer)}</div>
+        <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你确定吗？先别急着下结论，多找找能撑住判断的证据。</div>
+      `;
+    }
+    panel.appendChild(stepEl);
+    renderOptions(stepEl, PT1_GATE_OPTIONS, (id) => {
+      state.officialTimeAnswer = id;
+      save();
+      rerenderDm();
+    });
+    return;
+  }
+  thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${optLabel(PT1_GATE_OPTIONS, state.officialTimeAnswer)}</div>`;
+
+  thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>周晏星是几点之后去世的？</div>`;
+  if (!state.deathTimeAnswer) {
+    panel.appendChild(stepEl);
+    renderOptions(stepEl, PT1_TIME_OPTIONS, (id) => {
+      state.deathTimeAnswer = id;
+      save();
+      rerenderDm();
+    });
+    return;
+  }
+  thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${optLabel(PT1_TIME_OPTIONS, state.deathTimeAnswer)}</div>`;
+
+  thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>他是在哪里去世的？</div>`;
+  if (!state.deathLocationAnswer) {
+    panel.appendChild(stepEl);
+    renderOptions(stepEl, PT1_LOCATION_OPTIONS, (id) => {
+      state.deathLocationAnswer = id;
+      save();
+      rerenderDm();
+    });
+    return;
+  }
+  thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${optLabel(PT1_LOCATION_OPTIONS, state.deathLocationAnswer)}</div>`;
+
+  // 注意：canUnlockPt2(state) 在这里必然是 false——一旦为 true，
+  // renderDm() 顶层就已经直接路由到 PT2 分支，根本不会调用 renderPt1()。
+  const answersRight = state.deathTimeAnswer === "after_2352" && state.deathLocationAnswer === "residence";
+  if (answersRight) {
+    thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>光有判断还不够，你手上得先有能撑住这个判断的证据。</div>`;
+  } else {
+    thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你确定吗？先别急着下结论，多找找能撑住判断的证据。</div>`;
+  }
+
+  const retry = document.createElement("div");
+  retry.className = "reset-link";
+  retry.textContent = "重新想想 ›";
+  retry.addEventListener("click", () => {
+    state.deathTimeAnswer = null;
+    state.deathLocationAnswer = null;
+    save();
+    rerenderDm();
+  });
+  panel.appendChild(retry);
+}
+
+function optLabel(options, id) {
+  return options.find((o) => o.id === id)?.label || "";
+}
+
+function renderOptions(stepEl, options, onPick) {
+  stepEl.innerHTML = "";
+  options.forEach((o) => {
     const btn = document.createElement("button");
     btn.textContent = o.label;
-    btn.addEventListener("click", () => {
-      state.deathTimeAnswer = o.id;
-      save();
-      const rootEl = document.getElementById("view");
-      const scrollTop = window.scrollY;
-      rootEl.innerHTML = "";
-      renderDm(rootEl);
-      window.scrollTo(0, scrollTop);
-    });
+    btn.addEventListener("click", () => onPick(o.id));
     stepEl.appendChild(btn);
   });
+}
+
+function rerenderDm() {
+  const rootEl = document.getElementById("view");
+  const scrollTop = window.scrollY;
+  rootEl.innerHTML = "";
+  renderDm(rootEl);
+  window.scrollTo(0, scrollTop);
 }
 
 function renderAlreadyDecided(panel, thread) {
