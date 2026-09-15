@@ -1,11 +1,13 @@
 import { postById } from "../data.js";
-import { state, save, markClueFound, isUnlocked } from "../state.js";
+import { state, save, markClueFound } from "../state.js";
 import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
 import { icon, verifiedBadge } from "../components/icons.js";
 
 export function renderPostDetail(root, { id } = {}) {
+  const p = postById(id);
+
   root.className = "weibo-scope";
   renderTopNav(root);
 
@@ -15,15 +17,14 @@ export function renderPostDetail(root, { id } = {}) {
 
   const main = document.createElement("main");
   layout.appendChild(main);
-  layout.appendChild(renderRightbar());
+  layout.appendChild(renderRightbar(p?.thread));
 
   const back = document.createElement("div");
   back.className = "wback-row";
   back.innerHTML = "‹ 返回超话";
-  back.addEventListener("click", () => goTo("forum"));
+  back.addEventListener("click", () => goTo("forum", { thread: p?.thread }));
   main.appendChild(back);
 
-  const p = postById(id);
   if (!p) {
     const empty = document.createElement("div");
     empty.className = "wfeed-card";
@@ -58,7 +59,7 @@ export function renderPostDetail(root, { id } = {}) {
   }
   main.appendChild(post);
 
-  if (p.history && isUnlocked(p.history.requires)) {
+  if (p.history) {
     const revealed = state.foundClues.includes(p.history.clueId);
     if (revealed) {
       const histEl = document.createElement("div");

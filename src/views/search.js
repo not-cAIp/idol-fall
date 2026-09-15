@@ -1,5 +1,5 @@
 import { findProfile, isBlockedQuery } from "../data.js";
-import { markProfileFound, markClueFound, isUnlocked } from "../state.js";
+import { markProfileFound, markClueFound } from "../state.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderLeftNav, renderRightbar } from "../components/weiboChrome.js";
 import { icon } from "../components/icons.js";
@@ -51,9 +51,9 @@ export function renderSearch(root) {
     markProfileFound(profile.id);
     if (profile.clueOnFound) markClueFound(profile.clueOnFound);
 
-    const visibleBlocks = (profile.blocks || []).filter((b) => isUnlocked(b.requires));
-    const infoLines = visibleBlocks.filter((b) => b.info);
-    const postBlocks = visibleBlocks.filter((b) => !b.info);
+    const allBlocks = profile.blocks || [];
+    const infoLines = allBlocks.filter((b) => b.info);
+    const postBlocks = allBlocks.filter((b) => !b.info);
 
     resultEl.innerHTML = `
       <div class="wbanner" style="min-height:170px;background:linear-gradient(135deg,#2b3242,#171b22);">

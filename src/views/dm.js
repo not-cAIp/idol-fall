@@ -96,7 +96,7 @@ export function renderDm(root) {
 
 function computeEnding(replyId) {
   if (replyId === "c_expose_su") return "D";
-  const hasHistory = state.foundClues.includes("c26") && state.foundClues.includes("c27");
+  const hasHistory = state.foundClues.includes("c20") && state.foundClues.includes("c21");
   const hasPressure = state.foundClues.includes("c03") && state.foundClues.includes("c05");
   if (replyId === "c_company") return hasHistory ? "A" : "D";
   if (replyId === "c_pressure") return hasPressure ? "B" : "D";
