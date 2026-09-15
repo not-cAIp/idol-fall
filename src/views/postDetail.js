@@ -1,12 +1,12 @@
 import { postById } from "../data.js";
-import { state, save, markClueFound } from "../state.js";
+import { state, markClueFound } from "../state.js";
 import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
 import { icon, verifiedBadge } from "../components/icons.js";
 import { THREADS } from "./forum.js";
 
-export function renderPostDetail(root, { id } = {}) {
+export function renderPostDetail(root, { id, fromTab } = {}) {
   const p = postById(id);
 
   root.className = "weibo-scope";
@@ -25,7 +25,7 @@ export function renderPostDetail(root, { id } = {}) {
   back.innerHTML = p?.profile ? "‹ 返回主页" : "‹ 返回超话";
   back.addEventListener("click", () => {
     if (p?.profile) goTo("search", { profile: p.profile });
-    else goTo("forum", { thread: p?.thread });
+    else goTo("forum", { thread: p?.thread, tab: fromTab });
   });
   main.appendChild(back);
 
@@ -38,6 +38,7 @@ export function renderPostDetail(root, { id } = {}) {
   }
 
   (p.clueOnOpen || []).forEach((clueId) => markClueFound(clueId));
+  (p.replies || []).forEach((r) => r.clueId && markClueFound(r.clueId));
 
   const post = document.createElement("article");
   post.className = "post" + (p.pinned ? " pinned" : "");
@@ -98,28 +99,17 @@ export function renderPostDetail(root, { id } = {}) {
   list.appendChild(repliesEl);
   main.appendChild(list);
 
-  (p.replies || []).forEach((r, idx) => {
-    const key = `${p.id}-${idx}`;
-    const revealed = state.expandedReplies.includes(key);
+  (p.replies || []).forEach((r) => {
     const rEl = document.createElement("div");
-    rEl.className = "reply" + (r.buried ? " buried" : "") + (revealed ? " revealed" : "");
+    rEl.className = "reply";
     rEl.innerHTML = `<b>${r.author}</b>：<span class="text">${r.text}</span><div class="meta">${r.meta || ""}</div>`;
-
-    if (r.buried && !revealed) {
-      rEl.addEventListener("click", () => {
-        state.expandedReplies.push(key);
-        save();
-        if (r.clueId) markClueFound(r.clueId);
-        renderAgain();
-      });
-    }
     repliesEl.appendChild(rEl);
   });
 
   function renderAgain() {
     const scrollTop = window.scrollY;
     root.innerHTML = "";
-    renderPostDetail(root, { id });
+    renderPostDetail(root, { id, fromTab });
     window.scrollTo(0, scrollTop);
   }
 }

@@ -28,10 +28,10 @@ function postsForThread(threadSlug, tab) {
     .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || b.time.localeCompare(a.time));
 }
 
-export function renderForum(root, { thread } = {}) {
+export function renderForum(root, { thread, tab } = {}) {
   const slug = thread && THREADS[thread] ? thread : "yanxing";
   const info = THREADS[slug];
-  activeTab = "最新";
+  activeTab = TABS_CLICKABLE.includes(tab) ? tab : "最新";
 
   root.className = "weibo-scope";
   renderTopNav(root);
@@ -123,6 +123,6 @@ function postCard(p) {
     e.stopPropagation();
     goTo("forum", { thread: p.thread });
   });
-  card.addEventListener("click", () => goTo("postDetail", { id: p.id }));
+  card.addEventListener("click", () => goTo("postDetail", { id: p.id, fromTab: activeTab }));
   return card;
 }

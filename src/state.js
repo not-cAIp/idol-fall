@@ -32,7 +32,6 @@ export function canConvictHeXun(s) {
 }
 
 const defaultState = () => ({
-  expandedReplies: [],
   foundProfiles: [],
   foundClues: [],
   deathTimeAnswer: null,
