@@ -5,25 +5,26 @@ import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
 import { icon, verifiedBadge } from "../components/icons.js";
 
 // 三个超话都是「静态互联网世界」：所有帖子从游戏一开始就在这里，
-// 不会因为线索状态而出现/消失。两个功能标签页「最新」「热门」都可点，
-// 其余是纯装饰。热门=真正重要的信息（每条帖子在 posts.json 里标了
-// section:"hot"），最新=纯水贴氛围池（section:"flavor"）——两边内容
-// 完全不重叠，重要的东西不会混进纯水贴里，但代码也不会替玩家把线索
-// 挑出来单独列一份"证据清单"，热门里一样是帖子和评论的原始形态。
+// 不会因为线索状态而出现/消失。两个功能标签页「最新」「精华」都可点，
+// 其余四个（安利帖/图文产出/绝美舞台/水贴专区）是纯装饰。精华=真正
+// 重要的信息（每条帖子在 posts.json 里标了 section:"hot"），最新=纯
+// 水贴氛围池（section:"flavor"）——两边内容完全不重叠，重要的东西
+// 不会混进纯水贴里，但代码也不会替玩家把线索挑出来单独列一份
+// "证据清单"，精华里一样是帖子和评论的原始形态。
 export const THREADS = {
   yanxing: { name: "周晏星本人超话", stats: "892.4万 帖子 ｜ 2140万 粉丝", chip: "娱乐超话 No.1" },
   linan: { name: "林安本人超话", stats: "215万 帖子 ｜ 640万 粉丝", chip: "娱乐超话 No.8" },
   xinganlide: { name: "星安理得超话", stats: "430万 帖子 ｜ 158万 粉丝", chip: "CP超话 No.2" },
 };
 
-const TABS_CLICKABLE = ["最新", "热门"];
-const TABS_STATIC = ["精华", "视频", "圈子"];
+const TABS_CLICKABLE = ["最新", "精华"];
+const TABS_STATIC = ["安利帖", "图文产出", "绝美舞台", "水贴专区"];
 const TABS = [...TABS_CLICKABLE, ...TABS_STATIC];
 let activeTab = "最新";
 
 function postsForThread(threadSlug, tab) {
   return posts.posts
-    .filter((p) => p.thread === threadSlug && (tab === "热门" ? p.section !== "flavor" : p.section === "flavor"))
+    .filter((p) => p.thread === threadSlug && (tab === "精华" ? p.section !== "flavor" : p.section === "flavor"))
     .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || b.time.localeCompare(a.time));
 }
 
