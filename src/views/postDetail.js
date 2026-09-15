@@ -4,6 +4,7 @@ import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
 import { icon, verifiedBadge } from "../components/icons.js";
+import { THREADS } from "./forum.js";
 
 export function renderPostDetail(root, { id } = {}) {
   const p = postById(id);
@@ -48,6 +49,7 @@ export function renderPostDetail(root, { id } = {}) {
       </div>
       <div class="time mono">${p.time}</div>
     </div>
+    ${p.thread ? `<span class="ftag" id="post-ftag"># ${THREADS[p.thread]?.name || ""} #</span>` : ""}
     <div class="text">${p.text}</div>
     <div class="wb-actionbar" style="margin-top:10px;display:flex;gap:22px;font-size:12px;color:var(--ink-faint);font-family:'JetBrains Mono',monospace;">
       <span style="display:inline-flex;align-items:center;gap:5px;">${icon("like", { size: 14 })} ${p.likes || 0}</span>
@@ -60,6 +62,7 @@ export function renderPostDetail(root, { id } = {}) {
       createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption })
     );
   }
+  post.querySelector("#post-ftag")?.addEventListener("click", () => goTo("forum", { thread: p.thread }));
   main.appendChild(post);
 
   if (p.history) {

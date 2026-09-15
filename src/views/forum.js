@@ -119,6 +119,10 @@ function postCard(p) {
     slot.appendChild(thumb);
   }
   card.querySelectorAll(".fbody a").forEach((a) => a.addEventListener("click", (e) => e.stopPropagation()));
+  card.querySelector(".ftag")?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    goTo("forum", { thread: p.thread });
+  });
   card.addEventListener("click", () => goTo("postDetail", { id: p.id }));
   return card;
 }

@@ -13,6 +13,18 @@ import { THREADS } from "./forum.js";
 const CATEGORY_TABS = ["热门", "同城", "实时", "榜单", "明星", "搞笑", "情感"];
 const HOT_SEARCH = ["#周晏星本人超话#", "#星安理得#", "#林安#", "#银河星途#", "#泡泡App#"];
 
+// 首页热门不应该只有案件相关的严肃内容——真实微博热门永远混着一堆
+// 完全不相干的废话文学/无意义热搜，这些纯属氛围，跟案件无关，不接
+// postDetail、不可点，只是为了让首页看起来像真的微博而不是一个
+// 案件线索聚合器。
+const MEME_POSTS = [
+  { author: "今日份废话", handle: "@今日份废话", time: "2小时前", text: "【震惊】18岁花季少女，10年前居然只有8岁", likes: "8.2万", reposts: "3.1万", comments: 4200 },
+  { author: "热搜观察员", handle: "@热搜观察员", time: "3小时前", text: "多地网友反映：早上7点起床，比8点起床整整早了一个小时", likes: "5.6万", reposts: "1.9万", comments: 2800 },
+  { author: "深夜小课堂", handle: "@深夜小课堂", time: "5小时前", text: "医生提醒：长期不吃饭，可能会导致饿", likes: "9.9万", reposts: "4.4万", comments: 6100 },
+  { author: "随手一拍", handle: "@随手一拍", time: "6小时前", text: "实测：把手机倒过来拿，屏幕也跟着倒过来了，附视频", likes: "3.3万", reposts: "1.1万", comments: 1500 },
+  { author: "今天也在摆烂", handle: "@今天也在摆烂", time: "8小时前", text: "深夜发文：兄弟们，今天到底是星期几来着", likes: "2.1万", reposts: "890", comments: 3300 },
+];
+
 function likesToNumber(s) {
   if (!s) return 0;
   const str = String(s);
@@ -76,11 +88,47 @@ export function renderHome(root) {
   });
 
   const feed = page.querySelector("#whome-feed");
-  const hot = posts.posts
-    .filter((p) => p.thread && p.section === "hot")
+
+  // 第一条永远是官方通报——这是热搜第一名该有的位置。剩下的热门帖
+  // 按点赞混排，中间穿插几条完全不相干的废话文学，模拟真实首页的
+  // 混乱感：不是所有热门都跟案件有关。
+  const official = posts.posts.find((p) => p.id === "p001");
+  const rest = posts.posts
+    .filter((p) => p.thread && p.section === "hot" && p.id !== "p001")
     .sort((a, b) => likesToNumber(b.likes) - likesToNumber(a.likes))
-    .slice(0, 12);
-  hot.forEach((p) => feed.appendChild(trendingCard(p)));
+    .slice(0, 10);
+
+  if (official) feed.appendChild(trendingCard(official));
+  feed.appendChild(memeCard(MEME_POSTS[0]));
+  feed.appendChild(memeCard(MEME_POSTS[1]));
+  rest.slice(0, 4).forEach((p) => feed.appendChild(trendingCard(p)));
+  feed.appendChild(memeCard(MEME_POSTS[2]));
+  rest.slice(4, 7).forEach((p) => feed.appendChild(trendingCard(p)));
+  feed.appendChild(memeCard(MEME_POSTS[3]));
+  rest.slice(7).forEach((p) => feed.appendChild(trendingCard(p)));
+  feed.appendChild(memeCard(MEME_POSTS[4]));
+}
+
+function memeCard(m) {
+  const card = document.createElement("article");
+  card.className = "wfeed-card";
+  card.style.cursor = "default";
+  card.innerHTML = `
+    <div class="frow1">
+      <div class="favatar"></div>
+      <div>
+        <div class="fname">${m.author}<span class="ffollow">＋关注</span></div>
+        <div class="fmeta">${m.time} · 来自 微博 weibo.com</div>
+      </div>
+    </div>
+    <div class="fbody">${m.text}</div>
+    <div class="factions">
+      <span>${icon("repost", { size: 14 })} ${m.reposts}</span>
+      <span>${icon("chat", { size: 14 })} ${m.comments}</span>
+      <span>${icon("like", { size: 14 })} ${m.likes}</span>
+    </div>
+  `;
+  return card;
 }
 
 function trendingCard(p) {
@@ -111,6 +159,10 @@ function trendingCard(p) {
     thumb.addEventListener("click", (e) => e.stopPropagation());
     slot.appendChild(thumb);
   }
+  card.querySelector(".ftag")?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    goTo("forum", { thread: p.thread });
+  });
   card.addEventListener("click", () => goTo("postDetail", { id: p.id }));
   return card;
 }

@@ -399,7 +399,8 @@ body.desktop-mode #view {
   padding: 1px 9px; font-size: 11.5px; margin-left: 8px;
 }
 .wfeed-card .fmeta { font-size: 12px; color: #999; margin-top: 2px; }
-.wfeed-card .ftag { color: var(--accent); font-size: 13px; margin: 10px 0 2px; display: block; }
+.ftag { color: var(--accent); font-size: 13px; margin: 10px 0 2px; display: block; width: fit-content; cursor: pointer; }
+.ftag:hover { text-decoration: underline; }
 .wfeed-card .fbody { font-size: 14.5px; color: #222; line-height: 1.75; margin-top: 8px; }
 .wfeed-card .fpin { font-size: 11px; color: var(--accent); font-weight: 700; border: 1px solid var(--accent); border-radius: 4px; padding: 0 5px; margin-right: 6px; }
 .wfeed-card .ftag-status { font-size: 10.5px; color: var(--ink-faint); font-weight: 500; border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; margin-left: 8px; }
