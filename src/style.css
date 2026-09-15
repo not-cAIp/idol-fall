@@ -434,6 +434,80 @@ body.desktop-mode #view {
 }
 .wrightbar .wfooter { font-size: 12px; color: #b3b6bb; line-height: 2; }
 
+/* ---- 微博首页（点顶部 word mark 落到这里，不是某个人的超话）---- */
+.whome-hero {
+  position: relative; overflow: hidden;
+  background: radial-gradient(ellipse 90% 70% at 75% 130%, #1d4a72 0%, #0d2138 35%, #060a14 68%, #030509 100%);
+  padding: 46px 20px 34px; text-align: center; color: #fff;
+}
+.whome-hero-stars {
+  position: absolute; inset: 0; opacity: .55; pointer-events: none;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 22%, #fff, transparent),
+    radial-gradient(1px 1px at 28% 55%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 45% 15%, #fff, transparent),
+    radial-gradient(1px 1px at 62% 40%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 78% 25%, #fff, transparent),
+    radial-gradient(1px 1px at 88% 60%, #fff, transparent),
+    radial-gradient(1px 1px at 35% 75%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 95% 10%, #fff, transparent);
+}
+.whome-hero-inner { position: relative; max-width: 640px; margin: 0 auto; }
+.whome-logo { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 26px; }
+.whome-logo .wmark-big {
+  width: 52px; height: 52px; border-radius: 14px; background: var(--accent);
+  display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 900; color: #fff;
+  box-shadow: 0 8px 24px -8px rgba(255, 92, 114, 0.6);
+}
+.whome-word { text-align: left; }
+.whome-word b { display: block; font-size: 30px; font-weight: 900; letter-spacing: .01em; }
+.whome-word span { display: block; font-size: 13px; color: rgba(255,255,255,.55); margin-top: 2px; }
+.whome-search { display: flex; max-width: 480px; margin: 0 auto; }
+.whome-search input {
+  flex: 1; border: none; border-radius: 100px 0 0 100px; padding: 13px 20px; font-size: 14px;
+  background: rgba(255,255,255,.12); color: #fff; outline: none;
+}
+.whome-search input::placeholder { color: rgba(255,255,255,.5); }
+.whome-search button {
+  border: none; border-radius: 0 100px 100px 0; padding: 0 28px; background: var(--accent); color: #fff;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+}
+.whome-search button:hover { opacity: .92; }
+
+.whome-cats {
+  display: flex; align-items: center; gap: 28px; background: #171a20; padding: 0 24px;
+  overflow-x: auto; white-space: nowrap;
+}
+.whome-cats span { padding: 13px 0; font-size: 14px; color: rgba(255,255,255,.6); cursor: default; }
+.whome-cats span.active { color: #fff; font-weight: 700; border-bottom: 2px solid var(--accent); }
+.whome-cats-more { margin-left: auto; color: rgba(255,255,255,.5); display: flex; align-items: center; }
+
+.whome-body {
+  display: grid; grid-template-columns: 220px minmax(0, 1fr) 300px;
+  gap: 18px; max-width: 1360px; margin: 18px auto; padding: 0 20px; align-items: start;
+}
+@media (max-width: 1100px) {
+  .whome-body { grid-template-columns: minmax(0, 1fr); max-width: 720px; }
+  .whome-left, .whome-right { display: none; }
+}
+.whome-left { background: #fff; border-radius: 8px; padding: 10px 0; position: sticky; top: 78px; }
+.whome-left .wln-item {
+  display: flex; align-items: center; gap: 10px; padding: 10px 20px;
+  color: #333; font-size: 14px; cursor: default;
+}
+.whome-left .wln-item .ic { width: 18px; text-align: center; }
+.whome-left .wln-item.active { color: var(--accent); background: #fff4ea; border-right: 3px solid var(--accent); font-weight: 700; }
+.whome-left h4 { font-size: 12.5px; color: #aaa; font-weight: 500; padding: 14px 20px 6px; margin: 0; }
+.whome-feed { display: flex; flex-direction: column; gap: 12px; }
+.whome-promo {
+  border-radius: 10px; overflow: hidden; padding: 22px 18px; margin-bottom: 16px;
+  background: radial-gradient(ellipse at 30% 20%, #2a3550, #12141c 70%);
+  color: #fff;
+}
+.whome-promo-title { font-size: 17px; font-weight: 800; line-height: 1.5; }
+.whome-hs { display: flex; align-items: center; gap: 10px; padding: 7px 0; font-size: 13px; color: #333; }
+.whome-hs-rank { font-family: "JetBrains Mono", monospace; font-size: 12px; color: #ccc; font-weight: 700; width: 14px; }
+
 /* ---- 详情页返回条（桌面模式，嵌在中间栏内）---- */
 .wback-row {
   display: flex; align-items: center; gap: 6px; color: #666; font-size: 13.5px;

@@ -17,7 +17,7 @@ export function renderTopNav(root) {
       <span class="wsub">weibo.com</span>
     </div>
     <div class="wnav">
-      <button class="active" title="首页">${icon("home", { size: 18 })}</button>
+      <button class="active" id="wtop-nav-home" title="首页">${icon("home", { size: 18 })}</button>
       <button title="热门">${icon("fire", { size: 18 })}</button>
       <button title="视频">${icon("video", { size: 18 })}</button>
     </div>
@@ -33,7 +33,8 @@ export function renderTopNav(root) {
   `;
   root.appendChild(nav);
   nav.querySelector("#wtop-search").addEventListener("click", () => goTo("search"));
-  nav.querySelector("#wtop-home").addEventListener("click", () => goTo("forum"));
+  nav.querySelector("#wtop-home").addEventListener("click", () => goTo("home"));
+  nav.querySelector("#wtop-nav-home").addEventListener("click", () => goTo("home"));
   nav.querySelector("#wtop-dm").addEventListener("click", () => goTo("dm"));
   return nav;
 }
@@ -42,7 +43,7 @@ export function renderLeftNav(active) {
   const nav = document.createElement("nav");
   nav.className = "wleftnav";
   const items = [
-    ["home", "首页", "forum"],
+    ["home", "首页", "home"],
     ["clipboard", "全部关注", null],
     ["star", "最新微博", null],
     ["heart", "特别关注", null],

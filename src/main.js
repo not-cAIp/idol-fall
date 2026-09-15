@@ -1,5 +1,6 @@
 import "./style.css";
 import { registerView, mountRouter } from "./router.js";
+import { renderHome } from "./views/home.js";
 import { renderForum } from "./views/forum.js";
 import { renderPostDetail } from "./views/postDetail.js";
 import { renderSearch } from "./views/search.js";
@@ -7,6 +8,7 @@ import { renderDm } from "./views/dm.js";
 import { renderEnding } from "./views/ending.js";
 import { markClueFound } from "./state.js";
 
+registerView("home", renderHome);
 registerView("forum", renderForum);
 registerView("postDetail", renderPostDetail);
 registerView("search", renderSearch);
