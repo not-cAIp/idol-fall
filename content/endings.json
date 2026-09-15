@@ -1,7 +1,7 @@
 {
-  "_说明": "结局判定逻辑（配合 src/views/dm.js 的 computeEnding()）。玩家不再手动勾选证据——集齐 34 / 34 条线索（state.foundClues.length >= CLUE_TOTAL）之后，私信『陪你走到最后』才会给出 4 句回复可选，选哪句直接决定结局；有两句回复还要看手上具体有没有对应的证据，没有就会降级成结局 D。",
+  "_说明": "结局判定逻辑（配合 src/views/dm.js 的 computeEnding()）。玩家不再手动勾选证据，但也不再需要集满 34/34 才能开口——找到 MIN_TO_TALK（5）条线索起，私信『陪你走到最后』就会给出 4 句回复可选，这是刻意恢复的最早一版设计：玩家可以带着远不完整的信息就跑去回答。选哪句话直接决定结局；其中两句（c_company / c_pressure）还要看手上具体有没有对应的证据，没有就会降级成结局 D——这时候降级是真的会发生的，不是摆设。",
   "reportOptions": {
-    "requiredClueCount": 34,
+    "minClueCount": 5,
     "conclusionChoices": [
       { "id": "c_company", "text": "公司为保股价与代言，隐瞒了真实工作强度与通稿改动。", "targets": "结局A（需要 c20 + c21 都已找到）" },
       { "id": "c_pressure", "text": "长期跟踪与队友冲突叠加，是压垮他的最后一环。", "targets": "结局B（需要 c03 + c05 都已找到）" },

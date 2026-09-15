@@ -1,19 +1,7 @@
 import { endings } from "../data.js";
-import { state, save, CLUE_TOTAL } from "../state.js";
+import { state, save, CLUE_TOTAL, MIN_TO_TALK } from "../state.js";
 import { goTo } from "../router.js";
 import { renderTopNav } from "../components/weiboChrome.js";
-
-const HINT_TIERS = [
-  { max: 10, text: "超话里还有很多人似乎知道些什么。试着留意评论里反复出现的名字。" },
-  { max: 20, text: "有些账号并不能用真名找到。你见过的昵称、物品、宠物，也许都有意义。" },
-  { max: 29, text: "你已经很接近了。但死亡前最后几个小时，还有人的说法没有互相对上。" },
-  { max: 33, text: "只差一点。也许该回头看看你已经找到的人——有些主页后来出现了新的内容。" },
-];
-
-function hintFor(found) {
-  const tier = HINT_TIERS.find((t) => found <= t.max);
-  return tier ? tier.text : "";
-}
 
 export function renderDm(root) {
   root.className = "weibo-scope";
@@ -41,7 +29,7 @@ export function renderDm(root) {
   main.appendChild(panel);
 
   const found = state.foundClues.length;
-  const ready = found >= CLUE_TOTAL;
+  const ready = found >= MIN_TO_TALK;
   const { conclusionChoices } = endings.reportOptions;
 
   const thread = document.createElement("div");
@@ -50,9 +38,8 @@ export function renderDm(root) {
 
   if (!ready) {
     thread.innerHTML = `
-      <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你是不是也觉得这件事不对？</div>
+      <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>先别急着下结论，多查查清楚，别搞错了伤到不相干的人。</div>
       <p class="clue-progress mono">目前掌握线索：${found} / ${CLUE_TOTAL}</p>
-      <p class="clue-hint">你掌握的信息似乎还不足以还原那一晚。${hintFor(found)}</p>
     `;
     const link = document.createElement("div");
     link.className = "reset-link";

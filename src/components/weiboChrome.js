@@ -1,11 +1,11 @@
-import { state, CLUE_TOTAL } from "../state.js";
+import { state, MIN_TO_TALK } from "../state.js";
 import { goTo } from "../router.js";
 import { icon } from "./icons.js";
 
 export function renderTopNav(root) {
   document.body.classList.add("desktop-mode");
 
-  const coreDone = state.foundClues.length >= CLUE_TOTAL;
+  const coreDone = state.foundClues.length >= MIN_TO_TALK;
 
   const nav = document.createElement("header");
   nav.className = "wtop";

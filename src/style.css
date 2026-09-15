@@ -261,9 +261,7 @@ body.desktop-mode #view {
 .reply-options button:hover { border-color: var(--accent); }
 .chat-sent { align-self: flex-end; }
 
-/* ---------- Timeline / corkboard ---------- */
 .clue-progress { font-family: "JetBrains Mono", monospace; font-size: 15px; color: var(--ink); margin: 10px 0 4px; }
-.clue-hint { font-size: 13px; color: var(--ink-soft); line-height: 1.7; margin: 0; }
 
 /* ---------- Report ---------- */
 .ending-card {
