@@ -1769,8 +1769,8 @@
       "text": "（晒图，右上角用户名被裁掉了一部分）",
       "likes": "18",
       "reposts": "0",
-      "imagePrompt": "写实摄影风格，手机截图，社交 App 个人资料卡片局部特写。截图右上角刻意裁切，只露出用户名的最后几个字符『...412』，字体是应用默认无衬线体，背景是浅粉色渐变卡片，边缘能看到一点头像圆形轮廓和会员等级小图标。整体是随手截图分享的质感，非专业修图。",
-      "imageCaption": "用户名右上角被裁掉，只剩「...412」",
+      "imagePrompt": "写实摄影风格，手机截图，社交 App 个人资料卡片局部特写。截图右上角刻意裁切，用户名只露出前后两段、中间被卡片边缘挡住：能看清的部分拼起来是『ricec』开头、『12』结尾，中间几位完全看不到。字体是应用默认无衬线体，背景是浅粉色渐变卡片，边缘能看到一点头像圆形轮廓和会员等级小图标。整体是随手截图分享的质感，非专业修图。",
+      "imageCaption": "用户名被卡片边缘挡住一截，只拼得出「ricec••••12」",
       "replies": [
         {
           "author": "同校旧友",
@@ -1798,6 +1798,16 @@
           "author": "同校旧友",
           "text": "又是这天",
           "meta": "5 赞"
+        },
+        {
+          "author": "同校旧友",
+          "text": "你俩后来还联系吗",
+          "meta": "3 赞"
+        },
+        {
+          "author": "拾光の猫",
+          "text": "别问了",
+          "meta": "2 赞"
         }
       ]
     },
@@ -1875,6 +1885,66 @@
       ],
       "imagePrompt": "写实摄影风格，便利店小票特写，随手放在桌面上拍摄。小票上印着时间戳和店铺名称局部可见『徐汇...店』字样，其余文字模糊不可辨认，背景是便利店常见的塑料袋和随手放的饮料瓶，色温偏冷、便利店日光灯质感，业余手机随拍构图。",
       "imageCaption": "配图：一张便利店小票，隐约可见『徐汇』字样",
+      "replies": []
+    },
+    {
+      "id": "sg09",
+      "profile": "shiguang_neko",
+      "pinned": false,
+      "author": "拾光の猫",
+      "handle": "@shiguang_neko",
+      "verified": false,
+      "time": "03-08 22:10",
+      "text": "又被人说用户名幼稚了，ricecake怎么了😾",
+      "likes": "9",
+      "reposts": "0",
+      "replies": [
+        { "author": "今天吃什么", "text": "你这个ID用了几年了还不换", "meta": "2 赞" },
+        { "author": "拾光の猫", "text": "懒得换了", "meta": "1 赞" },
+        { "author": "今天吃什么", "text": "后面那四位也不换？", "meta": "1 赞" },
+        { "author": "拾光の猫", "text": "那个更不会换", "meta": "0 赞" }
+      ]
+    },
+    {
+      "id": "sg10",
+      "profile": "shiguang_neko",
+      "pinned": false,
+      "author": "拾光の猫",
+      "handle": "@shiguang_neko",
+      "verified": false,
+      "time": "08-17 09:30",
+      "text": "年糕生日快乐🎂",
+      "likes": "27",
+      "reposts": "1",
+      "replies": [
+        { "author": "同校旧友", "text": "好可爱，年糕几岁了", "meta": "4 赞" },
+        { "author": "拾光の猫", "text": "三岁啦", "meta": "3 赞" }
+      ]
+    },
+    {
+      "id": "sg11",
+      "profile": "shiguang_neko",
+      "pinned": false,
+      "author": "拾光の猫",
+      "handle": "@shiguang_neko",
+      "verified": false,
+      "time": "11-03 23:50",
+      "text": "又是这天啊。",
+      "likes": "14",
+      "reposts": "0",
+      "replies": []
+    },
+    {
+      "id": "sg12",
+      "profile": "shiguang_neko",
+      "pinned": false,
+      "author": "拾光の猫",
+      "handle": "@shiguang_neko",
+      "verified": false,
+      "time": "11-03（去年）",
+      "text": "还是老样子。",
+      "likes": "9",
+      "reposts": "0",
       "replies": []
     },
     {
