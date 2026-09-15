@@ -1,7 +1,19 @@
-import { clues, endings } from "../data.js";
-import { state, save } from "../state.js";
+import { endings } from "../data.js";
+import { state, save, CLUE_TOTAL } from "../state.js";
 import { goTo } from "../router.js";
 import { renderTopNav } from "../components/weiboChrome.js";
+
+const HINT_TIERS = [
+  { max: 10, text: "超话里还有很多人似乎知道些什么。试着留意评论里反复出现的名字。" },
+  { max: 20, text: "有些账号并不能用真名找到。你见过的昵称、物品、宠物，也许都有意义。" },
+  { max: 29, text: "你已经很接近了。但死亡前最后几个小时，还有人的说法没有互相对上。" },
+  { max: 33, text: "只差一点。也许该回头看看你已经找到的人——有些主页后来出现了新的内容。" },
+];
+
+function hintFor(found) {
+  const tier = HINT_TIERS.find((t) => found <= t.max);
+  return tier ? tier.text : "";
+}
 
 export function renderDm(root) {
   root.className = "weibo-scope";
@@ -28,22 +40,30 @@ export function renderDm(root) {
   panel.innerHTML = `<h3 style="margin:0 0 14px;font-size:15px;">私信 · 陪你走到最后</h3>`;
   main.appendChild(panel);
 
-  const coreClues = clues.timeline.filter((c) => c.core);
-  const hasAllCore = coreClues.every((c) => state.foundClues.includes(c.id));
+  const found = state.foundClues.length;
+  const ready = found >= CLUE_TOTAL;
   const { conclusionChoices } = endings.reportOptions;
 
   const thread = document.createElement("div");
   thread.className = "bubble-thread";
   panel.appendChild(thread);
 
-  if (!hasAllCore) {
+  if (!ready) {
     thread.innerHTML = `
-      <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>看你这几天一直在查，先别急着下结论，多查查清楚，别搞错了伤到不相干的人。</div>
+      <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你是不是也觉得这件事不对？</div>
+      <p class="clue-progress mono">目前掌握线索：${found} / ${CLUE_TOTAL}</p>
+      <p class="clue-hint">你掌握的信息似乎还不足以还原那一晚。${hintFor(found)}</p>
     `;
+    const link = document.createElement("div");
+    link.className = "reset-link";
+    link.textContent = "继续调查 ›";
+    link.addEventListener("click", () => goTo("forum"));
+    panel.appendChild(link);
     return;
   }
 
   thread.innerHTML = `
+    <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你是不是也觉得这件事不对？</div>
     <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>看你这几天查了不少东西。方便说说，你手上到底有什么，打算怎么处理吗？</div>
   `;
 
@@ -75,13 +95,11 @@ export function renderDm(root) {
 }
 
 function computeEnding(replyId) {
-  const coreClues = clues.timeline.filter((c) => c.core);
-  const hasAllCore = coreClues.every((c) => state.foundClues.includes(c.id));
-
   if (replyId === "c_expose_su") return "D";
-  if (!hasAllCore) return "D";
-  if (state.foundClues.includes("t06") && replyId === "c_company") return "A";
-  if (state.foundClues.includes("t01") && state.foundClues.includes("t03") && replyId === "c_pressure") return "B";
+  const hasHistory = state.foundClues.includes("c26") && state.foundClues.includes("c27");
+  const hasPressure = state.foundClues.includes("c03") && state.foundClues.includes("c05");
+  if (replyId === "c_company") return hasHistory ? "A" : "D";
+  if (replyId === "c_pressure") return hasPressure ? "B" : "D";
   if (replyId === "c_protect") return "C";
   return "D";
 }

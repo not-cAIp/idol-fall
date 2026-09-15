@@ -1,5 +1,5 @@
 import { findProfile, isBlockedQuery } from "../data.js";
-import { markProfileFound, markClueFound } from "../state.js";
+import { markProfileFound, markClueFound, isUnlocked } from "../state.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderLeftNav, renderRightbar } from "../components/weiboChrome.js";
 import { icon } from "../components/icons.js";
@@ -49,7 +49,10 @@ export function renderSearch(root) {
     }
 
     markProfileFound(profile.id);
-    if (profile.id === "shenxi_sunflower") markClueFound("t03");
+    if (profile.clueOnFound) markClueFound(profile.clueOnFound);
+
+    const visibleBlocks = (profile.blocks || []).filter((b) => isUnlocked(b.requires));
+    const visibleImages = (profile.images || []).filter((im) => isUnlocked(im.requires));
 
     resultEl.innerHTML = `
       <div class="wbanner" style="min-height:170px;background:linear-gradient(135deg,#2b3242,#171b22);">
@@ -73,14 +76,16 @@ export function renderSearch(root) {
         ${profile.locked ? `<div class="locked-note" style="margin-top:10px;display:flex;align-items:center;gap:5px;">${icon("lock", { size: 13 })} ${profile.lockedNote || "部分内容仅粉丝可见"}</div>` : ""}
       </div>
       <div class="wfeed-card" style="cursor:default;margin-top:12px;">
-        <div class="plist">${profile.posts.map((p) => `<div>· ${p}</div>`).join("")}</div>
-        ${profile.images?.length ? `<div class="photo-gallery"></div>` : ""}
+        <div class="plist">${visibleBlocks.map((b) => `<div>· ${b.text}${b.meta ? ` <span class="b-meta">（${b.meta}）</span>` : ""}</div>`).join("")}</div>
+        ${visibleImages.length ? `<div class="photo-gallery"></div>` : ""}
       </div>
     `;
 
+    visibleBlocks.forEach((b) => { if (b.clueId) markClueFound(b.clueId); });
+
     const galleryEl = resultEl.querySelector(".photo-gallery");
     if (galleryEl) {
-      profile.images.forEach((img) => galleryEl.appendChild(createPhotoThumb(img)));
+      visibleImages.forEach((img) => galleryEl.appendChild(createPhotoThumb(img)));
     }
   }
 

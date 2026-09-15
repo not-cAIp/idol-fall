@@ -1,5 +1,5 @@
 import { postById } from "../data.js";
-import { state, save, markClueFound } from "../state.js";
+import { state, save, markClueFound, isUnlocked } from "../state.js";
 import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
@@ -58,6 +58,25 @@ export function renderPostDetail(root, { id } = {}) {
   }
   main.appendChild(post);
 
+  if (p.history && isUnlocked(p.history.requires)) {
+    const revealed = state.foundClues.includes(p.history.clueId);
+    if (revealed) {
+      const histEl = document.createElement("div");
+      histEl.className = "post-history revealed";
+      histEl.innerHTML = `<div class="ph-label">历史版本</div><div class="text">${p.history.oldText}</div>`;
+      main.appendChild(histEl);
+    } else {
+      const toggle = document.createElement("div");
+      toggle.className = "post-history-toggle";
+      toggle.textContent = "‹ 查看历史版本";
+      toggle.addEventListener("click", () => {
+        markClueFound(p.history.clueId);
+        renderAgain();
+      });
+      main.appendChild(toggle);
+    }
+  }
+
   const commentsTitle = document.createElement("h3");
   commentsTitle.style.cssText = "font-size:14px;margin:18px 0 10px;color:var(--ink-soft);";
   commentsTitle.textContent = `全部评论 ${p.replies?.length || 0}`;
@@ -83,7 +102,7 @@ export function renderPostDetail(root, { id } = {}) {
       rEl.addEventListener("click", () => {
         state.expandedReplies.push(key);
         save();
-        if (p.id === "p006") markClueFound("t01");
+        if (r.clueId) markClueFound(r.clueId);
         renderAgain();
       });
     }

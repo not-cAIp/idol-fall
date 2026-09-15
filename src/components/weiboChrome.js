@@ -1,12 +1,11 @@
-import { clues } from "../data.js";
-import { state } from "../state.js";
+import { state, CLUE_TOTAL } from "../state.js";
 import { goTo } from "../router.js";
 import { icon } from "./icons.js";
 
 export function renderTopNav(root) {
   document.body.classList.add("desktop-mode");
 
-  const coreDone = clues.timeline.filter((c) => c.core).every((c) => state.foundClues.includes(c.id));
+  const coreDone = state.foundClues.length >= CLUE_TOTAL;
 
   const nav = document.createElement("header");
   nav.className = "wtop";
@@ -71,14 +70,6 @@ export function renderRightbar() {
   aside.className = "wrightbar";
   aside.innerHTML = `
     <div class="wwidget">
-      <h5>常用功能</h5>
-      <div class="witem" id="w-reasoning">
-        <div class="wicon-box">${icon("compass", { size: 18 })}</div>
-        <div class="wtxt"><div class="t1">案件推理台</div><div class="t2">case.xingchao.fm</div></div>
-        <span class="wbtn">打开</span>
-      </div>
-    </div>
-    <div class="wwidget">
       <h5>相关推荐 <span class="refresh">${icon("refresh", { size: 12 })} 换一换</span></h5>
       <div class="witem" id="w-luyan"><div class="wicon-box">${icon("mic", { size: 18 })}</div><div class="wtxt"><div class="t1">星安理得超话</div><div class="t2">CP 超话</div></div></div>
       <div class="witem" id="w-chenyu"><div class="wicon-box">${icon("building", { size: 18 })}</div><div class="wtxt"><div class="t1">银河星途</div><div class="t2">经纪公司</div></div></div>
@@ -89,7 +80,6 @@ export function renderRightbar() {
       星潮工作室 出品 · 本页面内容均为虚构
     </div>
   `;
-  aside.querySelector("#w-reasoning").addEventListener("click", () => goTo("reasoning"));
   aside.querySelector("#w-luyan").addEventListener("click", () => goTo("search"));
   aside.querySelector("#w-chenyu").addEventListener("click", () => goTo("search"));
   return aside;

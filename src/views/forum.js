@@ -1,5 +1,5 @@
 import { posts } from "../data.js";
-import { state, computeAct } from "../state.js";
+import { isUnlocked } from "../state.js";
 import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
@@ -11,10 +11,10 @@ const TABS = [...TABS_CLICKABLE, ...TABS_STATIC];
 const FEED_CAP = 10;
 let activeTab = "最新";
 
-function postsForTab(tab, act) {
+function postsForTab(tab) {
   if (tab === "精华") {
     return posts.posts
-      .filter((p) => (!p.section || p.section === "essence") && p.act <= act)
+      .filter((p) => (!p.section || p.section === "essence") && isUnlocked(p.requires))
       .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || a.time.localeCompare(b.time));
   }
   // 最新：纯水贴池，不含线索
@@ -71,8 +71,7 @@ export function renderForum(root) {
 
   function renderFeed() {
     feed.innerHTML = "";
-    const act = computeAct(state);
-    const all = postsForTab(activeTab, act);
+    const all = postsForTab(activeTab);
     all.slice(0, FEED_CAP).forEach((p) => feed.appendChild(postCard(p)));
     if (!feed.children.length) {
       feed.innerHTML = `<div class="wfeed-card" style="cursor:default;color:var(--ink-faint);text-align:center;">这里还没有内容</div>`;
