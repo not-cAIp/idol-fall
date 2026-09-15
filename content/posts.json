@@ -1932,7 +1932,10 @@
       "text": "又是这天啊。",
       "likes": "14",
       "reposts": "0",
-      "replies": []
+      "replies": [
+        { "author": "同校旧友", "text": "这天怎么了", "meta": "2 赞" },
+        { "author": "拾光の猫", "text": "没什么，习惯了", "meta": "1 赞" }
+      ]
     },
     {
       "id": "sg12",
@@ -1945,7 +1948,9 @@
       "text": "还是老样子。",
       "likes": "9",
       "reposts": "0",
-      "replies": []
+      "replies": [
+        { "author": "同校旧友", "text": "你每年这时候都这样", "meta": "1 赞" }
+      ]
     },
     {
       "id": "ly01",
