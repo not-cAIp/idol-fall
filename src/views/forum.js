@@ -72,12 +72,15 @@ export function renderForum(root) {
   function renderFeed() {
     feed.innerHTML = "";
     const all = postsForTab(activeTab);
-    all.slice(0, FEED_CAP).forEach((p) => feed.appendChild(postCard(p)));
+    // 精华区是有限的线索帖集合，回访解锁的新帖必须始终可见，不能被折叠——
+    // 折叠上限只用于『最新』那 30 条纯水贴的氛围池，营造"还有更多但不重要"的感觉。
+    const cap = activeTab === "精华" ? all.length : FEED_CAP;
+    all.slice(0, cap).forEach((p) => feed.appendChild(postCard(p)));
     if (!feed.children.length) {
       feed.innerHTML = `<div class="wfeed-card" style="cursor:default;color:var(--ink-faint);text-align:center;">这里还没有内容</div>`;
       return;
     }
-    if (all.length > FEED_CAP) {
+    if (all.length > cap) {
       const more = document.createElement("div");
       more.className = "wfeed-more";
       more.textContent = "更多帖子已被折叠";
