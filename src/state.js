@@ -85,3 +85,13 @@ export function resetGame() {
   localStorage.removeItem(STORAGE_KEY);
   location.reload();
 }
+
+// "继续调查"——只清掉 PT2 的指认结果（嫌疑人/处理方式/结局），线索、
+// 主页发现记录、PT1 的三个答案全部保留，玩家可以直接回私信换一个
+// 嫌疑人/处理方式再试，不用把已经拼出来的东西全部推倒重来。
+export function continueInvestigating() {
+  state.finalSuspect = null;
+  state.finalAction = null;
+  state.finalEnding = null;
+  save();
+}
