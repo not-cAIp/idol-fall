@@ -5,7 +5,7 @@ import { goTo } from "../router.js";
 import { renderTopNav, renderLeftNav, renderRightbar } from "../components/weiboChrome.js";
 import { icon, verifiedBadge } from "../components/icons.js";
 
-export function renderSearch(root, { profile: profileId } = {}) {
+export function renderSearch(root, { profile: profileId, query } = {}) {
   root.className = "weibo-scope";
   renderTopNav(root);
 
@@ -101,6 +101,9 @@ export function renderSearch(root, { profile: profileId } = {}) {
       input.value = profile.searchKeywords[0];
       showProfile(profile);
     }
+  } else if (query) {
+    input.value = query;
+    runSearch();
   }
 }
 

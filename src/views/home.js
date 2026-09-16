@@ -83,9 +83,11 @@ export function renderHome(root) {
     </div>
   `;
 
-  page.querySelector("#whome-search-btn").addEventListener("click", () => goTo("search"));
-  page.querySelector("#whome-search-input").addEventListener("keydown", (e) => {
-    if (e.key === "Enter") goTo("search");
+  const heroSearchInput = page.querySelector("#whome-search-input");
+  const runHeroSearch = () => goTo("search", { query: heroSearchInput.value.trim() || undefined });
+  page.querySelector("#whome-search-btn").addEventListener("click", runHeroSearch);
+  heroSearchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") runHeroSearch();
   });
 
   const feed = page.querySelector("#whome-feed");
