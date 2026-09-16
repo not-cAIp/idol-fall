@@ -17,6 +17,10 @@ export function renderEnding(root) {
 
   const suspect = endings.suspects.find((s) => s.id === state.finalSuspect);
   const summary = ending.summary.replaceAll("{name}", suspect?.name || "那个人");
+  const paragraphs = summary
+    .split("\n\n")
+    .map((p) => `<p>${p}</p>`)
+    .join("");
   const tag = isUnproven
     ? "证据不足"
     : suspect?.correct
@@ -29,7 +33,7 @@ export function renderEnding(root) {
     <div class="ending-card">
       <div class="tag mono">${tag}</div>
       <h2>${ending.name}</h2>
-      <p>${summary}</p>
+      ${paragraphs}
     </div>
     <div class="reset-link" id="reset-link">重新调查一遍</div>
   `;
