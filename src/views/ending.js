@@ -9,6 +9,7 @@ let fxController = null;
 export function renderEnding(root) {
   root.className = "";
   document.body.classList.remove("desktop-mode");
+  document.body.classList.add("ending-mode");
 
   const bg = document.createElement("div");
   bg.className = "ending-bg";
@@ -20,17 +21,36 @@ export function renderEnding(root) {
   root.appendChild(body);
 
   const isUnproven = state.finalEnding === "hexun_unproven";
-  const ending = isUnproven ? endings.hexun_unproven : endings.endings[state.finalEnding];
+  const suspect = endings.suspects.find((s) => s.id === state.finalSuspect);
+
+  // 贺寻（正确）和 unclear 各自是一篇完整独立的结局，直接按 key 查表。
+  // 其余 5 个错误嫌疑人不再共用一份 {name} 模板——每个人有自己独立的
+  // 调查正文（body），只有中间那一小段"传播后果"（actionSuffix）随
+  // 处理方式变化，结尾统一收在一段"未解释的裂缝"（crack）上，裂缝
+  // 不随处理方式变化，见 content/endings.json 的 wrongEndings。
+  let ending;
+  if (isUnproven) {
+    ending = endings.hexun_unproven;
+  } else if (state.finalSuspect === "unclear") {
+    ending = endings.endings.unclear;
+  } else if (suspect?.correct) {
+    ending = endings.endings[state.finalEnding];
+  } else {
+    const w = endings.wrongEndings?.[state.finalSuspect];
+    if (w) {
+      const suffix = w.actionSuffix[state.finalAction] || "";
+      ending = { name: w.name, summary: [w.body, suffix, w.crack].filter(Boolean).join("\n\n") };
+    }
+  }
+
   if (!ending) {
     body.innerHTML = `<p class="intro">还没有结局——先去私信里把话说完再来看看。</p>`;
     return;
   }
 
-  const suspect = endings.suspects.find((s) => s.id === state.finalSuspect);
-  const summary = ending.summary.replaceAll("{name}", suspect?.name || "那个人");
-  const paragraphs = summary
+  const paragraphs = ending.summary
     .split("\n\n")
-    .map((p) => `<p>${wrapForFocusFx(p)}</p>`)
+    .map((p) => renderParagraph(p))
     .join("");
   const tag = isUnproven
     ? "证据不足"
@@ -68,6 +88,22 @@ export function renderEnding(root) {
   });
 
   setupFocusFx(body);
+}
+
+// 三种段落：①裸时间戳（"23:52"这种整段就是一个时间点）当视觉锚点，
+// 用等宽字体加大间距，不进入模糊/清晰的 fx 效果，滚动经过时始终清楚；
+// ②整段加粗的强调句（**...**，原稿里都是独立成段的，不是段内一个词）
+// 同样跳过 fx 效果、直接加粗常驻清晰；③其余正文照常走 fx 切片。三种
+// 都是纯文字，没有卡片、没有边框、没有背景色，直接铺在结局背景图上。
+function renderParagraph(p) {
+  if (/^\d{2}:\d{2}(：\d{2})?[。.]?$/.test(p.trim())) {
+    return `<div class="ending-time mono">${p.trim().replace(/[。.]$/, "")}</div>`;
+  }
+  const boldMatch = p.trim().match(/^\*\*(.+)\*\*$/);
+  if (boldMatch) {
+    return `<p class="ending-emphasis">${boldMatch[1]}</p>`;
+  }
+  return `<p>${wrapForFocusFx(p)}</p>`;
 }
 
 // 把一段文字按标点切成小段，各自包一个 span——配合 setupFocusFx()

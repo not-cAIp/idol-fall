@@ -91,6 +91,26 @@ body.desktop-mode #view {
   overflow: visible;
 }
 
+/* 结局页：不要"手机壳"边框/圆角/阴影，背景图直接铺满整个视口，
+   横屏或宽视口下也不会在中间露出一个黑色长方形的壳。 */
+body.ending-mode {
+  display: block;
+  padding: 0;
+}
+body.ending-mode #phone {
+  max-width: none;
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+body.ending-mode #view {
+  overflow: visible;
+}
+
 .view-header {
   position: sticky;
   top: 0;
@@ -294,6 +314,17 @@ body.desktop-mode #view {
   text-shadow: 0 1px 10px rgba(0,0,0,.75);
 }
 .fx-chunk { transition: filter .15s linear, opacity .15s linear; will-change: filter, opacity; }
+
+/* 时间锚点和加粗强调句——纯文字处理，没有卡片/边框/背景色，靠字号、
+   字重、字间距和居中跟正文拉开层次，直接铺在结局背景图上。 */
+.ending-time {
+  text-align: center; font-size: 20px; font-weight: 700; letter-spacing: .06em;
+  color: var(--ink); margin: 30px 0 20px; text-shadow: 0 2px 14px rgba(0,0,0,.85);
+}
+.ending-overlay p.ending-emphasis {
+  text-align: center; font-weight: 700; font-size: 15.5px; color: var(--ink);
+  margin: 22px 0; text-shadow: 0 1px 10px rgba(0,0,0,.8);
+}
 
 .ending-actions { margin-top: 34px; padding-bottom: 6px; }
 .reset-link-faint { opacity: .5; font-size: 11px; margin-top: 10px; }

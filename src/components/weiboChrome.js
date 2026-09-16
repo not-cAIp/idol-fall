@@ -4,6 +4,7 @@ import { icon } from "./icons.js";
 
 export function renderTopNav(root) {
   document.body.classList.add("desktop-mode");
+  document.body.classList.remove("ending-mode");
 
   const coreDone = canUnlockPt2(state);
 
