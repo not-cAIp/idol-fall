@@ -2,7 +2,7 @@ import { endings, resolveSrc } from "../data.js";
 import { state, resetGame, continueInvestigating } from "../state.js";
 import { goTo } from "../router.js";
 
-const BG_IMAGE = "/images/fan-avatar-yanxing-backstage-back.jpg";
+const BG_IMAGE = "/images/yanxing-ending-bg.png";
 
 let fxController = null;
 

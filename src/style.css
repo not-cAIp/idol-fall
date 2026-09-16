@@ -286,8 +286,8 @@ body.ending-mode #view {
 .ending-bg {
   position: fixed; inset: 0; z-index: -1;
   background-size: cover; background-position: center 30%;
-  filter: blur(20px) brightness(.55) saturate(.8);
-  transform: scale(1.15);
+  filter: blur(3px) brightness(.6) saturate(.9);
+  transform: scale(1.03);
 }
 .ending-bg::after {
   content: ""; position: absolute; inset: 0;
