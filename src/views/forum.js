@@ -39,9 +39,20 @@ const TABS_STATIC = ["安利帖", "图文产出", "绝美舞台", "水贴专区"
 const TABS = [...TABS_CLICKABLE, ...TABS_STATIC];
 let activeTab = "最新";
 
+// section 通常是个字符串（"hot"/"flavor"），少数帖子（比如 p001）
+// 想同时出现在两个标签页，就写成数组 ["hot","flavor"]——两种写法都要
+// 支持，下面两个判断函数分别对应「该不该出现在精华」「该不该出现在
+// 最新」，字符串走原来的精确匹配，数组走 includes。
+function inHot(p) {
+  return Array.isArray(p.section) ? p.section.includes("hot") : p.section !== "flavor";
+}
+function inFlavor(p) {
+  return Array.isArray(p.section) ? p.section.includes("flavor") : p.section === "flavor";
+}
+
 function postsForThread(threadSlug, tab) {
   return posts.posts
-    .filter((p) => p.thread === threadSlug && (tab === "精华" ? p.section !== "flavor" : p.section === "flavor"))
+    .filter((p) => p.thread === threadSlug && (tab === "精华" ? inHot(p) : inFlavor(p)))
     .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || timeSortKey(b.time) - timeSortKey(a.time));
 }
 

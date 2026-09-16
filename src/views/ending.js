@@ -40,21 +40,32 @@ export function renderEnding(root) {
     ? "未指认任何人"
     : "推断有误";
 
+  // 上下各留一块空白（约一屏高），保证正文第一句和最后一句都能被
+  // 滚动到视口中间——不然贴着内容顶/底的那几行永远够不到聚焦带，
+  // 永远是虚的，读不清楚。
   body.innerHTML = `
-    <div class="ending-card">
+    <div class="ending-spacer"></div>
+    <div class="ending-overlay">
       <div class="tag mono">${tag}</div>
       <h2>${ending.name}</h2>
       ${paragraphs}
+      <div class="ending-actions">
+        <div class="reset-link" id="continue-link">继续调查 ›</div>
+        <div class="reset-link reset-link-faint" id="restart-link">重新开始（清空存档）</div>
+      </div>
     </div>
-    <div class="reset-link" id="continue-link">继续调查 ›</div>
-    <div class="reset-link reset-link-faint" id="restart-link">重新开始（清空存档）</div>
+    <div class="ending-spacer"></div>
   `;
 
   body.querySelector("#continue-link").addEventListener("click", () => {
     continueInvestigating();
     goTo("dm");
   });
-  body.querySelector("#restart-link").addEventListener("click", resetGame);
+  body.querySelector("#restart-link").addEventListener("click", () => {
+    if (window.confirm("确定要清空所有存档、从头开始吗？已经找到的线索和推理进度都会消失，这个操作不能撤销。")) {
+      resetGame();
+    }
+  });
 
   setupFocusFx(body);
 }

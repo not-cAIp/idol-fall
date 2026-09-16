@@ -51,7 +51,7 @@
           "meta": "3400 赞"
         }
       ],
-      "section": "hot"
+      "section": ["hot", "flavor"]
     },
     {
       "id": "w38",
@@ -780,11 +780,11 @@
       "section": "flavor"
     },
     {
-      "id": "w36",
+      "id": "w29",
       "thread": "yanxing",
       "pinned": false,
-      "author": "晏星今天笑了吗",
-      "handle": "@晏星今天笑了吗",
+      "author": "188纯情大蟑螂",
+      "handle": "@188纯情大蟑螂",
       "verified": false,
       "time": "08-30 15:20",
       "text": "采访里那个害羞的笑，存图",

@@ -262,28 +262,37 @@ body.desktop-mode #view {
 .ending-bg {
   position: fixed; inset: 0; z-index: -1;
   background-size: cover; background-position: center 30%;
-  filter: blur(20px) brightness(.62) saturate(.8);
+  filter: blur(20px) brightness(.55) saturate(.8);
   transform: scale(1.15);
 }
 .ending-bg::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(5,7,10,.3), rgba(5,7,10,.55) 55%, rgba(5,7,10,.8));
+  background: linear-gradient(180deg, rgba(5,7,10,.5), rgba(5,7,10,.6) 45%, rgba(5,7,10,.78));
 }
 
-.ending-card {
-  background: color-mix(in srgb, var(--surface) 90%, transparent);
-  border: 1px solid var(--accent); border-radius: var(--radius);
-  padding: 26px 24px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,.5);
-  max-width: 640px; margin: 40px auto 0;
-  backdrop-filter: blur(3px);
+/* 结局页不再用一个居中的卡片框——文字直接铺在模糊背景图上，可以
+   一路上下滑。上下各留一屏高的空白，保证第一句和最后一句都能被
+   滚动到视口中间的清晰带里，不会永远卡在虚化区读不清楚。 */
+.ending-spacer { height: 50vh; }
+.ending-overlay {
+  max-width: 620px; margin: 0 auto; padding: 0 22px;
+  text-align: center;
 }
-.ending-card .tag { font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--accent); letter-spacing: .1em; }
-.ending-card h2 { margin: 8px 0 18px; }
-.ending-card p { color: var(--ink-soft); font-size: 14px; line-height: 1.95; text-align: left; margin: 0 0 15px; }
-.ending-card p:last-child { margin-bottom: 0; }
+.ending-overlay .tag {
+  font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--accent);
+  letter-spacing: .14em; text-shadow: 0 2px 12px rgba(0,0,0,.8);
+}
+.ending-overlay h2 {
+  margin: 10px 0 26px; font-size: 21px; text-shadow: 0 2px 16px rgba(0,0,0,.85);
+}
+.ending-overlay p {
+  color: var(--ink); font-size: 14.5px; line-height: 2; text-align: left; margin: 0 0 17px;
+  text-shadow: 0 1px 10px rgba(0,0,0,.75);
+}
 .fx-chunk { transition: filter .15s linear, opacity .15s linear; will-change: filter, opacity; }
 
-.reset-link-faint { opacity: .5; font-size: 11px; margin-top: 8px; }
+.ending-actions { margin-top: 34px; padding-bottom: 6px; }
+.reset-link-faint { opacity: .5; font-size: 11px; margin-top: 10px; }
 .reset-link-faint:hover { opacity: .85; }
 .reset-link { display: block; text-align: center; margin-top: 16px; color: var(--ink-faint); font-size: 12px; cursor: pointer; }
 
