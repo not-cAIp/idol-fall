@@ -56,35 +56,22 @@ const KNOWN_AVATARS = {
   // 改回粉丝号人设（乍看是普通微博用户，主页一看全是他），头像也相应
   // 改成从粉丝头像池里普通分配，不再单独占用"营销号同款"头像。
   "@内娱教母": "/images/avatar-marketing-neiyujiaomu.jpg",
+  // "周-大粉"——用周晏星本人的照片当自己头像的铁杆大粉/组织号，只有
+  // 这几个指定账号能用，不进入下面的通用粉丝头像池（真实饭圈里只有
+  // 真的很上头的大粉/数据站/后援会才会直接拿本人照片当头像，普通路人
+  // 粉丝不会这么用）。
+  "@StarryNight_周晏星": "/images/fan-avatar-yanxing-rainy-night.jpg",
+  "@ZHOUYANXING_FOCUS": "/images/fan-avatar-yanxing-stage-dance.jpg",
+  "@Daniel周晏星数据站": "/images/fan-avatar-yanxing-encore-talk.jpg",
+  "@周晏星全国后援会": "/images/fan-avatar-yanxing-backstage-back.jpg",
+  "@周晏星吧官博": "/images/fan-avatar-yanxing-airport.jpg",
 };
 
+// 通用粉丝头像池——超话里其他普通人优先用年轻女孩风格（这类偶像的
+// 粉丝群体本来就以年轻女孩为主），ordinary（生活随手拍/宠物/风景）
+// 放在后面当补充，池子里已经不包含周晏星本人的照片（那些保留给上面
+// 明确指定的大粉账号专用）。
 const FAN_AVATARS = [
-  "/images/fan-avatar-yanxing-airport.jpg",
-  "/images/fan-avatar-yanxing-backstage-back.jpg",
-  "/images/fan-avatar-yanxing-encore-talk.jpg",
-  "/images/fan-avatar-yanxing-rainy-night.jpg",
-  "/images/fan-avatar-yanxing-stage-dance.jpg",
-  "/images/fan-avatar-yanxing-variety.jpg",
-  "/images/avatars/ordinary/ordinary-01.jpg",
-  "/images/avatars/ordinary/ordinary-02.jpg",
-  "/images/avatars/ordinary/ordinary-03.jpg",
-  "/images/avatars/ordinary/ordinary-04.jpg",
-  "/images/avatars/ordinary/ordinary-05.jpg",
-  "/images/avatars/ordinary/ordinary-06.jpg",
-  "/images/avatars/ordinary/ordinary-07.jpg",
-  "/images/avatars/ordinary/ordinary-08.jpg",
-  "/images/avatars/ordinary/ordinary-09.jpg",
-  "/images/avatars/ordinary/ordinary-10.jpg",
-  "/images/avatars/ordinary/ordinary-11.jpg",
-  "/images/avatars/ordinary/ordinary-12.jpg",
-  "/images/avatars/ordinary/ordinary-13.jpg",
-  "/images/avatars/ordinary/ordinary-14.jpg",
-  "/images/avatars/ordinary/ordinary-15.jpg",
-  "/images/avatars/ordinary/ordinary-16.jpg",
-  "/images/avatars/ordinary/ordinary-17.jpg",
-  "/images/avatars/ordinary/ordinary-18.jpg",
-  "/images/avatars/ordinary/ordinary-19.jpg",
-  "/images/avatars/ordinary/ordinary-20.jpg",
   "/images/avatars/young-girls/girl-01.jpg",
   "/images/avatars/young-girls/girl-02.jpg",
   "/images/avatars/young-girls/girl-03.jpg",
@@ -115,6 +102,26 @@ const FAN_AVATARS = [
   "/images/avatars/young-girls/girl-28.jpg",
   "/images/avatars/young-girls/girl-29.jpg",
   "/images/avatars/young-girls/girl-30.jpg",
+  "/images/avatars/ordinary/ordinary-01.jpg",
+  "/images/avatars/ordinary/ordinary-02.jpg",
+  "/images/avatars/ordinary/ordinary-03.jpg",
+  "/images/avatars/ordinary/ordinary-04.jpg",
+  "/images/avatars/ordinary/ordinary-05.jpg",
+  "/images/avatars/ordinary/ordinary-06.jpg",
+  "/images/avatars/ordinary/ordinary-07.jpg",
+  "/images/avatars/ordinary/ordinary-08.jpg",
+  "/images/avatars/ordinary/ordinary-09.jpg",
+  "/images/avatars/ordinary/ordinary-10.jpg",
+  "/images/avatars/ordinary/ordinary-11.jpg",
+  "/images/avatars/ordinary/ordinary-12.jpg",
+  "/images/avatars/ordinary/ordinary-13.jpg",
+  "/images/avatars/ordinary/ordinary-14.jpg",
+  "/images/avatars/ordinary/ordinary-15.jpg",
+  "/images/avatars/ordinary/ordinary-16.jpg",
+  "/images/avatars/ordinary/ordinary-17.jpg",
+  "/images/avatars/ordinary/ordinary-18.jpg",
+  "/images/avatars/ordinary/ordinary-19.jpg",
+  "/images/avatars/ordinary/ordinary-20.jpg",
 ];
 
 // 死讯是 09-14 凌晨发布的——真实饭圈惯例：消息传出后，普通粉丝账号会
