@@ -65,7 +65,10 @@ const KNOWN_AVATARS = {
   "@chenyu_official": "/images/avatar-chenyu-manager.jpg",
   "@aurora_fit": "/images/avatar-aurora-brand.jpg",
   "@stay_with_yx": "/images/avatar-companion-admin.jpg",
-  "@深夜蹲守代拍": "/images/avatar-daipai-landscape.jpg",
+  // 之前占位的 avatar-daipai-landscape.jpg 一直没配到图，改成从通用
+  // 头像池里"借"一张没被分配过的（47个账号用了50张里的47张，还剩
+  // ordinary-18/19/20 三张没人用），保证不会跟其他账号撞图。
+  "@深夜蹲守代拍": "/images/avatars/ordinary/ordinary-20.jpg",
   "@Manibeeo": "/images/avatar-manibeeo.png",
   "@msgleisa": "/images/avatar-msgleisa.png",
   // 只留一个真正的营销号身份——内娱教母（仿现实的"内娱教父"），专门
@@ -81,9 +84,31 @@ const KNOWN_AVATARS = {
   // 粉丝不会这么用）。
   "@StarryNight_周晏星": "/images/fan-avatar-yanxing-rainy-night.jpg",
   "@ZHOUYANXING_FOCUS": "/images/fan-avatar-yanxing-stage-dance.jpg",
-  "@Daniel周晏星数据站": "/images/fan-avatar-yanxing-encore-talk.jpg",
-  "@周晏星全国后援会": "/images/fan-avatar-yanxing-backstage-back.jpg",
+  "@Daniel周晏星数据站": "/images/fan-avatar-yanxing-backstage-back.jpg",
+  "@Star·F4ever|周晏星官方后援会": "/images/fan-avatar-yanxing-encore-talk.jpg",
   "@周晏星吧官博": "/images/fan-avatar-yanxing-airport.jpg",
+  // 这两张图标头像专属"老妈站重生版"（w41）和"能火"（w42）——这两个
+  // 是仿真营销号名字本身（会火→能火、老爹站重生版→老妈站重生版），
+  // 不是当初改名之后的粉丝向账号（晏星收藏家/DanielZ观察中，那两个
+  // 继续用通用粉丝头像池，不占这两张图）。
+  "@能火": "/images/avatar-marketing-nenghuo.jpg",
+  "@老妈站重生版": "/images/avatar-marketing-laomazhan.jpg",
+  // 同样的"大粉拿本人照片当头像"惯例，林安这边挑了7个人设最贴近的
+  // 林安超话常驻账号，固定分配新到的7张林安本人生活照/综艺截图/
+  // 舞台照，不进入通用粉丝头像池，也不会跟其他账号撞图。
+  "@linan_fanbase": "/images/fan-avatar-linan-stage-dance.jpg",
+  "@linan_archive": "/images/fan-avatar-linan-variety-laugh.jpg",
+  "@林安考古组": "/images/fan-avatar-linan-variety-game.jpg",
+  "@Ryan你别太爱了": "/images/fan-avatar-linan-cafe.jpg",
+  "@only_the_work": "/images/fan-avatar-linan-walk.jpg",
+  "@求求放过林安": "/images/fan-avatar-linan-stage-back.jpg",
+  "@同期练习生粉": "/images/fan-avatar-linan-encore.jpg",
+  // CP双人生活照同理，只给星安理得超话里明显是嗑CP大粉性质的三个
+  // 账号用（selfie那张给了超话自己的头像，不在这里），普通CP粉还是
+  // 走通用头像池，不会拿两个人的合照当自己头像。
+  "@DanielRyan_Focus": "/images/cp-xingan-backstage.jpg",
+  "@星安理得资源站": "/images/cp-xingan-variety-game.jpg",
+  "@星安不是真的我就是假的": "/images/cp-xingan-cafe.jpg",
 };
 
 // 通用粉丝头像池——超话里其他普通人优先用年轻女孩风格（这类偶像的

@@ -25,7 +25,7 @@ export const THREADS = {
     stats: "215万 帖子 ｜ 640万 粉丝",
     chip: "娱乐超话 No.8",
     banner: "/images/banner-linan-supertopic.jpg",
-    avatar: "/images/avatar-linan-official.jpg",
+    avatar: "/images/fan-avatar-linan-encore.jpg",
     todayPosts: 3726,
   },
   xinganlide: {
@@ -33,6 +33,7 @@ export const THREADS = {
     stats: "430万 帖子 ｜ 158万 粉丝",
     chip: "CP超话 No.2",
     banner: "/images/banner-xingan-cp.jpg",
+    avatar: "/images/cp-xingan-selfie.jpg",
     todayPosts: 4613,
   },
   // F4ever（团体超话）：纯氛围水贴，不承担任何线索——不像另外三个超话
