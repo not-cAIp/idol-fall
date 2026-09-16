@@ -57,6 +57,7 @@ const KNOWN_AVATARS = {
   // 改成从粉丝头像池里普通分配，不再单独占用"营销号同款"头像。
   "@内娱教母": "/images/avatar-marketing-neiyujiaomu.jpg",
   "@真的吗？我不信": "/images/avatars/marketing/marketing-01.jpg",
+  "@小编今日份沙雕": "/images/avatars/marketing/marketing-08.jpg",
   // "周-大粉"——用周晏星本人的照片当自己头像的铁杆大粉/组织号，只有
   // 这几个指定账号能用，不进入下面的通用粉丝头像池（真实饭圈里只有
   // 真的很上头的大粉/数据站/后援会才会直接拿本人照片当头像，普通路人

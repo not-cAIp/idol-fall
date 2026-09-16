@@ -20,6 +20,7 @@ const HOT_SEARCH = ["#周晏星本人超话#", "#星安理得#", "#林安#", "#�
 const MEME_POSTS = [
   { author: "今日份废话", handle: "@今日份废话", time: "2小时前", text: "【震惊】18岁花季少女，10年前居然只有8岁", likes: "8.2万", reposts: "3.1万", comments: 4200 },
   { author: "热搜观察员", handle: "@热搜观察员", time: "3小时前", text: "多地网友反映：早上7点起床，比8点起床整整早了一个小时", likes: "5.6万", reposts: "1.9万", comments: 2800 },
+  { author: "小编今日份沙雕", handle: "@小编今日份沙雕", time: "4小时前", text: "【热点】今天的太阳，从东边升起了，小编也很惊讶", likes: "6.7万", reposts: "2.4万", comments: 3800 },
   { author: "深夜小课堂", handle: "@深夜小课堂", time: "5小时前", text: "医生提醒：长期不吃饭，可能会导致饿", likes: "9.9万", reposts: "4.4万", comments: 6100 },
   { author: "随手一拍", handle: "@随手一拍", time: "6小时前", text: "实测：把手机倒过来拿，屏幕也跟着倒过来了，附视频", likes: "3.3万", reposts: "1.1万", comments: 1500 },
   { author: "今天也在摆烂", handle: "@今天也在摆烂", time: "8小时前", text: "深夜发文：兄弟们，今天到底是星期几来着", likes: "2.1万", reposts: "890", comments: 3300 },
@@ -101,12 +102,13 @@ export function renderHome(root) {
   if (official) feed.appendChild(trendingCard(official));
   feed.appendChild(memeCard(MEME_POSTS[0]));
   feed.appendChild(memeCard(MEME_POSTS[1]));
-  rest.slice(0, 4).forEach((p) => feed.appendChild(trendingCard(p)));
   feed.appendChild(memeCard(MEME_POSTS[2]));
-  rest.slice(4, 7).forEach((p) => feed.appendChild(trendingCard(p)));
+  rest.slice(0, 4).forEach((p) => feed.appendChild(trendingCard(p)));
   feed.appendChild(memeCard(MEME_POSTS[3]));
-  rest.slice(7).forEach((p) => feed.appendChild(trendingCard(p)));
+  rest.slice(4, 7).forEach((p) => feed.appendChild(trendingCard(p)));
   feed.appendChild(memeCard(MEME_POSTS[4]));
+  rest.slice(7).forEach((p) => feed.appendChild(trendingCard(p)));
+  feed.appendChild(memeCard(MEME_POSTS[5]));
 }
 
 function memeCard(m) {
