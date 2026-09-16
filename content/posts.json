@@ -2390,6 +2390,26 @@
       "section": "hot"
     },
     {
+      "id": "l13",
+      "thread": "linan",
+      "pinned": false,
+      "author": "练习生时代考古组",
+      "handle": "@练习生时代考古组",
+      "verified": false,
+      "time": "09-14 13:40",
+      "text": "顺手搜了一下，这个叫ECHO的老软件官网首页居然还在，不知道账号是不是还能登进去：<a href=\"https://saraliuxt-coder.github.io/echo/\" target=\"_blank\" rel=\"noopener\">网页链接</a>",
+      "likes": "1900",
+      "reposts": "340",
+      "replies": [
+        {
+          "author": "同期练习生粉",
+          "text": "这么多年了服务器居然没关",
+          "meta": "260 赞"
+        }
+      ],
+      "section": "hot"
+    },
+    {
       "id": "p026",
       "thread": "linan",
       "pinned": false,
@@ -2681,6 +2701,164 @@
           "meta": "540 赞"
         }
       ],
+      "section": "flavor"
+    },
+    {
+      "id": "fe01",
+      "thread": "f4ever",
+      "pinned": true,
+      "author": "F4ever应援站",
+      "handle": "@F4ever应援站",
+      "verified": false,
+      "time": "08-05 12:00",
+      "text": "【置顶】超话签到点这里，团粉不分唯粉，理智追星，谢谢姐妹们",
+      "likes": "5200",
+      "reposts": "310",
+      "replies": [],
+      "section": "flavor"
+    },
+    {
+      "id": "fe02",
+      "thread": "f4ever",
+      "pinned": false,
+      "author": "四人饭堂",
+      "handle": "@四人饭堂",
+      "verified": false,
+      "time": "07-02 20:10",
+      "text": "四人合照更新，这次的默契度是真的绝了，站位都不用喊了",
+      "likes": "8900",
+      "reposts": "1200",
+      "replies": [
+        {
+          "author": "路人观众",
+          "text": "这个眼神交流我嗑到了",
+          "meta": "760 赞"
+        }
+      ],
+      "section": "flavor"
+    },
+    {
+      "id": "fe03",
+      "thread": "f4ever",
+      "pinned": false,
+      "author": "求求官方营业",
+      "handle": "@求求官方营业",
+      "verified": false,
+      "time": "06-18 21:40",
+      "text": "求求了什么时候能有团综，四个人凑一起真的比什么都好看",
+      "likes": "6100",
+      "reposts": "540",
+      "replies": [],
+      "section": "flavor"
+    },
+    {
+      "id": "fe04",
+      "thread": "f4ever",
+      "pinned": false,
+      "author": "数据女工今天也在",
+      "handle": "@数据女工今天也在",
+      "verified": false,
+      "time": "05-27 10:15",
+      "text": "刚刷到一点新歌小样的风声，虽然官方还没确认，但真的很期待",
+      "likes": "4300",
+      "reposts": "890",
+      "replies": [],
+      "section": "flavor"
+    },
+    {
+      "id": "fe05",
+      "thread": "f4ever",
+      "pinned": false,
+      "author": "灯牌快乐星",
+      "handle": "@灯牌快乐星",
+      "verified": false,
+      "time": "04-14 19:00",
+      "text": "四个人的应援色放一起也太好看了吧，谁调的配色，给谁加鸡腿",
+      "likes": "3700",
+      "reposts": "260",
+      "replies": [],
+      "section": "flavor"
+    },
+    {
+      "id": "fe06",
+      "thread": "f4ever",
+      "pinned": false,
+      "author": "钱包已空姐妹会",
+      "handle": "@钱包已空姐妹会",
+      "verified": false,
+      "time": "03-22 14:30",
+      "text": "灯牌钱包已经空了，就等官方一声令下",
+      "likes": "2900",
+      "reposts": "180",
+      "replies": [],
+      "section": "flavor"
+    },
+    {
+      "id": "fe07",
+      "thread": "f4ever",
+      "pinned": false,
+      "author": "考古挖到手软",
+      "handle": "@考古挖到手软",
+      "verified": false,
+      "time": "02-11 22:50",
+      "text": "刚翻到出道时候的采访，一晃这么多年了，四个人一个没少真的很难得",
+      "likes": "5600",
+      "reposts": "620",
+      "replies": [
+        {
+          "author": "路人观众",
+          "text": "看哭了，真的不容易",
+          "meta": "410 赞"
+        }
+      ],
+      "section": "flavor"
+    },
+    {
+      "id": "fe08",
+      "thread": "f4ever",
+      "pinned": false,
+      "author": "求排面小分队",
+      "handle": "@求排面小分队",
+      "verified": false,
+      "time": "01-30 09:20",
+      "text": "求排面，求官方好好宣传一下，明明四个人业务能力都很能打",
+      "likes": "3300",
+      "reposts": "410",
+      "replies": [],
+      "section": "flavor"
+    },
+    {
+      "id": "w40",
+      "thread": "yanxing",
+      "pinned": false,
+      "author": "F4ever全国后援会",
+      "handle": "@F4ever全国后援会",
+      "verified": false,
+      "time": "08-22 11:00",
+      "text": "官方刚官宣了F4ever巡演的城市名单！虽然具体日期还没放出来，但真的等好久了，希望这次四个人都能状态在线",
+      "likes": "9200",
+      "reposts": "1800",
+      "replies": [
+        {
+          "author": "只看周晏星",
+          "text": "终于终于终于，抢票警告",
+          "meta": "2100 赞"
+        }
+      ],
+      "section": "flavor"
+    },
+    {
+      "id": "l12",
+      "thread": "linan",
+      "pinned": false,
+      "author": "F4ever全国后援会",
+      "handle": "@F4ever全国后援会",
+      "verified": false,
+      "time": "08-22 11:05",
+      "text": "巡演城市名单里有林安家乡诶，本地姐妹狠狠期待住了",
+      "likes": "4100",
+      "reposts": "560",
+      "replies": [],
       "section": "flavor"
     }
   ]

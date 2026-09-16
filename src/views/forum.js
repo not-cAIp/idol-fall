@@ -35,11 +35,21 @@ export const THREADS = {
     banner: "/images/banner-xingan-cp.jpg",
     todayPosts: 4613,
   },
+  // F4ever（团体超话）：纯氛围水贴，不承担任何线索——不像另外三个超话
+  // 那样区分"精华/最新"（onlyLatest:true，只留"最新"一个能点的标签），
+  // 帖子也不能点进详情页（nonClickable:true，反正点进去也没有更多内容）。
+  f4ever: {
+    name: "F4ever超话",
+    stats: "68万 帖子 ｜ 890万 粉丝",
+    chip: "团体超话",
+    todayPosts: 2158,
+    onlyLatest: true,
+    nonClickable: true,
+  },
 };
 
 const TABS_CLICKABLE = ["最新", "精华"];
 const TABS_STATIC = ["安利帖", "图文产出", "绝美舞台", "水贴专区"];
-const TABS = [...TABS_CLICKABLE, ...TABS_STATIC];
 let activeTab = "最新";
 
 // section 通常是个字符串（"hot"/"flavor"），少数帖子（比如 p001）
@@ -62,7 +72,9 @@ function postsForThread(threadSlug, tab) {
 export function renderForum(root, { thread, tab } = {}) {
   const slug = thread && THREADS[thread] ? thread : "yanxing";
   const info = THREADS[slug];
-  activeTab = TABS_CLICKABLE.includes(tab) ? tab : "最新";
+  const clickableTabs = info.onlyLatest ? ["最新"] : TABS_CLICKABLE;
+  const tabs = [...clickableTabs, ...TABS_STATIC];
+  activeTab = clickableTabs.includes(tab) ? tab : "最新";
 
   root.className = "weibo-scope";
   renderTopNav(root);
@@ -90,8 +102,8 @@ export function renderForum(root, { thread, tab } = {}) {
       </div>
       <div class="wbanner-chips"><span>${info.chip}</span><span>今日发帖 ${info.todayPosts}</span></div>
     </div>
-    <div class="wtabs">${TABS.map(
-      (t) => `<span data-tab="${t}" class="${t === activeTab ? "active" : ""}${TABS_CLICKABLE.includes(t) ? "" : " static"}">${t}</span>`
+    <div class="wtabs">${tabs.map(
+      (t) => `<span data-tab="${t}" class="${t === activeTab ? "active" : ""}${clickableTabs.includes(t) ? "" : " static"}">${t}</span>`
     ).join("")}</div>
     <div class="wfeed" id="wfeed"></div>
   `;
@@ -100,7 +112,7 @@ export function renderForum(root, { thread, tab } = {}) {
   const feed = main.querySelector("#wfeed");
 
   tabEls.forEach((el) => {
-    if (!TABS_CLICKABLE.includes(el.dataset.tab)) return;
+    if (!clickableTabs.includes(el.dataset.tab)) return;
     el.addEventListener("click", () => {
       activeTab = el.dataset.tab;
       tabEls.forEach((t) => t.classList.toggle("active", t.dataset.tab === activeTab));
@@ -111,7 +123,7 @@ export function renderForum(root, { thread, tab } = {}) {
   function renderFeed() {
     feed.innerHTML = "";
     const all = postsForThread(slug, activeTab);
-    all.forEach((p) => feed.appendChild(postCard(p)));
+    all.forEach((p) => feed.appendChild(postCard(p, info)));
     if (!all.length) {
       feed.innerHTML = `<div class="wfeed-card" style="cursor:default;color:var(--ink-faint);text-align:center;">这里还没有内容</div>`;
     }
@@ -121,10 +133,12 @@ export function renderForum(root, { thread, tab } = {}) {
   layout.appendChild(renderRightbar(slug));
 }
 
-function postCard(p) {
+function postCard(p, threadInfo) {
   const card = document.createElement("article");
   card.className = "wfeed-card";
   const threadName = THREADS[p.thread]?.name || "";
+  const nonClickable = threadInfo?.nonClickable;
+  if (nonClickable) card.style.cursor = "default";
   card.innerHTML = `
     <div class="frow1">
       <div class="favatar" style="background:${avatarFor(p)};"></div>
@@ -150,6 +164,10 @@ function postCard(p) {
     slot.appendChild(thumb);
   }
   card.querySelectorAll(".fbody a").forEach((a) => a.addEventListener("click", (e) => e.stopPropagation()));
+  if (nonClickable) {
+    // 纯水贴超话：帖子不跳详情页，#标签也不用跳（本来就只有这一个超话）。
+    return card;
+  }
   card.querySelector(".ftag")?.addEventListener("click", (e) => {
     e.stopPropagation();
     goTo("forum", { thread: p.thread });

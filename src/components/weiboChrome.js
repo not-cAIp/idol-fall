@@ -70,6 +70,7 @@ const THREAD_WIDGETS = {
   yanxing: { icon: "chat", t1: "周晏星本人超话", t2: "艺人超话" },
   linan: { icon: "mic", t1: "林安本人超话", t2: "艺人超话" },
   xinganlide: { icon: "building", t1: "星安理得超话", t2: "CP 超话" },
+  f4ever: { icon: "people", t1: "F4ever超话", t2: "团体超话" },
 };
 
 export function renderRightbar(activeThread) {
