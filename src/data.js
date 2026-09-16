@@ -28,6 +28,23 @@ export function resolveSrc(src) {
   return import.meta.env.BASE_URL + src.replace(/^\//, "");
 }
 
+// 帖子时间格式不统一——大多数是"MM-DD HH:MM"，但苏昭主页那几条怀念/
+// 周年帖用的是"MM-DD（去年）"/"MM-DD（前年）"这种相对年份写法，直接按
+// 字符串比较（localeCompare）排不出真实的新旧顺序（"（去年）"这种后缀会
+// 打乱月日本身的比较）。这里统一转成一个可比较的数字：年份差是最主要
+// 的排序依据（今年 > 去年 > 前年），同一年份差内再按月日、时间比。没有
+// 具体时间的（比如只有"MM-DD"或者相对年份帖）当成当天最早。
+export function timeSortKey(t) {
+  if (!t) return -Infinity;
+  const yearOffset = t.includes("前年") ? -2 : t.includes("去年") ? -1 : 0;
+  const m = t.match(/(\d{2})-(\d{2})(?:\s+(\d{2}):(\d{2}))?/);
+  if (!m) return yearOffset * 1e8;
+  const [, mm, dd, hh, min] = m;
+  const monthDay = Number(mm) * 100 + Number(dd);
+  const minutes = hh ? Number(hh) * 60 + Number(min) : 0;
+  return yearOffset * 1e8 + monthDay * 1e4 + minutes;
+}
+
 export function isBlockedQuery(query) {
   const q = query.trim();
   if (!q) return false;

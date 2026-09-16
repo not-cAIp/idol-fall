@@ -1,4 +1,4 @@
-import { findProfile, isBlockedQuery, posts, profiles, avatarFor, resolveSrc } from "../data.js";
+import { findProfile, isBlockedQuery, posts, profiles, avatarFor, resolveSrc, timeSortKey } from "../data.js";
 import { markProfileFound, markClueFound } from "../state.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { goTo } from "../router.js";
@@ -64,7 +64,7 @@ export function renderSearch(root, { profile: profileId } = {}) {
     const feedEl = resultEl.querySelector("#profile-feed");
     const ownPosts = posts.posts
       .filter((p) => p.profile === profile.id)
-      .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || b.time.localeCompare(a.time));
+      .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || timeSortKey(b.time) - timeSortKey(a.time));
     ownPosts.forEach((p) => feedEl.appendChild(profilePostCard(p)));
     if (!ownPosts.length) {
       feedEl.innerHTML = `<div class="wfeed-card" style="cursor:default;color:var(--ink-faint);text-align:center;">这里还没有内容</div>`;

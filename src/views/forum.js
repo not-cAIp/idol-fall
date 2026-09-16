@@ -1,4 +1,4 @@
-import { posts, avatarFor, resolveSrc } from "../data.js";
+import { posts, avatarFor, resolveSrc, timeSortKey } from "../data.js";
 import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
@@ -42,7 +42,7 @@ let activeTab = "最新";
 function postsForThread(threadSlug, tab) {
   return posts.posts
     .filter((p) => p.thread === threadSlug && (tab === "精华" ? p.section !== "flavor" : p.section === "flavor"))
-    .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || b.time.localeCompare(a.time));
+    .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || timeSortKey(b.time) - timeSortKey(a.time));
 }
 
 export function renderForum(root, { thread, tab } = {}) {
