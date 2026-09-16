@@ -48,6 +48,9 @@ const KNOWN_AVATARS = {
   "@chenyu_official": "/images/avatar-chenyu-manager.jpg",
   "@aurora_fit": "/images/avatar-aurora-brand.jpg",
   "@stay_with_yx": "/images/avatar-companion-admin.jpg",
+  "@深夜蹲守代拍": "/images/avatar-daipai-landscape.jpg",
+  "@Manibeeo": "/images/avatar-manibeeo.png",
+  "@msgleisa": "/images/avatar-msgleisa.png",
 };
 
 const FAN_AVATARS = [

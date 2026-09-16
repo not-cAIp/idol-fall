@@ -155,6 +155,24 @@
       "discoveredVia": "act8 · 从 p018 顺藤摸瓜挖到这个小号",
       "clueOnFound": "c15",
       "devNote": "这个账号（帖子 id 前缀 cm，见 posts.json）里藏着通向 GALAXY WORKSPACE 的真实链接（cm05）——这是这个私人小号被搜到之后才可能看到的内容，不是开局就能点的入口，比早期版本放一条明显的超话帖子要藏得深得多。gxshare.cn 那条死链（cm02）只营造『公司有自己的共享文件系统、命名习惯是日期+run』的印象，本身打不开；cm05 的真实链接需要玩家在 GALAXY WORKSPACE 落地页自己填一次『安全验证』，答案就是这个命名习惯拼出来的口令。c15/c16/c19/c31 都在这个账号上，一次搜到全部可见。"
+    },
+    {
+      "id": "daipai_stakeout",
+      "searchKeywords": [
+        "代拍",
+        "深夜蹲守代拍"
+      ],
+      "name": "深夜蹲守代拍",
+      "handle": "@深夜蹲守代拍",
+      "verified": false,
+      "bio": "同城代拍 | 出图快 | 不接受赊账，价格私聊",
+      "stats": [
+        "粉丝 3.1万"
+      ],
+      "locked": false,
+      "discoveredVia": "搜『代拍』直接可搜到，普通的代拍营业号，跟案件本身无关",
+      "avatarImage": "/images/avatar-daipai-landscape.jpg",
+      "devNote": "这个账号本身不算线索——它存在只是让『代拍』这个搜索词有对应结果，营造饭圈生态的真实感。她的帖子（dp01/dp02，星安理得超话）也是纯营业性质的『出图』广告，没有额外剧情。avatarImage 目前指向一张还没生成的风景照占位路径（/images/avatar-daipai-landscape.jpg），需要补一张随机风景照片（代拍/黄牛类账号常用风景图当头像、不用真人头像的惯例），生成后放进 public/images/ 即可自动生效。"
     }
   ]
 }
