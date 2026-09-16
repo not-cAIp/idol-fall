@@ -18,6 +18,7 @@ export const THREADS = {
     chip: "娱乐超话 No.1",
     banner: "/images/banner-yanxing-supertopic.jpg",
     avatar: "/images/fan-avatar-yanxing-variety.jpg",
+    todayPosts: 6974,
   },
   linan: {
     name: "林安本人超话",
@@ -25,12 +26,14 @@ export const THREADS = {
     chip: "娱乐超话 No.8",
     banner: "/images/banner-linan-supertopic.jpg",
     avatar: "/images/avatar-linan-official.jpg",
+    todayPosts: 3726,
   },
   xinganlide: {
     name: "星安理得超话",
     stats: "430万 帖子 ｜ 158万 粉丝",
     chip: "CP超话 No.2",
     banner: "/images/banner-xingan-cp.jpg",
+    todayPosts: 4613,
   },
 };
 
@@ -85,7 +88,7 @@ export function renderForum(root, { thread, tab } = {}) {
           <div class="stats">${info.stats}</div>
         </div>
       </div>
-      <div class="wbanner-chips"><span>${info.chip}</span><span>今日发帖 ${Math.floor(800 + Math.random() * 4000)}</span></div>
+      <div class="wbanner-chips"><span>${info.chip}</span><span>今日发帖 ${info.todayPosts}</span></div>
     </div>
     <div class="wtabs">${TABS.map(
       (t) => `<span data-tab="${t}" class="${t === activeTab ? "active" : ""}${TABS_CLICKABLE.includes(t) ? "" : " static"}">${t}</span>`
@@ -142,7 +145,7 @@ function postCard(p) {
   if (p.image || p.imagePrompt) {
     const slot = card.querySelector(".fthumb-slot");
     slot.className = "fthumb";
-    const thumb = createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption, imageFit: p.imageFit });
+    const thumb = createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption });
     thumb.addEventListener("click", (e) => e.stopPropagation());
     slot.appendChild(thumb);
   }
