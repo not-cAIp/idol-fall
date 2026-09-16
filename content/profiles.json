@@ -139,6 +139,26 @@
       "avatarImage": "/images/avatar-aurora-brand.jpg"
     },
     {
+      "id": "f4ever_official",
+      "searchKeywords": [
+        "F4ever",
+        "f4ever",
+        "F4everofficial",
+        "f4ever官方"
+      ],
+      "name": "F4ever官方微博",
+      "handle": "@f4everofficial",
+      "verified": true,
+      "bio": "F4ever 组合官方认证账号",
+      "stats": [
+        "粉丝 1560万"
+      ],
+      "locked": false,
+      "discoveredVia": "开局默认可搜",
+      "devNote": "纯氛围账号，不承担任何线索——跟 F4ever超话（水贴超话，不可点/无精华）是两回事：这个是官方认证的组合本号，超话是粉丝自发的讨论区。这里的每条帖子都是官方通稿式的水贴（巡演/日常问候/周边），故意不放任何跟案件相关的信息，呼应超话本身『全是水贴』的设计。",
+      "avatarImage": "/images/avatar-f4ever-official.png"
+    },
+    {
       "id": "chenyu_memo",
       "searchKeywords": [
         "陈屿的备忘录",
@@ -156,7 +176,7 @@
       "lockedNote": "大部分内容不可见，唯一泄露出来的是几条被朋友截图转发的记录。",
       "discoveredVia": "act8 · 从 p018 顺藤摸瓜挖到这个小号",
       "clueOnFound": "c15",
-      "devNote": "这个账号（帖子 id 前缀 cm，见 posts.json）里藏着通向 GALAXY WORKSPACE 的真实链接（cm05）——这是这个私人小号被搜到之后才可能看到的内容，不是开局就能点的入口，比早期版本放一条明显的超话帖子要藏得深得多。gxshare.cn 那条死链（cm02）只营造『公司有自己的共享文件系统、命名习惯是日期+run』的印象，本身打不开；cm05 的真实链接需要玩家在 GALAXY WORKSPACE 落地页自己填一次『安全验证』，答案就是这个命名习惯拼出来的口令。c15/c16/c19/c31 都在这个账号上，一次搜到全部可见。"
+      "devNote": "这个账号（帖子 id 前缀 cm，见 posts.json）里藏着通向 GALAXY WORKSPACE 的真实链接（cm05）——这是这个私人小号被搜到之后才可能看到的内容，不是开局就能点的入口，比早期版本放一条明显的超话帖子要藏得深得多。gxshare.cn 那条死链（cm02）只营造『公司有自己的共享文件系统、命名习惯是日期+run』的印象，本身打不开；cm05 的真实链接需要玩家在 GALAXY WORKSPACE 落地页自己填一次『安全验证』，答案就是这个命名习惯拼出来的口令。c15/c16/c31 都在这个账号上（原来还有 c19，帖子 cm03 应用户要求下线了，c19 现在没有入口，见 clues.json），一次搜到全部可见。"
     },
     {
       "id": "daipai_stakeout",

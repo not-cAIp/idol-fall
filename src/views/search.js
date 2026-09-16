@@ -4,6 +4,7 @@ import { createPhotoThumb } from "../components/photoViewer.js";
 import { goTo } from "../router.js";
 import { renderTopNav, renderLeftNav, renderRightbar } from "../components/weiboChrome.js";
 import { icon, verifiedBadge } from "../components/icons.js";
+import { THREADS } from "./forum.js";
 
 export function renderSearch(root, { profile: profileId, query } = {}) {
   root.className = "weibo-scope";
@@ -110,6 +111,7 @@ export function renderSearch(root, { profile: profileId, query } = {}) {
 function profilePostCard(p) {
   const card = document.createElement("article");
   card.className = "wfeed-card";
+  const tagThreadName = p.tagThread ? THREADS[p.tagThread]?.name : null;
   card.innerHTML = `
     <div class="frow1">
       <div class="favatar" style="background:${avatarFor(p)};"></div>
@@ -118,6 +120,7 @@ function profilePostCard(p) {
         <div class="fmeta">${p.time ? `${p.time} · ` : ""}来自 iPhone客户端</div>
       </div>
     </div>
+    ${tagThreadName ? `<span class="ftag"># ${tagThreadName} #</span>` : ""}
     <div class="fbody">${p.text}</div>
     <div class="fthumb-slot"></div>
     <div class="factions">
@@ -134,6 +137,10 @@ function profilePostCard(p) {
     slot.appendChild(thumb);
   }
   card.querySelectorAll(".fbody a").forEach((a) => a.addEventListener("click", (e) => e.stopPropagation()));
+  card.querySelector(".ftag")?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    goTo("forum", { thread: p.tagThread });
+  });
   card.addEventListener("click", () => goTo("postDetail", { id: p.id }));
   return card;
 }

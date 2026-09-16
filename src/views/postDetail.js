@@ -50,7 +50,7 @@ export function renderPostDetail(root, { id, fromTab } = {}) {
       </div>
       <div class="time mono">${p.time}</div>
     </div>
-    ${p.thread ? `<span class="ftag" id="post-ftag"># ${THREADS[p.thread]?.name || ""} #</span>` : ""}
+    ${p.thread || p.tagThread ? `<span class="ftag" id="post-ftag"># ${THREADS[p.thread || p.tagThread]?.name || ""} #</span>` : ""}
     <div class="text">${p.text}</div>
     <div class="wb-actionbar" style="margin-top:10px;display:flex;gap:22px;font-size:12px;color:var(--ink-faint);font-family:'JetBrains Mono',monospace;">
       <span style="display:inline-flex;align-items:center;gap:5px;">${icon("like", { size: 14 })} ${p.likes || 0}</span>
@@ -63,7 +63,7 @@ export function renderPostDetail(root, { id, fromTab } = {}) {
       createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption })
     );
   }
-  post.querySelector("#post-ftag")?.addEventListener("click", () => goTo("forum", { thread: p.thread }));
+  post.querySelector("#post-ftag")?.addEventListener("click", () => goTo("forum", { thread: p.thread || p.tagThread }));
   main.appendChild(post);
 
   if (p.history) {
