@@ -39,6 +39,7 @@ const defaultState = () => ({
   foundClues: [],
   officialTimeAnswer: null,
   deathTimeAnswer: null,
+  deathTimeAnswerRaw: null,
   deathLocationAnswer: null,
   finalSuspect: null,
   finalAction: null,

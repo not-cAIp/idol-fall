@@ -79,11 +79,6 @@ const PT1_GATE_OPTIONS = [
   { id: "after_2343", label: "不成立，23:43之后仍然活着" },
   { id: "unsure", label: "无法判断" },
 ];
-const PT1_TIME_OPTIONS = [
-  { id: "before_2320", label: "23:20 之前（官方口径）" },
-  { id: "after_2352", label: "23:52 之后" },
-  { id: "unsure", label: "无法判断" },
-];
 const PT1_LOCATION_OPTIONS = [
   { id: "hangzhou", label: "杭州（官方原定行程地）" },
   { id: "residence", label: "自己住所" },
@@ -120,14 +115,16 @@ function renderPt1(panel, thread, found) {
   thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>周晏星是几点之后去世的？</div>`;
   if (!state.deathTimeAnswer) {
     panel.appendChild(stepEl);
-    renderOptions(stepEl, PT1_TIME_OPTIONS, (id) => {
+    renderTimeInput(stepEl, (id, raw) => {
       state.deathTimeAnswer = id;
+      state.deathTimeAnswerRaw = raw;
       save();
       rerenderDm();
     });
     return;
   }
-  thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${optLabel(PT1_TIME_OPTIONS, state.deathTimeAnswer)}</div>`;
+  const timeRecap = state.deathTimeAnswer === "unsure" ? "无法判断" : `${state.deathTimeAnswerRaw || ""} 之后`;
+  thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${timeRecap}</div>`;
 
   thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>他是在哪里去世的？</div>`;
   if (!state.deathLocationAnswer) {
@@ -155,6 +152,7 @@ function renderPt1(panel, thread, found) {
   retry.textContent = "重新想想 ›";
   retry.addEventListener("click", () => {
     state.deathTimeAnswer = null;
+    state.deathTimeAnswerRaw = null;
     state.deathLocationAnswer = null;
     save();
     rerenderDm();
@@ -164,6 +162,61 @@ function renderPt1(panel, thread, found) {
 
 function optLabel(options, id) {
   return options.find((o) => o.id === id)?.label || "";
+}
+
+// 玩家自己填时间，不给选项——"23:52之后"不能靠排除法蒙，得真的从
+// AURORA 手环记录（23:47仍在同步、23:52中断）里读出这个点。00:00-05:59
+// 也算"当晚这之后"，覆盖真实死亡窗口 23:50-00:10 附近的合理填法。
+function parseTimeToMinutes(raw) {
+  const s = (raw || "").trim();
+  let m = s.match(/^(\d{1,2})\s*[:：点时]\s*(\d{1,2})\s*分?$/);
+  if (!m) m = s.match(/^(\d{2})(\d{2})$/);
+  if (!m) return null;
+  const hh = parseInt(m[1], 10);
+  const mm = parseInt(m[2], 10);
+  if (hh > 23 || mm > 59) return null;
+  return hh * 60 + mm;
+}
+
+function classifyDeathTime(raw) {
+  const mins = parseTimeToMinutes(raw);
+  if (mins === null) return null;
+  if (mins >= 23 * 60 + 52 || mins < 6 * 60) return "after_2352";
+  return "wrong";
+}
+
+function renderTimeInput(stepEl, onSubmit) {
+  stepEl.innerHTML = `
+    <div class="search-row" style="align-items:center;">
+      <input id="pt1-time-input" type="text" placeholder="输入具体时间，例如 23:52" />
+      <span style="color:var(--ink-faint);font-size:13px;white-space:nowrap;">之后</span>
+      <button id="pt1-time-submit">提交</button>
+    </div>
+    <div id="pt1-time-err" style="color:var(--danger);font-size:12px;margin-top:6px;"></div>
+  `;
+  const input = stepEl.querySelector("#pt1-time-input");
+  const err = stepEl.querySelector("#pt1-time-err");
+  function submit() {
+    const raw = input.value.trim();
+    if (!raw) return;
+    const cat = classifyDeathTime(raw);
+    if (cat === null) {
+      err.textContent = "看不懂这个时间，试试类似 23:52 的格式";
+      return;
+    }
+    onSubmit(cat, raw);
+  }
+  stepEl.querySelector("#pt1-time-submit").addEventListener("click", submit);
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") submit();
+  });
+
+  const unsureBtn = document.createElement("button");
+  unsureBtn.className = "reset-link";
+  unsureBtn.style.marginTop = "10px";
+  unsureBtn.textContent = "无法判断";
+  unsureBtn.addEventListener("click", () => onSubmit("unsure", null));
+  stepEl.appendChild(unsureBtn);
 }
 
 function renderOptions(stepEl, options, onPick) {
