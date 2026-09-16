@@ -51,19 +51,11 @@ const KNOWN_AVATARS = {
   "@深夜蹲守代拍": "/images/avatar-daipai-landscape.jpg",
   "@Manibeeo": "/images/avatar-manibeeo.png",
   "@msgleisa": "/images/avatar-msgleisa.png",
-  // 营销号/娱记style账号——名字是现实里真实存在的娱乐营销号改一两个字
-  // 仿的（会火→能火、内娱教父→内娱教母、老爹站重生版→老妈站重生版、
-  // 脱粉回踩救钱包→脱粉回踩救救我，其余几个也是同样手法），头像风格
-  // 应该统一用"营销号同款"那种（logo文字水印/网图拼贴风，不是真人
-  // 头像）——这 8 张目前还没有对应图片，先占位。
-  "@老妈站重生版": "/images/avatar-marketing-laomazhan.jpg",
+  // 只留一个真正的营销号身份——内娱教母（仿现实的"内娱教父"），专门
+  // 用来发公关群那条爆料（c22）。其余原本借用营销号命名手法的账号已经
+  // 改回粉丝号人设（乍看是普通微博用户，主页一看全是他），头像也相应
+  // 改成从粉丝头像池里普通分配，不再单独占用"营销号同款"头像。
   "@内娱教母": "/images/avatar-marketing-neiyujiaomu.jpg",
-  "@脱粉回踩救救我": "/images/avatar-marketing-tuofenhuicai.jpg",
-  "@能火": "/images/avatar-marketing-nenghuo.jpg",
-  "@桃秘": "/images/avatar-marketing-taomi.jpg",
-  "@关九": "/images/avatar-marketing-guanjiu.jpg",
-  "@星帆": "/images/avatar-marketing-xingfan.jpg",
-  "@深九君": "/images/avatar-marketing-shenjiujun.jpg",
 };
 
 const FAN_AVATARS = [

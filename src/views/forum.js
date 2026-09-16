@@ -17,7 +17,7 @@ export const THREADS = {
     stats: "892.4万 帖子 ｜ 2140万 粉丝",
     chip: "娱乐超话 No.1",
     banner: "/images/banner-yanxing-supertopic.jpg",
-    avatar: "/images/avatar-yanxing-studio.jpg",
+    avatar: "/images/fan-avatar-yanxing-variety.jpg",
   },
   linan: {
     name: "林安本人超话",
