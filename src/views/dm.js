@@ -49,17 +49,19 @@ export function renderDm(root) {
   `;
 
   if (!state.foundClues.includes("c37") || !state.foundClues.includes("c38")) {
-    thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>这是我查到的一个文件，我还没来得及破解里面的内容。</div>`;
+    thread.innerHTML += `
+      <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>我打听到一个内部共享盘的访问口令，是"0913run"，具体链接和里面有什么我还没查清楚。</div>
+    `;
     const gwLink = document.createElement("a");
     gwLink.className = "file-card";
-    gwLink.href = `${GW_URL}?code=0913run`;
+    gwLink.href = GW_URL;
     gwLink.target = "_blank";
     gwLink.rel = "noopener";
     gwLink.innerHTML = `
       <span class="fc-icon">${icon("clipboard", { size: 17 })}</span>
       <span class="fc-info">
-        <span class="fc-name">陈屿_经纪人文件夹</span>
-        <span class="fc-sub">加密文件 · 点击打开</span>
+        <span class="fc-name">GALAXY WORKSPACE</span>
+        <span class="fc-sub">需要访问口令</span>
       </span>
     `;
     thread.appendChild(gwLink);
@@ -77,16 +79,14 @@ export function renderDm(root) {
   renderSuspectStep(thread, stepEl);
 }
 
-// PT1 分三步：①先问『公司公布的死亡时间是否成立』，选『不成立，23:43
-// 之后仍然活着』才往下走，选别的只给一句轻推回，停在这一步反复问；
-// ②过了①，再直接问『几点』——答案『23:52之后』要靠 AURORA 手环同步
-// 记录撑住；③再问『哪里』——答案『自己住所』要靠沈溪主页的帖子撑住
-// （如果他真去了杭州，不会有人在住所附近看到他）。
-const PT1_GATE_OPTIONS = [
-  { id: "at_2320", label: "成立，约23:20死亡" },
-  { id: "after_2343", label: "不成立，23:43之后仍然活着" },
-  { id: "unsure", label: "无法判断" },
-];
+// PT1 分三步：①直接问『几点之后去世的』（不再先问一道"公司口径成不
+// 成立"的判断题）——答案『23:52之后』要靠 AURORA 手环同步记录撑住；
+// ②追问『能不能继续锁定』——利用泡泡里比①的证据更晚出现的"对方已
+// 下线"状态，把范围收窄到 23:52 前后的窄窗口；③再问『哪里』——答案
+// 『自己住所』要靠沈溪主页的帖子撑住（如果他真去了杭州，不会有人在
+// 住所附近看到他）。如果玩家在①就直接填出了②要求的精确时间，②会
+// 自动判定通过，不再重复问一遍已经推理出来的结论。每一步答错都只会
+// 停在原地反复问，不会带着错的时间/地点先看到下一题。
 const PT1_LOCATION_OPTIONS = [
   { id: "hangzhou", label: "杭州（官方原定行程地）" },
   { id: "residence", label: "自己住所" },
@@ -102,27 +102,6 @@ function renderPt1(panel, thread, pt1Found) {
   const stepEl = document.createElement("div");
   stepEl.className = "reply-options";
 
-  // 三问现在每一问都要答对才能往下走——答错只会停在原地反复问，跟
-  // 第一问『公司口径是否成立』一直以来的行为一致，不会让玩家带着错的
-  // 时间/地点先看到下一题。
-  thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>公司公布的死亡时间是否成立？</div>`;
-  if (state.officialTimeAnswer !== "after_2343") {
-    if (state.officialTimeAnswer) {
-      thread.innerHTML += `
-        <div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${optLabel(PT1_GATE_OPTIONS, state.officialTimeAnswer)}</div>
-        <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你确定吗？先别急着下结论，多找找能撑住判断的证据。</div>
-      `;
-    }
-    panel.appendChild(stepEl);
-    renderOptions(stepEl, PT1_GATE_OPTIONS, (id) => {
-      state.officialTimeAnswer = id;
-      save();
-      rerenderDm();
-    });
-    return;
-  }
-  thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${optLabel(PT1_GATE_OPTIONS, state.officialTimeAnswer)}</div>`;
-
   thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>周晏星是几点之后去世的？</div>`;
   if (state.deathTimeAnswer !== "after_2352") {
     if (state.deathTimeAnswer) {
@@ -133,15 +112,49 @@ function renderPt1(panel, thread, pt1Found) {
       `;
     }
     panel.appendChild(stepEl);
-    renderTimeInput(stepEl, (id, raw) => {
-      state.deathTimeAnswer = id;
-      state.deathTimeAnswerRaw = raw;
-      save();
-      rerenderDm();
-    });
+    renderTimeInput(
+      stepEl,
+      { placeholder: "输入具体时间，例如 20:02", suffix: "之后", classify: classifyDeathTime },
+      (cat, raw) => {
+        state.deathTimeAnswer = cat;
+        state.deathTimeAnswerRaw = raw;
+        // 跳步判定：如果玩家这一步填的时间已经精确到②要求的窄窗口，
+        // ②直接视为通过，不再重复问一遍玩家已经推理出来的结论。
+        if (cat === "after_2352" && raw && classifyPreciseTime(raw) === "pinned") {
+          state.deathTimeStep2Answer = "pinned";
+          state.deathTimeStep2AnswerRaw = raw;
+        }
+        save();
+        rerenderDm();
+      }
+    );
     return;
   }
   thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${state.deathTimeAnswerRaw || ""} 之后</div>`;
+
+  thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你能继续锁定时间吗？</div>`;
+  if (state.deathTimeStep2Answer !== "pinned") {
+    if (state.deathTimeStep2Answer) {
+      const timeRecap = state.deathTimeStep2Answer === "unsure" ? "无法判断" : `${state.deathTimeStep2AnswerRaw || ""}`;
+      thread.innerHTML += `
+        <div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${timeRecap}</div>
+        <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你确定吗？先别急着下结论，多找找能撑住判断的证据。</div>
+      `;
+    }
+    panel.appendChild(stepEl);
+    renderTimeInput(
+      stepEl,
+      { placeholder: "输入更精确的时间，例如 23:52", classify: classifyPreciseTime },
+      (cat, raw) => {
+        state.deathTimeStep2Answer = cat;
+        state.deathTimeStep2AnswerRaw = raw;
+        save();
+        rerenderDm();
+      }
+    );
+    return;
+  }
+  thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${state.deathTimeStep2AnswerRaw || "23:52 前后"}</div>`;
 
   thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>他是在哪里去世的？</div>`;
   if (state.deathLocationAnswer !== "residence") {
@@ -189,11 +202,20 @@ function classifyDeathTime(raw) {
   return "wrong";
 }
 
-function renderTimeInput(stepEl, onSubmit) {
+// 第二步的窄窗口——靠泡泡里比手环记录更晚出现的"对方已下线"状态
+// （09-13 23:52）撑住，允许 23:50-23:54 的合理填法误差。
+function classifyPreciseTime(raw) {
+  const mins = parseTimeToMinutes(raw);
+  if (mins === null) return null;
+  if (mins >= 23 * 60 + 50 && mins <= 23 * 60 + 54) return "pinned";
+  return "wrong";
+}
+
+function renderTimeInput(stepEl, { placeholder, suffix = "", classify }, onSubmit) {
   stepEl.innerHTML = `
     <div class="search-row" style="align-items:center;">
-      <input id="pt1-time-input" type="text" placeholder="输入具体时间，例如 20:02" />
-      <span style="color:var(--ink-faint);font-size:13px;white-space:nowrap;">之后</span>
+      <input id="pt1-time-input" type="text" placeholder="${placeholder}" />
+      ${suffix ? `<span style="color:var(--ink-faint);font-size:13px;white-space:nowrap;">${suffix}</span>` : ""}
       <button id="pt1-time-submit">提交</button>
     </div>
     <div id="pt1-time-err" style="color:var(--danger);font-size:12px;margin-top:6px;"></div>
@@ -203,7 +225,7 @@ function renderTimeInput(stepEl, onSubmit) {
   function submit() {
     const raw = input.value.trim();
     if (!raw) return;
-    const cat = classifyDeathTime(raw);
+    const cat = classify(raw);
     if (cat === null) {
       err.textContent = "看不懂这个时间，试试类似 23:52 的格式";
       return;

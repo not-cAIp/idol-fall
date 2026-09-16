@@ -11,39 +11,41 @@ export const PT1_CLUE_IDS = [
   "c23", "c24", "c30", "c35", "c41",
 ];
 
-// PT1 分三步问：①『公司公布的死亡时间是否成立』，选『不成立，23:43
-// 之后仍然活着』才会往下走；②『几点』，正确答案是玩家自己填的时间
-// 『23:52之后』；③『哪里』，正确答案『自己住所』。这一版不再要求玩家
-// 手上必须先"点开"过某几条具体线索（c23/c24/c35 之类）才算数——纯粹
-// 看这三步推理答没答对，找没找到支撑证据是玩家自己判断该不该确信
-// 这个答案的事，不是代码强制的门槛。沈溪主页（23:31/23:43仍有动静）、
-// AURORA 手环记录（23:47仍在同步、23:52中断）都还在，是帮玩家推理出
-// 正确答案的线索来源，只是不再被 canUnlockPt2 逐条打卡。
+// PT1 分三步问：①直接问『几点之后去世的』，正确答案是玩家自己填的
+// 『23:52之后』（不再先问一道"公司口径成不成立"的判断题——玩家该
+// 不该信官方时间，是自己看证据判断的事，不是选择题）；②在①的基础上
+// 用泡泡里更晚出现的"对方已下线"状态继续锁定，正确答案要落在 23:52
+// 前后的窄窗口里；③『哪里』，正确答案『自己住所』。如果玩家在①就直接
+// 填出了②要求的精确时间，②会自动算过，不会再重复问一遍。这一版不
+// 要求玩家手上必须先"点开"过某几条具体线索才算数——纯粹看这三步推理
+// 答没答对，找没找到支撑证据是玩家自己判断该不该确信这个答案的事，
+// 不是代码强制的门槛。沈溪主页（23:31/23:43仍有动静）、AURORA 手环
+// 记录（23:47仍在同步、23:52中断）、泡泡的"对方已下线"都还在，是帮
+// 玩家推理出正确答案的线索来源，只是不再被 canUnlockPt2 逐条打卡。
 export function canUnlockPt2(s) {
   return (
-    s.officialTimeAnswer === "after_2343" &&
     s.deathTimeAnswer === "after_2352" &&
+    s.deathTimeStep2Answer === "pinned" &&
     s.deathLocationAnswer === "residence"
   );
 }
 
-// PT2 指认贺寻：GALAXY WORKSPACE 那四份文件（风险评估/权限交接/门禁
-// 记录/场馆照片，对应 c37-c40）已经去掉了"返回超话"这个同步环节
-// （GW 和主站是两个独立域名的静态站点，没有共享存储），所以这四条
-// 不再是硬性要求，只剩 ECHO 的身份链接（c36：HX_404=贺寻=HX_PROD）
-// 还挂着——玩家自己去 GW 看没看这些文件、信不信这个结论，不再由代码
-// 逐条打卡判定。选中贺寻但没做身份链接确认，会得到『还没能证明』的
-// 中间结局，见 src/views/dm.js。
-export function canConvictHeXun(s) {
-  return s.foundClues.includes("c36");
+// PT2 指认贺寻：GW 的四份文件（c37-c40）和 ECHO 的身份链接（c36）
+// 都已经去掉了"返回超话"这个跨站同步环节（GW/ECHO 和主站是三个独立
+// 域名的静态站点，没有共享存储），所以现在没有任何一条是硬性要求——
+// 玩家自己去 GW/ECHO 看没看这些证据、信不信这个结论，不再由代码逐条
+// 打卡判定。hexun_unproven（『找到了但还证不了』）这个中间结局因此在
+// 正常玩法下已经进不去了，代码保留但是死代码，见 src/views/dm.js。
+export function canConvictHeXun() {
+  return true;
 }
 
 const defaultState = () => ({
   foundProfiles: [],
   foundClues: [],
-  officialTimeAnswer: null,
   deathTimeAnswer: null,
   deathTimeAnswerRaw: null,
+  deathTimeStep2Answer: null,
   deathLocationAnswer: null,
   finalSuspect: null,
   finalAction: null,
