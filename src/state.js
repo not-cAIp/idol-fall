@@ -2,36 +2,40 @@ const STORAGE_KEY = "tafang-anjuan-save";
 
 export const CLUE_TOTAL = 41;
 
-// PT1 分三步：①先问『公司公布的死亡时间是否成立』，选『不成立，23:43
-// 之后仍然活着』才会往下走；②再直接问『几点』——答案『23:52之后』要靠
-// AURORA 手环同步记录撑住（c35，23:47仍在同步、23:52才中断）；③再问
-// 『哪里』——答案『自己住所』要靠沈溪主页 23:31/23:43 仍在附近的帖子
-// 撑住（c23/c24：如果他真去了杭州，不会有人在住所附近看到他）。三个
-// 判断 + 两项证据全部凑齐才算真的推翻了官方口径，不是瞎蒙对了选项就算数。
+// PT1（死亡时间线）相关的线索子集，用来在私信里单独显示"PT1 进度"，
+// 跟总的 41 条区分开——玩家在推理死亡时间/地点阶段，看到的不该是
+// 一个混进了 CP 糖点、公司内部风险评估这些 PT2 内容的总数。
+export const PT1_CLUE_IDS = [
+  "c01", "c02", "c03", "c04", "c05", "c06",
+  "c17", "c18", "c20", "c21", "c22",
+  "c23", "c24", "c30", "c35", "c41",
+];
+
+// PT1 分三步问：①『公司公布的死亡时间是否成立』，选『不成立，23:43
+// 之后仍然活着』才会往下走；②『几点』，正确答案是玩家自己填的时间
+// 『23:52之后』；③『哪里』，正确答案『自己住所』。这一版不再要求玩家
+// 手上必须先"点开"过某几条具体线索（c23/c24/c35 之类）才算数——纯粹
+// 看这三步推理答没答对，找没找到支撑证据是玩家自己判断该不该确信
+// 这个答案的事，不是代码强制的门槛。沈溪主页（23:31/23:43仍有动静）、
+// AURORA 手环记录（23:47仍在同步、23:52中断）都还在，是帮玩家推理出
+// 正确答案的线索来源，只是不再被 canUnlockPt2 逐条打卡。
 export function canUnlockPt2(s) {
   return (
     s.officialTimeAnswer === "after_2343" &&
     s.deathTimeAnswer === "after_2352" &&
-    s.deathLocationAnswer === "residence" &&
-    s.foundClues.includes("c35") &&
-    (s.foundClues.includes("c23") || s.foundClues.includes("c24"))
+    s.deathLocationAnswer === "residence"
   );
 }
 
-// PT2 最终指认贺寻成立的条件：身份链接（ECHO 站点 HX_404=贺寻=HX_PROD）、
-// 风险评估文件（出道前恋情 + 公司知情选择性保护）、Bubble 导出日志历史
-// 版本（贺寻先看到复合消息、再查旧存档）、门禁记录历史版本（23:46 进 /
-// 00:11 出，后来被他自己删掉）、假不在场证明被拆穿（场馆照片没有脸）——
-// 五项缺一不可。即使玩家提前选中贺寻，证据不全也只会得到『还没能证明』
-// 的中间结局，不会直接给出完整真相，见 src/views/dm.js。
+// PT2 指认贺寻：GALAXY WORKSPACE 那四份文件（风险评估/权限交接/门禁
+// 记录/场馆照片，对应 c37-c40）已经去掉了"返回超话"这个同步环节
+// （GW 和主站是两个独立域名的静态站点，没有共享存储），所以这四条
+// 不再是硬性要求，只剩 ECHO 的身份链接（c36：HX_404=贺寻=HX_PROD）
+// 还挂着——玩家自己去 GW 看没看这些文件、信不信这个结论，不再由代码
+// 逐条打卡判定。选中贺寻但没做身份链接确认，会得到『还没能证明』的
+// 中间结局，见 src/views/dm.js。
 export function canConvictHeXun(s) {
-  return (
-    s.foundClues.includes("c36") &&
-    s.foundClues.includes("c37") &&
-    s.foundClues.includes("c38") &&
-    s.foundClues.includes("c39") &&
-    s.foundClues.includes("c40")
-  );
+  return s.foundClues.includes("c36");
 }
 
 const defaultState = () => ({

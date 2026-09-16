@@ -296,6 +296,20 @@ body.desktop-mode #view {
 .reset-link-faint:hover { opacity: .85; }
 .reset-link { display: block; text-align: center; margin-top: 16px; color: var(--ink-faint); font-size: 12px; cursor: pointer; }
 
+.file-card {
+  display: flex; align-items: center; gap: 10px; max-width: 82%;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: 12px;
+  padding: 12px 14px; margin: 0 0 14px; text-decoration: none; color: var(--ink);
+}
+.file-card:hover { border-color: var(--accent); }
+.file-card .fc-icon {
+  width: 34px; height: 34px; border-radius: 8px; background: var(--surface);
+  display: flex; align-items: center; justify-content: center; flex: none; color: var(--accent);
+}
+.file-card .fc-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.file-card .fc-name { font-size: 13px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-card .fc-sub { font-size: 11px; color: var(--ink-faint); }
+
 /* ================= 星潮（仿真微博桌面端）================= */
 
 .wicon-svg { display: inline-block; vertical-align: middle; flex: none; }

@@ -1,7 +1,8 @@
 import { endings } from "../data.js";
-import { state, save, CLUE_TOTAL, canUnlockPt2, canConvictHeXun } from "../state.js";
+import { state, save, PT1_CLUE_IDS, canUnlockPt2, canConvictHeXun } from "../state.js";
 import { goTo } from "../router.js";
 import { renderTopNav } from "../components/weiboChrome.js";
+import { icon } from "../components/icons.js";
 
 const GW_URL = "https://saraliuxt-coder.github.io/galaxy-workspace/";
 
@@ -34,11 +35,11 @@ export function renderDm(root) {
   thread.className = "bubble-thread";
   panel.appendChild(thread);
 
-  const found = state.foundClues.length;
+  const pt1Found = PT1_CLUE_IDS.filter((id) => state.foundClues.includes(id)).length;
   const pt2Open = canUnlockPt2(state);
 
   if (!pt2Open) {
-    renderPt1(panel, thread, found);
+    renderPt1(panel, thread, pt1Found);
     return;
   }
 
@@ -48,13 +49,20 @@ export function renderDm(root) {
   `;
 
   if (!state.foundClues.includes("c37") || !state.foundClues.includes("c38")) {
+    thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>这是我查到的一个文件，我还没来得及破解里面的内容。</div>`;
     const gwLink = document.createElement("a");
-    gwLink.className = "reset-link";
-    gwLink.textContent = "打开陈屿_经纪人文件夹 ›";
+    gwLink.className = "file-card";
     gwLink.href = `${GW_URL}?code=0913run`;
     gwLink.target = "_blank";
     gwLink.rel = "noopener";
-    panel.appendChild(gwLink);
+    gwLink.innerHTML = `
+      <span class="fc-icon">${icon("clipboard", { size: 17 })}</span>
+      <span class="fc-info">
+        <span class="fc-name">陈屿_经纪人文件夹</span>
+        <span class="fc-sub">加密文件 · 点击打开</span>
+      </span>
+    `;
+    thread.appendChild(gwLink);
   }
 
   if (state.finalEnding) {
@@ -85,15 +93,18 @@ const PT1_LOCATION_OPTIONS = [
   { id: "unsure", label: "无法判断" },
 ];
 
-function renderPt1(panel, thread, found) {
+function renderPt1(panel, thread, pt1Found) {
   thread.innerHTML = `
     <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>先别急着下结论，多查查清楚，别搞错了伤到不相干的人。</div>
-    <p class="clue-progress mono">目前掌握线索：${found} / ${CLUE_TOTAL}</p>
+    <p class="clue-progress mono">PT1 · 目前掌握线索：${pt1Found} / ${PT1_CLUE_IDS.length}</p>
   `;
 
   const stepEl = document.createElement("div");
   stepEl.className = "reply-options";
 
+  // 三问现在每一问都要答对才能往下走——答错只会停在原地反复问，跟
+  // 第一问『公司口径是否成立』一直以来的行为一致，不会让玩家带着错的
+  // 时间/地点先看到下一题。
   thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>公司公布的死亡时间是否成立？</div>`;
   if (state.officialTimeAnswer !== "after_2343") {
     if (state.officialTimeAnswer) {
@@ -113,7 +124,14 @@ function renderPt1(panel, thread, found) {
   thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${optLabel(PT1_GATE_OPTIONS, state.officialTimeAnswer)}</div>`;
 
   thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>周晏星是几点之后去世的？</div>`;
-  if (!state.deathTimeAnswer) {
+  if (state.deathTimeAnswer !== "after_2352") {
+    if (state.deathTimeAnswer) {
+      const timeRecap = state.deathTimeAnswer === "unsure" ? "无法判断" : `${state.deathTimeAnswerRaw || ""} 之后`;
+      thread.innerHTML += `
+        <div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${timeRecap}</div>
+        <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你确定吗？先别急着下结论，多找找能撑住判断的证据。</div>
+      `;
+    }
     panel.appendChild(stepEl);
     renderTimeInput(stepEl, (id, raw) => {
       state.deathTimeAnswer = id;
@@ -123,11 +141,16 @@ function renderPt1(panel, thread, found) {
     });
     return;
   }
-  const timeRecap = state.deathTimeAnswer === "unsure" ? "无法判断" : `${state.deathTimeAnswerRaw || ""} 之后`;
-  thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${timeRecap}</div>`;
+  thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${state.deathTimeAnswerRaw || ""} 之后</div>`;
 
   thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>他是在哪里去世的？</div>`;
-  if (!state.deathLocationAnswer) {
+  if (state.deathLocationAnswer !== "residence") {
+    if (state.deathLocationAnswer) {
+      thread.innerHTML += `
+        <div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${optLabel(PT1_LOCATION_OPTIONS, state.deathLocationAnswer)}</div>
+        <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你确定吗？先别急着下结论，多找找能撑住判断的证据。</div>
+      `;
+    }
     panel.appendChild(stepEl);
     renderOptions(stepEl, PT1_LOCATION_OPTIONS, (id) => {
       state.deathLocationAnswer = id;
@@ -136,28 +159,9 @@ function renderPt1(panel, thread, found) {
     });
     return;
   }
+  // 三问全对：canUnlockPt2(state) 现在必然为真，renderDm() 顶层会在
+  // 下一次渲染直接路由到 PT2 分支，这里不会真的执行到这一行之后。
   thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${optLabel(PT1_LOCATION_OPTIONS, state.deathLocationAnswer)}</div>`;
-
-  // 注意：canUnlockPt2(state) 在这里必然是 false——一旦为 true，
-  // renderDm() 顶层就已经直接路由到 PT2 分支，根本不会调用 renderPt1()。
-  const answersRight = state.deathTimeAnswer === "after_2352" && state.deathLocationAnswer === "residence";
-  if (answersRight) {
-    thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>光有判断还不够，你手上得先有能撑住这个判断的证据。</div>`;
-  } else {
-    thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你确定吗？先别急着下结论，多找找能撑住判断的证据。</div>`;
-  }
-
-  const retry = document.createElement("div");
-  retry.className = "reset-link";
-  retry.textContent = "重新想想 ›";
-  retry.addEventListener("click", () => {
-    state.deathTimeAnswer = null;
-    state.deathTimeAnswerRaw = null;
-    state.deathLocationAnswer = null;
-    save();
-    rerenderDm();
-  });
-  panel.appendChild(retry);
 }
 
 function optLabel(options, id) {
@@ -188,7 +192,7 @@ function classifyDeathTime(raw) {
 function renderTimeInput(stepEl, onSubmit) {
   stepEl.innerHTML = `
     <div class="search-row" style="align-items:center;">
-      <input id="pt1-time-input" type="text" placeholder="输入具体时间，例如 23:52" />
+      <input id="pt1-time-input" type="text" placeholder="输入具体时间，例如 20:02" />
       <span style="color:var(--ink-faint);font-size:13px;white-space:nowrap;">之后</span>
       <button id="pt1-time-submit">提交</button>
     </div>

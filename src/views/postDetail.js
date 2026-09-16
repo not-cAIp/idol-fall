@@ -60,7 +60,7 @@ export function renderPostDetail(root, { id, fromTab } = {}) {
   `;
   if (p.image || p.imagePrompt) {
     post.querySelector(".text").after(
-      createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption })
+      createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption, imageFit: p.imageFit })
     );
   }
   post.querySelector("#post-ftag")?.addEventListener("click", () => goTo("forum", { thread: p.thread }));

@@ -51,7 +51,10 @@
           "meta": "3400 赞"
         }
       ],
-      "section": ["hot", "flavor"]
+      "section": [
+        "hot",
+        "flavor"
+      ]
     },
     {
       "id": "w38",
@@ -2331,22 +2334,47 @@
         },
         {
           "author": "同期练习生粉",
-          "text": "他那时候不是还没用Ryan吗？采访里说自己的英文名一直是Anson",
-          "meta": "1400 赞"
-        },
-        {
-          "author": "练习生时代考古组",
-          "text": "有道理，这么一说中间那几位说不定是anson",
-          "meta": "980 赞"
+          "text": "英文名的话不是Ryan吗，是不是quietryan_716",
+          "meta": "890 赞"
         },
         {
           "author": "路人乙",
-          "text": "quiet+anson+716？会不会是这个",
-          "meta": "560 赞"
+          "text": "试了，好像不对，登不进去",
+          "meta": "640 赞"
+        },
+        {
+          "author": "练习生时代考古组",
+          "text": "他这个英文名感觉是出道以后才开始用的，之前是不是不太一样",
+          "meta": "710 赞"
         }
       ],
       "section": "hot",
       "image": "/images/p025-echo-account.jpg"
+    },
+    {
+      "id": "l11",
+      "thread": "linan",
+      "pinned": false,
+      "author": "林安考古组",
+      "handle": "@林安考古组",
+      "verified": false,
+      "time": "09-14 13:10",
+      "text": "继续考古：翻了几篇出道前的采访和通稿，林安那会儿英文名其实一直写的是Anson，不是现在的Ryan，不知道是什么时候、为什么换的",
+      "likes": "2400",
+      "reposts": "510",
+      "replies": [
+        {
+          "author": "路人丙",
+          "text": "还真是，我也翻到一篇一样的",
+          "meta": "380 赞"
+        },
+        {
+          "author": "同期练习生粉",
+          "text": "出道前后好多细节都对不上，感觉有些东西被抹掉了",
+          "meta": "290 赞"
+        }
+      ],
+      "section": "hot"
     },
     {
       "id": "p026",
@@ -2427,7 +2455,8 @@
           "text": "续航这次终于给力了",
           "meta": "410 赞"
         }
-      ]
+      ],
+      "imageFit": "contain"
     },
     {
       "id": "au02",
