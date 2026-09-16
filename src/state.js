@@ -11,21 +11,22 @@ export const PT1_CLUE_IDS = [
   "c23", "c24", "c30", "c35", "c41",
 ];
 
-// PT1 分三步问：①直接问『几点之后去世的』，正确答案是玩家自己填的
-// 『23:52之后』（不再先问一道"公司口径成不成立"的判断题——玩家该
-// 不该信官方时间，是自己看证据判断的事，不是选择题）；②在①的基础上
-// 用泡泡里更晚出现的"对方已下线"状态继续锁定，正确答案要落在 23:52
-// 前后的窄窗口里；③『哪里』，正确答案『自己住所』。如果玩家在①就直接
-// 填出了②要求的精确时间，②会自动算过，不会再重复问一遍。这一版不
-// 要求玩家手上必须先"点开"过某几条具体线索才算数——纯粹看这三步推理
-// 答没答对，找没找到支撑证据是玩家自己判断该不该确信这个答案的事，
-// 不是代码强制的门槛。沈溪主页（23:31/23:43仍有动静）、AURORA 手环
-// 记录（23:47仍在同步、23:52中断）、泡泡的"对方已下线"都还在，是帮
-// 玩家推理出正确答案的线索来源，只是不再被 canUnlockPt2 逐条打卡。
+// PT1 分三步问，答案都要玩家自己填精确时间点，不是选择题：①『几点
+// 之前去世的』——正确答案『00:20』，靠 AURORA『尝试读取心率，未找到设备』这条
+// 记录撑住，是死亡区间的上界；②『几点之后去世的』——正确答案
+// 『23:52』，靠泡泡最后一条消息+『对方已下线』状态撑住（同一分钟
+// AURORA 也显示同步中断，两边互相印证），是死亡区间的下界。两问
+// 答对以后，私信会把这两个点拼成一个区间"23:52-00:20"讲给玩家听；
+// ③再问『哪里』，正确答案『自己住所』。这一版不要求玩家手上必须先
+// "点开"过某几条具体线索才算数——纯粹看这三步推理答没答对，找没找到
+// 支撑证据是玩家自己判断该不该确信这个答案的事，不是代码强制的门槛。
+// 沈溪主页（23:31/23:43仍有动静）、AURORA 手环记录、泡泡的最后消息
+// 都还在，是帮玩家推理出正确答案的线索来源，只是不再被 canUnlockPt2
+// 逐条打卡。
 export function canUnlockPt2(s) {
   return (
-    s.deathTimeAnswer === "after_2352" &&
-    s.deathTimeStep2Answer === "pinned" &&
+    s.deathBeforeAnswer === "before_0020" &&
+    s.deathAfterAnswer === "after_2352" &&
     s.deathLocationAnswer === "residence"
   );
 }
@@ -43,9 +44,10 @@ export function canConvictHeXun() {
 const defaultState = () => ({
   foundProfiles: [],
   foundClues: [],
-  deathTimeAnswer: null,
-  deathTimeAnswerRaw: null,
-  deathTimeStep2Answer: null,
+  deathBeforeAnswer: null,
+  deathBeforeAnswerRaw: null,
+  deathAfterAnswer: null,
+  deathAfterAnswerRaw: null,
   deathLocationAnswer: null,
   finalSuspect: null,
   finalAction: null,

@@ -15,7 +15,7 @@ registerView("search", renderSearch);
 registerView("dm", renderDm);
 registerView("ending", renderEnding);
 
-// 泡泡是一个独立站点（saraliuxt-coder.github.io/paopao/），读完专属消息后
+// 泡泡是一个独立站点（not-cAIp.github.io/paopao/），读完专属消息后
 // 会带着 ?clue=c11,c12,c13,c14,c31 这样的逗号分隔列表跳回这里——
 // 这是唯一需要跨站点同步的信号。
 const returnedClue = new URLSearchParams(location.search).get("clue");

@@ -4,7 +4,7 @@ import { goTo } from "../router.js";
 import { renderTopNav } from "../components/weiboChrome.js";
 import { icon } from "../components/icons.js";
 
-const GW_URL = "https://saraliuxt-coder.github.io/galaxy-workspace/";
+const GW_URL = "https://not-cAIp.github.io/galaxy-workspace/";
 
 export function renderDm(root) {
   root.className = "weibo-scope";
@@ -79,14 +79,14 @@ export function renderDm(root) {
   renderSuspectStep(thread, stepEl);
 }
 
-// PT1 分三步：①直接问『几点之后去世的』（不再先问一道"公司口径成不
-// 成立"的判断题）——答案『23:52之后』要靠 AURORA 手环同步记录撑住；
-// ②追问『能不能继续锁定』——利用泡泡里比①的证据更晚出现的"对方已
-// 下线"状态，把范围收窄到 23:52 前后的窄窗口；③再问『哪里』——答案
-// 『自己住所』要靠沈溪主页的帖子撑住（如果他真去了杭州，不会有人在
-// 住所附近看到他）。如果玩家在①就直接填出了②要求的精确时间，②会
-// 自动判定通过，不再重复问一遍已经推理出来的结论。每一步答错都只会
-// 停在原地反复问，不会带着错的时间/地点先看到下一题。
+// PT1 分三步：①先问『几点之前去世的』——答案『00:20』要靠 AURORA
+// 『尝试读取心率，未找到设备』这条记录撑住，是死亡区间的上界；②再问『几点之后
+// 去世的』——答案『23:52』要靠泡泡最后一条消息+『对方已下线』状态
+// 撑住（同一分钟 AURORA 也显示同步中断），是死亡区间的下界；两问都
+// 答对后会有一条系统消息把两个点拼成一个区间讲给玩家听；③再问
+// 『哪里』——答案『自己住所』要靠沈溪主页的帖子撑住（如果他真去了
+// 杭州，不会有人在住所附近看到他）。每一步答错都只会停在原地反复
+// 问，不会带着错的时间/地点先看到下一题。
 const PT1_LOCATION_OPTIONS = [
   { id: "hangzhou", label: "杭州（官方原定行程地）" },
   { id: "residence", label: "自己住所" },
@@ -102,10 +102,10 @@ function renderPt1(panel, thread, pt1Found) {
   const stepEl = document.createElement("div");
   stepEl.className = "reply-options";
 
-  thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>周晏星是几点之后去世的？</div>`;
-  if (state.deathTimeAnswer !== "after_2352") {
-    if (state.deathTimeAnswer) {
-      const timeRecap = state.deathTimeAnswer === "unsure" ? "无法判断" : `${state.deathTimeAnswerRaw || ""} 之后`;
+  thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>周晏星是几点之前去世的？</div>`;
+  if (state.deathBeforeAnswer !== "before_0020") {
+    if (state.deathBeforeAnswer) {
+      const timeRecap = state.deathBeforeAnswer === "unsure" ? "无法判断" : `${state.deathBeforeAnswerRaw || ""} 之前`;
       thread.innerHTML += `
         <div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${timeRecap}</div>
         <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你确定吗？先别急着下结论，多找找能撑住判断的证据。</div>
@@ -114,28 +114,22 @@ function renderPt1(panel, thread, pt1Found) {
     panel.appendChild(stepEl);
     renderTimeInput(
       stepEl,
-      { placeholder: "输入具体时间，例如 20:02", suffix: "之后", classify: classifyDeathTime },
+      { placeholder: "输入具体时间，例如 01:15", suffix: "之前", classify: classifyBeforeTime },
       (cat, raw) => {
-        state.deathTimeAnswer = cat;
-        state.deathTimeAnswerRaw = raw;
-        // 跳步判定：如果玩家这一步填的时间已经精确到②要求的窄窗口，
-        // ②直接视为通过，不再重复问一遍玩家已经推理出来的结论。
-        if (cat === "after_2352" && raw && classifyPreciseTime(raw) === "pinned") {
-          state.deathTimeStep2Answer = "pinned";
-          state.deathTimeStep2AnswerRaw = raw;
-        }
+        state.deathBeforeAnswer = cat;
+        state.deathBeforeAnswerRaw = raw;
         save();
         rerenderDm();
       }
     );
     return;
   }
-  thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${state.deathTimeAnswerRaw || ""} 之后</div>`;
+  thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${state.deathBeforeAnswerRaw || ""} 之前</div>`;
 
-  thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你能继续锁定时间吗？</div>`;
-  if (state.deathTimeStep2Answer !== "pinned") {
-    if (state.deathTimeStep2Answer) {
-      const timeRecap = state.deathTimeStep2Answer === "unsure" ? "无法判断" : `${state.deathTimeStep2AnswerRaw || ""}`;
+  thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>那他是几点之后去世的？</div>`;
+  if (state.deathAfterAnswer !== "after_2352") {
+    if (state.deathAfterAnswer) {
+      const timeRecap = state.deathAfterAnswer === "unsure" ? "无法判断" : `${state.deathAfterAnswerRaw || ""} 之后`;
       thread.innerHTML += `
         <div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${timeRecap}</div>
         <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你确定吗？先别急着下结论，多找找能撑住判断的证据。</div>
@@ -144,17 +138,20 @@ function renderPt1(panel, thread, pt1Found) {
     panel.appendChild(stepEl);
     renderTimeInput(
       stepEl,
-      { placeholder: "输入更精确的时间，例如 23:52", classify: classifyPreciseTime },
+      { placeholder: "输入具体时间，例如 22:30", suffix: "之后", classify: classifyAfterTime },
       (cat, raw) => {
-        state.deathTimeStep2Answer = cat;
-        state.deathTimeStep2AnswerRaw = raw;
+        state.deathAfterAnswer = cat;
+        state.deathAfterAnswerRaw = raw;
         save();
         rerenderDm();
       }
     );
     return;
   }
-  thread.innerHTML += `<div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${state.deathTimeStep2AnswerRaw || "23:52 前后"}</div>`;
+  thread.innerHTML += `
+    <div class="bubble-msg out chat-sent"><span class="tag mono">你 · 刚刚</span>${state.deathAfterAnswerRaw || ""} 之后</div>
+    <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>所以他是在 23:52 到 00:20 之间去世的。</div>
+  `;
 
   thread.innerHTML += `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>他是在哪里去世的？</div>`;
   if (state.deathLocationAnswer !== "residence") {
@@ -181,9 +178,8 @@ function optLabel(options, id) {
   return options.find((o) => o.id === id)?.label || "";
 }
 
-// 玩家自己填时间，不给选项——"23:52之后"不能靠排除法蒙，得真的从
-// AURORA 手环记录（23:47仍在同步、23:52中断）里读出这个点。00:00-05:59
-// 也算"当晚这之后"，覆盖真实死亡窗口 23:50-00:10 附近的合理填法。
+// 玩家自己填时间，不给选项——两个答案都不能靠排除法蒙，得真的从
+// AURORA/泡泡的具体记录里读出准确的分钟数。
 function parseTimeToMinutes(raw) {
   const s = (raw || "").trim();
   let m = s.match(/^(\d{1,2})\s*[:：点时]\s*(\d{1,2})\s*分?$/);
@@ -195,19 +191,23 @@ function parseTimeToMinutes(raw) {
   return hh * 60 + mm;
 }
 
-function classifyDeathTime(raw) {
+// 死亡区间的上界，只认一个准确时间点：AURORA 同步记录里『00:20 尝试
+// 读取心率，未找到设备』——不是测到了心跳为零，是设备联系不上了，
+// 但过了这个点就再没有任何活动迹象。
+function classifyBeforeTime(raw) {
   const mins = parseTimeToMinutes(raw);
   if (mins === null) return null;
-  if (mins >= 23 * 60 + 52 || mins < 6 * 60) return "after_2352";
+  if (mins === 0 * 60 + 20) return "before_0020";
   return "wrong";
 }
 
-// 第二步的窄窗口——靠泡泡里比手环记录更晚出现的"对方已下线"状态
-// （09-13 23:52）撑住，允许 23:50-23:54 的合理填法误差。
-function classifyPreciseTime(raw) {
+// 死亡区间的下界，只认一个准确时间点：泡泡最后一条消息『23:52 你
+// 睡了吗？』+ 同一分钟的『对方已下线』状态——AURORA 那边同步中断
+// 也是这一分钟，两个独立来源互相印证。
+function classifyAfterTime(raw) {
   const mins = parseTimeToMinutes(raw);
   if (mins === null) return null;
-  if (mins >= 23 * 60 + 50 && mins <= 23 * 60 + 54) return "pinned";
+  if (mins === 23 * 60 + 52) return "after_2352";
   return "wrong";
 }
 
