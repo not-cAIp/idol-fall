@@ -73,6 +73,56 @@ const FAN_AVATARS = [
   "/images/fan-avatar-yanxing-rainy-night.jpg",
   "/images/fan-avatar-yanxing-stage-dance.jpg",
   "/images/fan-avatar-yanxing-variety.jpg",
+  "/images/avatars/ordinary/ordinary-01.jpg",
+  "/images/avatars/ordinary/ordinary-02.jpg",
+  "/images/avatars/ordinary/ordinary-03.jpg",
+  "/images/avatars/ordinary/ordinary-04.jpg",
+  "/images/avatars/ordinary/ordinary-05.jpg",
+  "/images/avatars/ordinary/ordinary-06.jpg",
+  "/images/avatars/ordinary/ordinary-07.jpg",
+  "/images/avatars/ordinary/ordinary-08.jpg",
+  "/images/avatars/ordinary/ordinary-09.jpg",
+  "/images/avatars/ordinary/ordinary-10.jpg",
+  "/images/avatars/ordinary/ordinary-11.jpg",
+  "/images/avatars/ordinary/ordinary-12.jpg",
+  "/images/avatars/ordinary/ordinary-13.jpg",
+  "/images/avatars/ordinary/ordinary-14.jpg",
+  "/images/avatars/ordinary/ordinary-15.jpg",
+  "/images/avatars/ordinary/ordinary-16.jpg",
+  "/images/avatars/ordinary/ordinary-17.jpg",
+  "/images/avatars/ordinary/ordinary-18.jpg",
+  "/images/avatars/ordinary/ordinary-19.jpg",
+  "/images/avatars/ordinary/ordinary-20.jpg",
+  "/images/avatars/young-girls/girl-01.jpg",
+  "/images/avatars/young-girls/girl-02.jpg",
+  "/images/avatars/young-girls/girl-03.jpg",
+  "/images/avatars/young-girls/girl-04.jpg",
+  "/images/avatars/young-girls/girl-05.jpg",
+  "/images/avatars/young-girls/girl-06.jpg",
+  "/images/avatars/young-girls/girl-07.jpg",
+  "/images/avatars/young-girls/girl-08.jpg",
+  "/images/avatars/young-girls/girl-09.jpg",
+  "/images/avatars/young-girls/girl-10.jpg",
+  "/images/avatars/young-girls/girl-11.jpg",
+  "/images/avatars/young-girls/girl-12.jpg",
+  "/images/avatars/young-girls/girl-13.jpg",
+  "/images/avatars/young-girls/girl-14.jpg",
+  "/images/avatars/young-girls/girl-15.jpg",
+  "/images/avatars/young-girls/girl-16.jpg",
+  "/images/avatars/young-girls/girl-17.jpg",
+  "/images/avatars/young-girls/girl-18.jpg",
+  "/images/avatars/young-girls/girl-19.jpg",
+  "/images/avatars/young-girls/girl-20.jpg",
+  "/images/avatars/young-girls/girl-21.jpg",
+  "/images/avatars/young-girls/girl-22.jpg",
+  "/images/avatars/young-girls/girl-23.jpg",
+  "/images/avatars/young-girls/girl-24.jpg",
+  "/images/avatars/young-girls/girl-25.jpg",
+  "/images/avatars/young-girls/girl-26.jpg",
+  "/images/avatars/young-girls/girl-27.jpg",
+  "/images/avatars/young-girls/girl-28.jpg",
+  "/images/avatars/young-girls/girl-29.jpg",
+  "/images/avatars/young-girls/girl-30.jpg",
 ];
 
 // 死讯是 09-14 凌晨发布的——真实饭圈惯例：消息传出后，普通粉丝账号会
@@ -88,11 +138,30 @@ function hashStr(s) {
   return h;
 }
 
+// 不同账号不能撞同一张头像——光靠哈希取模在账号数接近头像池大小时
+// 很容易撞车。这里在模块加载时把 posts.json 里出现过的、不在
+// KNOWN_AVATARS 里的账号 key 全部收集起来、排序（保证每次结果一致），
+// 按顺序从头像池里一人发一张，只要池子够大就不会有两个不同账号拿到
+// 同一张。池子不够大时才退回旧的哈希取模（允许撞车，但至少不报错）。
+const _fanKeys = Array.from(
+  new Set(
+    posts.posts
+      .filter((p) => !(p.handle && KNOWN_AVATARS[p.handle]) && p.time && p.time < MOURNING_DATE)
+      .map((p) => p.author || p.handle)
+      .filter(Boolean)
+  )
+).sort();
+const _assignedFanAvatar = {};
+_fanKeys.forEach((k, i) => {
+  _assignedFanAvatar[k] = FAN_AVATARS[i < FAN_AVATARS.length ? i : hashStr(k) % FAN_AVATARS.length];
+});
+
 // 返回一个可以直接赋给 el.style.background 的 CSS 值——可能是
 // `url(...) center/cover`，也可能是哀悼用的纯色渐变。
 export function avatarFor({ handle, author, time } = {}) {
   if (handle && KNOWN_AVATARS[handle]) return `url(${resolveSrc(KNOWN_AVATARS[handle])}) center/cover`;
   if (time && time >= MOURNING_DATE) return MOURNING_BG;
   const key = author || handle || "?";
-  return `url(${resolveSrc(FAN_AVATARS[hashStr(key) % FAN_AVATARS.length])}) center/cover`;
+  const src = _assignedFanAvatar[key] || FAN_AVATARS[hashStr(key) % FAN_AVATARS.length];
+  return `url(${resolveSrc(src)}) center/cover`;
 }
