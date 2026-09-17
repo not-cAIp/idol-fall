@@ -50,7 +50,9 @@ export function renderDm(root) {
 
   if (!state.foundClues.includes("c37") || !state.foundClues.includes("c38")) {
     thread.innerHTML += `
-      <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>我打听到一个内部共享盘的访问口令，是"0913run"，具体链接和里面有什么我还没查清楚。</div>
+      <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>我之前保存过陈屿工作文件夹的入口。密码他换过，我不知道现在还是不是那个。</div>
+      <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>他以前有个很奇怪的习惯，重要项目都用"日期+当天发生的事"。</div>
+      <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>我只记得那天是 9 月 13 日。后面的三个字母……好像和行程有关。</div>
     `;
     const gwLink = document.createElement("a");
     gwLink.className = "file-card";
