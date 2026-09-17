@@ -36,12 +36,6 @@
       "name": "银河星途",
       "label": "银河星途——他的公司",
       "correct": false
-    },
-    {
-      "id": "unclear",
-      "name": null,
-      "label": "说不清是谁，也许根本没有『凶手』",
-      "correct": false
     }
   ],
   "actions": [
