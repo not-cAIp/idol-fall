@@ -2252,7 +2252,7 @@
       "handle": "@cy_notes",
       "verified": false,
       "time": "08-05 14:20",
-      "text": "有个男的打电话到工作室，说要『讨个说法』，前台没敢转接，我这边也没往上报，先按下不表。",
+      "text": "有个打电话到工作室的，说要『讨个说法』，前台没敢转接，我这边也没往上报，先按下不表。",
       "likes": "0",
       "reposts": "0",
       "replies": []
@@ -2264,7 +2264,7 @@
       "author": "陈屿的备忘录",
       "handle": "@cy_notes",
       "verified": false,
-      "time": "08-26 21:10",
+      "time": "08-21 21:10 (前年）",
       "text": "怎么公司这些群聊密码都是原名_生日，真不怕被黑啊",
       "likes": "2",
       "reposts": "0",
@@ -2273,6 +2273,25 @@
           "author": "manibeeo",
           "text": "你带的都这么糊，谁没事去黑账号",
           "meta": "1 赞"
+        }
+      ]
+    },
+    {
+      "id": "cm09",
+      "profile": "chenyu_memo",
+      "pinned": false,
+      "author": "陈屿的备忘录",
+      "handle": "@cy_notes",
+      "verified": false,
+      "time": "08-12 23:15",
+      "text": "又在加班，很累。",
+      "likes": "2",
+      "reposts": "0",
+      "replies": [
+        {
+          "author": "陈屿的备忘录",
+          "text": "公司为啥会把安保密码命名成「那个」，那个名字不是早就不用了吗",
+          "meta": "0 赞"
         }
       ]
     },
