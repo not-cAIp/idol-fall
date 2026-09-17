@@ -28,14 +28,26 @@ export function resolveSrc(src) {
   return import.meta.env.BASE_URL + src.replace(/^\//, "");
 }
 
-// 帖子时间格式不统一——大多数是"MM-DD HH:MM"，但苏昭主页那几条怀念/
-// 周年帖用的是"MM-DD（去年）"/"MM-DD（前年）"这种相对年份写法，直接按
-// 字符串比较（localeCompare）排不出真实的新旧顺序（"（去年）"这种后缀会
-// 打乱月日本身的比较）。这里统一转成一个可比较的数字：年份差是最主要
-// 的排序依据（今年 > 去年 > 前年），同一年份差内再按月日、时间比。没有
-// 具体时间的（比如只有"MM-DD"或者相对年份帖）当成当天最早。
+// 帖子时间格式不统一——大多数是"MM-DD HH:MM"（隐含"今年"），少数怀念/
+// 周年帖用"MM-DD（去年）"/"MM-DD（前年）"这种相对年份写法，2018-2019
+// 年代考古线的关键帖子则需要显示绝对年份"YYYY-MM-DD HH:MM"（陆昭/
+// weather0721 那条线横跨快十年，只用"前年/去年"表达不了，玩家也需要
+// 看到确切年份才能自己拼时间线）。三种格式都统一转成一个可比较的
+// 数字：年份差是最主要的排序依据，同一年份差内再按月日、时间比。
+// 故事当前年份固定为 2027（对应 F4ever 官方超话 #F4ever2027巡演# 这个
+// 已有锚点），绝对年份直接换算成相对 2027 的年份差，跟"去年/前年"用
+// 的是同一套单位，可以互相比较排序。
+const STORY_YEAR = 2027;
 export function timeSortKey(t) {
   if (!t) return -Infinity;
+  const abs = t.match(/(\d{4})-(\d{2})-(\d{2})(?:\s+(\d{2}):(\d{2}))?/);
+  if (abs) {
+    const [, yyyy, mm, dd, hh, min] = abs;
+    const yearOffset = Number(yyyy) - STORY_YEAR;
+    const monthDay = Number(mm) * 100 + Number(dd);
+    const minutes = hh ? Number(hh) * 60 + Number(min) : 0;
+    return yearOffset * 1e8 + monthDay * 1e4 + minutes;
+  }
   const yearOffset = t.includes("前年") ? -2 : t.includes("去年") ? -1 : 0;
   const m = t.match(/(\d{2})-(\d{2})(?:\s+(\d{2}):(\d{2}))?/);
   if (!m) return yearOffset * 1e8;
@@ -60,7 +72,9 @@ const KNOWN_AVATARS = {
   "@zhouyanxing_studio": "/images/avatar-yanxing-studio.jpg",
   "@galaxy_agency": "/images/avatar-galaxy-agency.jpg",
   "@晏星今天早点睡": "/images/avatar-shenxi-sunflower.jpg",
+  "@sg_neko": "/images/avatar-shiguang-cat.jpg",
   "@shiguang_neko": "/images/avatar-shiguang-cat.jpg",
+  "@weather0721": "/images/sg06-night-window.jpg",
   "@linan_ryan": "/images/avatar-linan-official.jpg",
   "@chenyu_official": "/images/avatar-chenyu-manager.jpg",
   "@aurora_fit": "/images/avatar-aurora-brand.jpg",
