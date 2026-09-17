@@ -72,7 +72,6 @@ const KNOWN_AVATARS = {
   "@zhouyanxing_studio": "/images/avatar-yanxing-studio.jpg",
   "@galaxy_agency": "/images/avatar-galaxy-agency.jpg",
   "@晏星今天早点睡": "/images/avatar-shenxi-sunflower.jpg",
-  "@sg_neko": "/images/avatar-shiguang-cat.jpg",
   "@shiguang_neko": "/images/avatar-shiguang-cat.jpg",
   "@weather0721": "/images/sg06-night-window.jpg",
   "@linan_ryan": "/images/avatar-linan-official.jpg",
