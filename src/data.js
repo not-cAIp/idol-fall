@@ -66,6 +66,7 @@ const KNOWN_AVATARS = {
   "@aurora_fit": "/images/avatar-aurora-brand.jpg",
   "@f4everofficial": "/images/avatar-f4ever-official.png",
   "@stay_with_yx": "/images/avatar-companion-admin.jpg",
+  "@xinprod_work": "/images/avatar-xinprod-work.png",
   // 之前占位的 avatar-daipai-landscape.jpg 一直没配到图，改成从通用
   // 头像池里"借"一张没被分配过的（47个账号用了50张里的47张，还剩
   // ordinary-18/19/20 三张没人用），保证不会跟其他账号撞图。
