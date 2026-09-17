@@ -73,11 +73,15 @@ h1, h2, h3 { font-family: "Noto Serif SC", "Noto Serif", serif; margin: 0 0 10px
 
 .app-footer {
   flex: none;
-  text-align: center;
-  font-size: 10.5px;
-  color: var(--ink-faint);
-  padding: 7px 0;
-  letter-spacing: .04em;
+  display: flex;
+  justify-content: center;
+  padding: 6px 0;
+}
+.app-footer img {
+  display: block;
+  width: 88%;
+  max-width: 360px;
+  height: auto;
 }
 
 /* 桌面端仿真微博模式：#phone 从"手机壳"变成普通网页容器 */
