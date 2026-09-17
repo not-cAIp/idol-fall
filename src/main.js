@@ -7,6 +7,7 @@ import { renderSearch } from "./views/search.js";
 import { renderDm } from "./views/dm.js";
 import { renderEnding } from "./views/ending.js";
 import { markClueFound } from "./state.js";
+import { renderOnboardingNotif } from "./components/onboardingNotif.js";
 
 registerView("home", renderHome);
 registerView("forum", renderForum);
@@ -25,3 +26,4 @@ if (returnedClue) {
 }
 
 mountRouter(document.getElementById("view"), "forum");
+renderOnboardingNotif();

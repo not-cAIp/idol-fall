@@ -44,6 +44,7 @@ export function canConvictHeXun() {
 const defaultState = () => ({
   foundProfiles: [],
   foundClues: [],
+  hasSeenOnboardingNotif: false,
   deathBeforeAnswer: null,
   deathBeforeAnswerRaw: null,
   deathAfterAnswer: null,

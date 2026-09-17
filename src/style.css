@@ -77,6 +77,72 @@ h1, h2, h3 { font-family: "Noto Serif SC", "Noto Serif", serif; margin: 0 0 10px
   justify-content: center;
   padding: 6px 0;
 }
+
+/* 开局的一条模拟系统通知，来自"陪你走到最后"——position:fixed 相对
+   视口定位，不受手机壳/desktop-mode/ending-mode 任何一种布局影响。 */
+.onb-notif {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translate(-50%, -140%);
+  width: min(340px, calc(100vw - 24px));
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 11px 13px;
+  background: color-mix(in srgb, #171b22 88%, transparent);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 16px 34px -14px rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  z-index: 999;
+  opacity: 0;
+  transition: transform 0.32s cubic-bezier(.2, .9, .3, 1.15), opacity 0.28s ease;
+}
+.onb-notif.onb-notif-in {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+.onb-notif.onb-notif-out {
+  transform: translate(-50%, -140%);
+  opacity: 0;
+}
+.onb-notif-icon {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent, #ff5c72);
+  color: #14171c;
+}
+.onb-notif-body { min-width: 0; flex: 1; }
+.onb-notif-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+.onb-notif-app {
+  font-size: 12px;
+  font-weight: 700;
+  color: #e7e9ed;
+  letter-spacing: .01em;
+}
+.onb-notif-time {
+  font-size: 10.5px;
+  color: #8b929c;
+  flex: none;
+}
+.onb-notif-msg {
+  font-size: 13px;
+  color: #e7e9ed;
+  line-height: 1.35;
+}
 .app-footer img {
   display: block;
   width: 88%;
