@@ -282,6 +282,17 @@ body.ending-mode #view {
 .search-empty { color: var(--ink-faint); font-size: 13.5px; padding: 20px 0; text-align: center; }
 .search-blocked { color: var(--danger); font-size: 13px; padding: 12px 14px; border: 1px solid var(--danger); border-radius: 10px; background: color-mix(in srgb, var(--danger) 12%, transparent); }
 
+.recent-searches { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: -6px; margin-bottom: 4px; }
+.rs-label { font-size: 12px; color: var(--ink-faint); margin-right: 2px; }
+.rs-tag {
+  font-size: 12.5px; color: var(--ink-soft); background: var(--surface-2);
+  border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px;
+  cursor: pointer;
+}
+.rs-tag:hover { border-color: var(--accent); color: var(--accent); }
+.rs-meta { margin-top: 8px; font-size: 11px; color: var(--ink-faint); line-height: 1.7; }
+.rs-meta-faint { display: block; opacity: 0.55; }
+
 .profile-card {
   display: flex; gap: 14px;
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);

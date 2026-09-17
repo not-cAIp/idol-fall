@@ -1,5 +1,5 @@
 import { findProfile, isBlockedQuery, posts, profiles, avatarFor, resolveSrc, timeSortKey } from "../data.js";
-import { markProfileFound, markClueFound } from "../state.js";
+import { state, markProfileFound, markClueFound, recordSearch, canUnlockPt2 } from "../state.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { goTo } from "../router.js";
 import { renderTopNav, renderLeftNav, renderRightbar } from "../components/weiboChrome.js";
@@ -27,12 +27,44 @@ export function renderSearch(root, { profile: profileId, query } = {}) {
         <input id="search-input" type="text" placeholder="搜索账号 / 昵称 / 关键词" />
         <button id="search-btn">搜索</button>
       </div>
+      <div id="recent-searches"></div>
     </div>
     <div id="search-result" style="margin-top:14px;"></div>
   `;
 
   const input = main.querySelector("#search-input");
   const resultEl = main.querySelector("#search-result");
+  const recentEl = main.querySelector("#recent-searches");
+
+  // 纯氛围的"最近搜索"，不参与任何判定——搜够一定数量后底下配一句
+  // 很淡的系统小字，见 state.js 的 recordSearch()。
+  function renderRecent() {
+    if (!state.recentSearches.length) {
+      recentEl.innerHTML = "";
+      return;
+    }
+    recentEl.innerHTML = `
+      <div class="recent-searches">
+        <span class="rs-label">最近搜索</span>
+        ${state.recentSearches.map((q) => `<span class="rs-tag">${escapeHtml(q)}</span>`).join("")}
+      </div>
+      ${
+        canUnlockPt2(state) && state.recentSearches.length >= 5
+          ? `<div class="rs-meta">
+               搜索记录仅保存在本机。
+               <span class="rs-meta-faint">有些记录，当年也是这么保存的。</span>
+             </div>`
+          : ""
+      }
+    `;
+    recentEl.querySelectorAll(".rs-tag").forEach((tag) => {
+      tag.addEventListener("click", () => {
+        input.value = tag.textContent;
+        runSearch();
+      });
+    });
+  }
+  renderRecent();
 
   function showProfile(profile) {
     markProfileFound(profile.id);
@@ -76,6 +108,9 @@ export function renderSearch(root, { profile: profileId, query } = {}) {
     const q = input.value;
     resultEl.innerHTML = "";
     if (!q.trim()) return;
+
+    recordSearch(q.trim());
+    renderRecent();
 
     if (isBlockedQuery(q)) {
       resultEl.innerHTML = `<div class="wfeed-card" style="cursor:default;"><div class="search-blocked">搜索结果存在风险，已隐藏。</div></div>`;

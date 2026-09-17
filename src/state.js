@@ -44,6 +44,7 @@ export function canConvictHeXun() {
 const defaultState = () => ({
   foundProfiles: [],
   foundClues: [],
+  recentSearches: [],
   hasSeenOnboardingNotif: false,
   deathBeforeAnswer: null,
   deathBeforeAnswerRaw: null,
@@ -88,6 +89,17 @@ export function markProfileFound(id) {
     state.foundProfiles.push(id);
     save();
   }
+}
+
+// 纯氛围的"最近搜索"，不参与任何判定——记录玩家实际敲过的词（不管
+// 搜没搜到），最新的排在最前，去重，只留 8 条。search.js 在搜到
+// 一定数量后会在列表下面配一句很淡的系统小字，纯文本，不弹窗、不
+// 当线索，只是极轻的一点 meta 感（"有些记录，当年也是这么保存的"）。
+export function recordSearch(query) {
+  const q = (query || "").trim();
+  if (!q) return;
+  state.recentSearches = [q, ...state.recentSearches.filter((x) => x !== q)].slice(0, 8);
+  save();
 }
 
 export function resetGame() {

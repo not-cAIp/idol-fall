@@ -67,6 +67,18 @@ export function renderDm(root) {
       </span>
     `;
     thread.appendChild(gwLink);
+  } else if (state.foundClues.includes("c36")) {
+    // 沈溪的道德矛盾——只在玩家已经走完 GW（c37/c38）和 ECHO（c36）
+    // 之后才出现，不早也不晚。不给判断，不说教，就摆出这个事实让
+    // 玩家自己坐着不舒服一下：能证明公司撒谎的证据，一半是跟踪/
+    // 偷拍/入侵账号换来的。这跟最终「实名公开/写报道/私下交给我/
+    // 什么都不做」四选一是同一个主题的预埋，不需要提前点破。
+    thread.innerHTML += `
+      <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>你有没有发现一件事。</div>
+      <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>我们现在用来证明公司撒谎的东西，有一半是她跟踪他留下来的。</div>
+      <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>真相是真的。</div>
+      <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>但拿到它的方法也是。</div>
+    `;
   }
 
   if (state.finalEnding) {
