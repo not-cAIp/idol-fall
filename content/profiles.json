@@ -120,8 +120,7 @@
     {
       "id": "aurora_official",
       "searchKeywords": [
-        "运动手环",
-        "极光手环",
+        "Aurora",
         "极光运动",
         "aurora",
         "AURORA"
@@ -177,7 +176,7 @@
       "lockedNote": "大部分内容不可见，唯一泄露出来的是几条被朋友截图转发的记录。",
       "discoveredVia": "act8 · 从 p018 顺藤摸瓜挖到这个小号",
       "clueOnFound": "c15",
-      "devNote": "这个账号（帖子 id 前缀 cm，见 posts.json）里藏着通向 GALAXY WORKSPACE 的真实链接（cm05）——这是这个私人小号被搜到之后才可能看到的内容，不是开局就能点的入口，比早期版本放一条明显的超话帖子要藏得深得多。gxshare.cn 那条死链（cm02）只营造『公司有自己的共享文件系统、命名习惯是日期+run』的印象，本身打不开；cm05 的真实链接需要玩家在 GALAXY WORKSPACE 落地页自己填一次『安全验证』，答案就是这个命名习惯拼出来的口令。c15/c16/c31 都在这个账号上（原来还有 c19，帖子 cm03 应用户要求下线了，c19 现在没有入口，见 clues.json），一次搜到全部可见。"
+      "devNote": "这个账号（帖子 id 前缀 cm，见 posts.json）里以前藏着通向 GALAXY WORKSPACE 的真实链接（cm05），现在已经删掉了——GW 这一版只能靠 PT1 通关后私信『陪你走到最后』给的链接卡片进去，不能提前从这里摸到。gxshare.cn 那条死链帖子（cm02）原来文字里直接写着『gxshare.cn/s/0913run』，等于密码提前剧透，这一版也把这半句拿掉了，现在只留『公司有自己的共享文件系统、命名习惯是日期+run』这个氛围，不再暴露具体口令。c15/c16/c31 都在这个账号上（原来还有 c19，帖子 cm03 应用户要求下线了，c19 现在没有入口，见 clues.json），一次搜到全部可见。"
     },
     {
       "id": "daipai_stakeout",

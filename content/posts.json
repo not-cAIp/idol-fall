@@ -2225,20 +2225,14 @@
       "handle": "@cy_notes",
       "verified": false,
       "time": "08-19 23:00",
-      "text": "手机又死机🙂 谁再让我现场改行程表我真的辞职 gxshare.cn/s/0913run",
-      "tag": "链接已失效",
+      "text": "手机又死机🙂 谁再让我现场改行程表我真的辞职",
       "likes": "3",
       "reposts": "0",
       "replies": [
         {
           "author": "打工人别卷了",
-          "text": "你这个链接命名真的十年不变",
+          "text": "其实都是牛马啊",
           "meta": "1 赞"
-        },
-        {
-          "author": "陈屿的备忘录",
-          "text": "方便啊 日期+run",
-          "meta": "0 赞"
         }
       ]
     },
@@ -2306,25 +2300,6 @@
           "author": "陈屿的备忘录",
           "text": "公司为啥会把安保密码命名成「那个」，那个名字不是早就不用了吗",
           "meta": "0 赞"
-        }
-      ]
-    },
-    {
-      "id": "cm05",
-      "profile": "chenyu_memo",
-      "pinned": false,
-      "author": "陈屿的备忘录",
-      "handle": "@cy_notes",
-      "verified": false,
-      "time": "07-02 11:20",
-      "text": "上次那个链接过期了，这是新发的，回头存一下：<a href=\"https://not-cAIp.github.io/galaxy-workspace/\" target=\"_blank\" rel=\"noopener\">gxshare.cn/s/GX-YX-0703-run</a>",
-      "likes": "0",
-      "reposts": "0",
-      "replies": [
-        {
-          "author": "打工人别卷了",
-          "text": "又是这个命名，你是真的懒得想新名字",
-          "meta": "1 赞"
         }
       ]
     },
