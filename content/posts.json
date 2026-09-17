@@ -3236,7 +3236,7 @@
       "author": "拾光の猫",
       "handle": "@shiguang_neko",
       "verified": false,
-      "time": "2026-04-11 23:58",
+      "time": "2020-04-11 23:58",
       "text": "本来没打算点的。",
       "likes": "1",
       "reposts": "0",
@@ -3249,7 +3249,7 @@
       "author": "拾光の猫",
       "handle": "@shiguang_neko",
       "verified": false,
-      "time": "2026-04-12 00:03",
+      "time": "2020-04-12 00:03",
       "text": "最后一分钟还是提交了。人有时候真的很没出息。",
       "likes": "3",
       "reposts": "0",
@@ -3262,7 +3262,7 @@
       "author": "拾光の猫",
       "handle": "@shiguang_neko",
       "verified": false,
-      "time": "2026-04-12 09:40",
+      "time": "2020-04-12 09:40",
       "text": "我这种人居然也能中。算了，当纪念一下运气。",
       "imagePrompt": "一张裁切过的截图，只露出上半段：一行\"恭喜获得……\"的祝贺文字，右下角一个日期戳\"04/12\"，其余内容被裁掉了。",
       "imageCaption": "裁切过的截图，只露出\"恭喜获得……\"和日期\"04/12\"。",
@@ -3275,7 +3275,7 @@
           "meta": "3 赞"
         },
         {
-          "author": "S.G.",
+          "author": "拾光の猫",
           "text": "一个订阅活动，运气而已",
           "meta": "0 赞"
         }
@@ -3441,19 +3441,6 @@
       "replies": []
     },
     {
-      "id": "w0721_11",
-      "profile": "weather_old",
-      "pinned": false,
-      "author": "天气很好",
-      "handle": "@weather0721",
-      "verified": false,
-      "time": "2019-04-12",
-      "text": "一年多了。\n好快。",
-      "likes": "2",
-      "reposts": "0",
-      "replies": []
-    },
-    {
       "id": "w0721_12",
       "profile": "weather_old",
       "pinned": false,
@@ -3491,6 +3478,73 @@
       "likes": "0",
       "reposts": "0",
       "replies": []
+    },
+    {
+      "id": "ga02",
+      "profile": "galaxy_agency",
+      "pinned": false,
+      "author": "银河星途",
+      "handle": "@galaxy_agency",
+      "verified": true,
+      "time": "2020-04-08 11:00",
+      "text": "Bubble Beta 首批体验用户招募启动。本次将从报名用户中随机抽取首批体验用户，中签用户可提前创建账号并体验艺人订阅功能。正式服务开放后，原账号及历史数据将继续保留。",
+      "likes": "2100",
+      "reposts": "640",
+      "replies": [
+        {
+          "author": "蹲了好久终于等到",
+          "text": "终于开始抽了，冲了！",
+          "meta": "340 赞"
+        },
+        {
+          "author": "数据女工连轴转",
+          "text": "希望这次名额能多一点",
+          "meta": "180 赞"
+        }
+      ]
+    },
+    {
+      "id": "ga03",
+      "profile": "galaxy_agency",
+      "pinned": false,
+      "author": "银河星途",
+      "handle": "@galaxy_agency",
+      "verified": true,
+      "time": "2020-04-12 12:00",
+      "text": "Bubble Beta 首批内测体验资格已发放，请参与抽选的用户查看站内通知。未中签的朋友请耐心等待后续正式开放。",
+      "likes": "1800",
+      "reposts": "410",
+      "replies": [
+        {
+          "author": "每天都在等通知",
+          "text": "刷新一百次了还没看到",
+          "meta": "90 赞"
+        },
+        {
+          "author": "柠檬味的糖",
+          "text": "恭喜中签的姐妹",
+          "meta": "150 赞"
+        }
+      ]
+    },
+    {
+      "id": "ga04",
+      "profile": "galaxy_agency",
+      "pinned": false,
+      "author": "银河星途",
+      "handle": "@galaxy_agency",
+      "verified": true,
+      "time": "2020-05-18 10:00",
+      "text": "Bubble 正式开放。即日起所有用户均可自行注册账号并购买艺人订阅，感谢首批体验用户的陪伴与反馈。",
+      "likes": "3400",
+      "reposts": "920",
+      "replies": [
+        {
+          "author": "终于等到官宣",
+          "text": "不用抽了，直接冲",
+          "meta": "210 赞"
+        }
+      ]
     }
   ]
 }
