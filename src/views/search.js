@@ -1,4 +1,4 @@
-import { findProfile, isBlockedQuery, posts, profiles, avatarFor, resolveSrc, timeSortKey } from "../data.js";
+import { findProfile, isBlockedQuery, posts, profiles, avatarFor, resolveSrc, timeSortKey, displayTime } from "../data.js";
 import { state, markProfileFound, markClueFound, recordSearch, canUnlockPt2 } from "../state.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { goTo } from "../router.js";
@@ -152,7 +152,7 @@ function profilePostCard(p) {
       <div class="favatar" style="background:${avatarFor(p)};"></div>
       <div>
         <div class="fname">${p.author}${p.verified ? `<span class="verified">${verifiedBadge({ size: 13 })}</span>` : ""}${p.tag ? `<span class="ftag-status">${p.tag}</span>` : ""}</div>
-        <div class="fmeta">${p.time ? `${p.time} · ` : ""}来自 iPhone客户端</div>
+        <div class="fmeta">${p.time ? `${displayTime(p.time)} · ` : ""}来自 iPhone客户端</div>
       </div>
     </div>
     ${tagThreadName ? `<span class="ftag"># ${tagThreadName} #</span>` : ""}

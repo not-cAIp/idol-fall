@@ -1,4 +1,4 @@
-import { postById } from "../data.js";
+import { postById, displayTime } from "../data.js";
 import { state, markClueFound } from "../state.js";
 import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
@@ -48,7 +48,7 @@ export function renderPostDetail(root, { id, fromTab } = {}) {
         <span class="uname">${p.author}${p.verified ? `<span class="verified">${verifiedBadge({ size: 13 })} 已认证</span>` : ""}${p.tag ? `<span class="ftag-status">${p.tag}</span>` : ""}</span>
         <div class="handle">${p.handle}</div>
       </div>
-      <div class="time mono">${p.time}</div>
+      <div class="time mono">${displayTime(p.time)}</div>
     </div>
     ${p.thread || p.tagThread ? `<span class="ftag" id="post-ftag"># ${THREADS[p.thread || p.tagThread]?.name || ""} #</span>` : ""}
     <div class="text">${p.text}</div>

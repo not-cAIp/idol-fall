@@ -57,6 +57,20 @@ export function timeSortKey(t) {
   return yearOffset * 1e8 + monthDay * 1e4 + minutes;
 }
 
+// 帖子列表/详情页展示时间用这个，不直接用原始 time 字段——绝对年份
+// 如果就是故事当前年（STORY_YEAR），跟真实微博一样不显示年份，只留
+// "MM-DD HH:MM"；往年的帖子（2018/2019/2024/2025……）才继续显示完整
+// "YYYY-MM-DD HH:MM"，这样玩家一眼就能看出"这条是今年的，还是考古出
+// 来的旧帖"。评论区里的 meta 字段（比如 weather0721 那条 23:52 的
+// 揭示评论）不走这个函数，就算落在当前年也保留完整年份——那是故意
+// 强调"隔了好几年才出现"的戏剧性，不是普通的今年帖。
+export function displayTime(t) {
+  if (!t) return t;
+  const m = t.match(/^(\d{4})-(.+)$/);
+  if (m && Number(m[1]) === STORY_YEAR) return m[2];
+  return t;
+}
+
 export function isBlockedQuery(query) {
   const q = query.trim();
   if (!q) return false;

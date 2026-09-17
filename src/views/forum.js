@@ -1,4 +1,4 @@
-import { posts, avatarFor, resolveSrc, timeSortKey } from "../data.js";
+import { posts, avatarFor, resolveSrc, timeSortKey, displayTime } from "../data.js";
 import { goTo } from "../router.js";
 import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
@@ -145,7 +145,7 @@ function postCard(p, threadInfo) {
       <div class="favatar" style="background:${avatarFor(p)};"></div>
       <div>
         <div class="fname">${p.pinned ? '<span class="fpin">置顶</span>' : ""}${p.author}${p.verified ? `<span class="verified">${verifiedBadge({ size: 13 })}</span>` : ""}<span class="ffollow">＋关注</span></div>
-        <div class="fmeta">${p.time} · 来自 iPhone客户端</div>
+        <div class="fmeta">${displayTime(p.time)} · 来自 iPhone客户端</div>
       </div>
     </div>
     <span class="ftag"># ${threadName} #</span>
