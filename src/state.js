@@ -1,6 +1,6 @@
 const STORAGE_KEY = "tafang-anjuan-save";
 
-export const CLUE_TOTAL = 43;
+export const CLUE_TOTAL = 44;
 
 // PT1（死亡时间线）相关的线索子集，用来在私信里单独显示"PT1 进度"，
 // 跟总的 41 条区分开——玩家在推理死亡时间/地点阶段，看到的不该是
@@ -54,6 +54,9 @@ const defaultState = () => ({
   finalSuspect: null,
   finalAction: null,
   finalEnding: null,
+  // 沈溪私信：玩家有没有主动问过"你看到什么了？"——问过之后她的回答
+  // 和拾光杯子照片就一直留在这个对话里，不需要重新问一次。
+  shenxiAsked: false,
 });
 
 function load() {

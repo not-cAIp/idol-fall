@@ -94,6 +94,14 @@ export function renderSearch(root, { profile: profileId, query } = {}) {
       <div class="wfeed" id="profile-feed" style="margin-top:12px;"></div>
     `;
 
+    // "留言"目前只对沈溪这个账号是真正可交互的私信入口——其余账号
+    // 保持原样的装饰性按钮，不是每个主页都新增这个功能。
+    if (profile.id === "shenxi_sunflower") {
+      const msgBtns = resultEl.querySelectorAll(".wbanner-btn");
+      const msgBtn = [...msgBtns].find((b) => b.textContent === "留言");
+      if (msgBtn) msgBtn.addEventListener("click", () => goTo("shenxiDm"));
+    }
+
     const feedEl = resultEl.querySelector("#profile-feed");
     const ownPosts = posts.posts
       .filter((p) => p.profile === profile.id)
