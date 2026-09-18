@@ -1495,7 +1495,6 @@
       "verified": false,
       "time": "09-13 20:18",
       "text": "所以最后还是回来了。",
-      "tag": "已删除",
       "likes": "89",
       "reposts": "12",
       "clueOnOpen": [
@@ -1553,7 +1552,6 @@
       "verified": false,
       "time": "09-13 20:31",
       "text": "被发现了 🙂",
-      "tag": "已删除 · 十分钟后撤回",
       "likes": "56",
       "reposts": "8",
       "clueOnOpen": [
@@ -1703,7 +1701,6 @@
       "verified": false,
       "time": "09-13 23:43",
       "text": "（无正文，仅转发）",
-      "tag": "已删除",
       "likes": "34",
       "reposts": "9",
       "clueOnOpen": [
@@ -3184,8 +3181,6 @@
       "verified": false,
       "time": "2020-04-12 09:40",
       "text": "我这种人居然也能中。算了，当纪念一下运气。",
-      "imagePrompt": "一张裁切过的截图，只露出上半段：一行\"恭喜获得……\"的祝贺文字，右下角一个日期戳\"04/12\"，其余内容被裁掉了。",
-      "imageCaption": "裁切过的截图，只露出\"恭喜获得……\"和日期\"04/12\"。",
       "likes": "15",
       "reposts": "1",
       "replies": [
