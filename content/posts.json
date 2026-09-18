@@ -2024,6 +2024,39 @@
       "replies": []
     },
     {
+      "id": "ly05",
+      "profile": "luyan_zy",
+      "pinned": false,
+      "author": "林安",
+      "handle": "@linan_ryan",
+      "verified": true,
+      "time": "09-13 22:18",
+      "text": "你如果真的要解绑，我不会替你把原因藏着。",
+      "tag": "已删除 · 仅存他人截图",
+      "likes": "89",
+      "reposts": "12",
+      "clueOnOpen": [
+        "c52"
+      ],
+      "replies": [
+        {
+          "author": "林安考古组",
+          "text": "这条挂了不到十分钟就没了，我手快截了图",
+          "meta": "1800 赞"
+        },
+        {
+          "author": "路人丙",
+          "text": "『原因』是什么啊，不会是在暗示什么吧",
+          "meta": "1200 赞"
+        },
+        {
+          "author": "求求放过林安",
+          "text": "当时没多想，现在看真的有点可怕",
+          "meta": "940 赞"
+        }
+      ]
+    },
+    {
       "id": "cp01",
       "profile": "chenyu_public",
       "pinned": false,
@@ -2305,6 +2338,82 @@
       "section": "hot"
     },
     {
+      "id": "l15",
+      "thread": "linan",
+      "pinned": false,
+      "author": "不知道哪来的瓜",
+      "handle": "@不知道哪来的瓜",
+      "verified": false,
+      "time": "08-02 22:50",
+      "text": "不知道谁哪弄来的截图，反正我是看不懂，有没有懂行的姐妹解释一下这是什么野榜",
+      "likes": "1600",
+      "reposts": "340",
+      "imagePrompt": "写实摄影风格，手机截图的截图，画质粗糙、带明显二次压缩噪点。深色背景的商务/招商类PPT页面，英文+数字混排，标题写着\"F4ever 2026 H2 Commercial Planning\"，下面一张简单的条形/表格：\"ZYX Solo — 8.4\"\"LA Solo — 4.1\"\"ZYX × LA — 7.8\"\"Group — 6.3\"，再往下一行小字：\"Renewal retention\"\"Solo LA: 42%\"\"Pair package: 81%\"。整体像是从招商会流出的内部资料截图，没有任何品牌logo或公司抬头，边缘有裁切和转发水印痕迹。",
+      "imageCaption": "",
+      "clueOnOpen": ["c48"],
+      "replies": [
+        {
+          "author": "路人丙",
+          "text": "这什么野榜啊，数字都看不懂什么意思",
+          "meta": "290 赞"
+        },
+        {
+          "author": "不知道哪来的瓜",
+          "text": "好像是以前招商会流出来的，真假不知道，反正我也是别人转给我的",
+          "meta": "420 赞"
+        },
+        {
+          "author": "今天不吵架",
+          "text": "ZYX是周晏星缩写吧，LA是林安？那这几个数字是不是商业价值评分",
+          "meta": "980 赞"
+        },
+        {
+          "author": "理智吧唯粉",
+          "text": "真的假的先不说，就算是真的，这种东西怎么会流出来",
+          "meta": "560 赞"
+        }
+      ],
+      "section": "hot"
+    },
+    {
+      "id": "l19",
+      "thread": "linan",
+      "pinned": false,
+      "author": "林安存图组",
+      "handle": "@林安存图组",
+      "verified": false,
+      "time": "09-10 21:40",
+      "text": "存图强迫症发作，官博今天那条『周年准备中』九宫格我昨天存的时候明明是九张，刚刚点进去数了一下变成八张了，把我存的第六张放出来对比一下，谁能告诉我这是我记错了吗",
+      "likes": "2900",
+      "reposts": "890",
+      "imagePrompt": "写实摄影风格，手机截图，一张电脑显示器屏幕一角的抓拍照片，能看到桌面上并排开着几个文件夹图标，文件夹命名依稀可辨：\"2027商务规划\"\"双人项目\"\"解绑预...\"（后半部分被旁边窗口挡住）\"LA_repl...\"（同样被遮挡看不全），画面整体是花絮抓拍风格，色调偏暖，构图随意，像是后台工作人员随手拍到的桌面一角，不是特意取景。",
+      "imageCaption": "",
+      "clueOnOpen": ["c51"],
+      "replies": [
+        {
+          "author": "路人乙",
+          "text": "怎么少了一张？昨天不是九张吗",
+          "meta": "780 赞"
+        },
+        {
+          "author": "今天不吵架",
+          "text": "谁存了第六张，求好心人",
+          "meta": "1100 赞"
+        },
+        {
+          "author": "林安存图组",
+          "text": "放出来了，就是电脑屏幕那张，文件夹名字看不太清楚，大家自己看",
+          "meta": "2400 赞"
+        },
+        {
+          "author": "理智吧唯粉",
+          "text": "『解绑』『LA_repl』……这两个词有点意思了",
+          "meta": "3200 赞"
+        }
+      ],
+      "section": "hot"
+    },
+    {
       "id": "p026",
       "thread": "linan",
       "pinned": false,
@@ -2312,7 +2421,7 @@
       "handle": "@晏星收藏家",
       "verified": true,
       "time": "05-09 09:00",
-      "text": "《F4ever林安：我最怀念的是没有名字的夏天》（节选）\n\n小时候家里人都叫他『安仔』，这个称呼他自己好像也没打算改掉。聊起生日，他说印象最深的一次是很多年前，正赶上彩排到很晚，蛋糕店都快打烊了，最后是工作人员满城找的。记者追问具体是哪天，他想了想说：『06年3月4号，我自己一般不太记日子，这个倒是记得挺清楚，因为那年真的很赶。』",
+      "text": "《F4ever林安：我最怀念的是没有名字的夏天》（节选）\n\n小时候家里人都叫他『安仔』，这个称呼他自己好像也没打算改掉。聊起生日，他说印象最深的一次是很多年前，正赶上彩排到很晚，蛋糕店都快打烊了，最后是工作人员满城找的。记者追问具体是哪天，他想了想说：『06年3月4号，我自己一般不太记日子，这个倒是记得挺清楚，因为那年真的很赶。』\n\n聊到小时候的爱好，他笑了一下：『我小学的时候特别迷那种把字母往后挪几位的加密方法，自己写小纸条给同学，觉得挪三位就没人看得懂了，其实一学就会，但当时真的很有成就感。』记者问现在还玩吗，他说：『很少了，不过有时候手痒还是会用。』",
       "likes": "4600",
       "reposts": "1900",
       "replies": [
@@ -2474,6 +2583,33 @@
       ]
     },
     {
+      "id": "f04",
+      "profile": "f4ever_official",
+      "pinned": false,
+      "author": "F4ever官方微博",
+      "handle": "@f4everofficial",
+      "verified": true,
+      "tagThread": "f4ever",
+      "time": "09-09 19:00",
+      "text": "周年准备中 📸\n一些碎片。",
+      "likes": "9200",
+      "reposts": "1600",
+      "imagePrompt": "写实摄影风格，八宫格花絮拼图截图，每格都是很随意的后台抓拍：排练厅一角、饮料瓶、耳返设备、化妆镜前的补妆用品、几双舞台鞋、一张排期表的边角、走廊灯光、手写便签便条，构图松散、色调温暖，典型的官方账号『花絮碎片』营业帖风格，没有任何一格是电脑屏幕或办公场景。",
+      "imageCaption": "",
+      "replies": [
+        {
+          "author": "追星使我快乐8000天",
+          "text": "碎片也太好看了吧",
+          "meta": "670 赞"
+        },
+        {
+          "author": "只吃一口糖",
+          "text": "感觉这次周年准备了好久",
+          "meta": "410 赞"
+        }
+      ]
+    },
+    {
       "id": "sx12",
       "profile": "shenxi_sunflower",
       "pinned": false,
@@ -2631,6 +2767,255 @@
         }
       ],
       "section": "hot"
+    },
+    {
+      "id": "x10",
+      "thread": "xinganlide",
+      "pinned": false,
+      "author": "柠檬味的糖",
+      "handle": "@柠檬味的糖",
+      "verified": false,
+      "time": "2024-04-18",
+      "text": "两人同时出现在同一家咖啡店，谁懂啊，是巧合还是命中注定",
+      "likes": "3300",
+      "reposts": "410",
+      "replies": [
+        {
+          "author": "只吃一口糖",
+          "text": "这也太甜了，糖分超标",
+          "meta": "560 赞"
+        }
+      ],
+      "section": "flavor"
+    },
+    {
+      "id": "x11",
+      "thread": "xinganlide",
+      "pinned": false,
+      "author": "银河星途",
+      "handle": "@galaxy_agency",
+      "verified": true,
+      "time": "2024-04-20",
+      "text": "【官宣】周晏星 × 林安 正式成为「甄选气泡水」双人代言人，更多联名内容陆续上线，敬请期待。",
+      "likes": "8900",
+      "reposts": "2100",
+      "replies": [
+        {
+          "author": "延迟嗑糖",
+          "text": "官宣速度也太快了吧，前天才发的糖",
+          "meta": "670 赞"
+        }
+      ],
+      "section": "flavor"
+    },
+    {
+      "id": "x12",
+      "thread": "xinganlide",
+      "pinned": false,
+      "author": "今天不吵架",
+      "handle": "@今天不吵架",
+      "verified": false,
+      "time": "2024-08-07",
+      "text": "后台候场抓拍，两人互相帮忙整理衣领，这个默契是真的",
+      "likes": "4100",
+      "reposts": "560",
+      "replies": [],
+      "section": "flavor"
+    },
+    {
+      "id": "x13",
+      "thread": "xinganlide",
+      "pinned": false,
+      "author": "银河星途",
+      "handle": "@galaxy_agency",
+      "verified": true,
+      "time": "2024-08-09",
+      "text": "【预告】周晏星 × 林安 双人封面即将上线某杂志九月刊，敬请期待。",
+      "likes": "7600",
+      "reposts": "1800",
+      "replies": [],
+      "section": "flavor"
+    },
+    {
+      "id": "x14",
+      "thread": "xinganlide",
+      "pinned": false,
+      "author": "半糖去冰不加珍珠",
+      "handle": "@半糖去冰不加珍珠",
+      "verified": false,
+      "time": "2025-02-12",
+      "text": "情人节前直播连线，弹幕直接刷屏，官方是懂造节点的",
+      "likes": "5200",
+      "reposts": "780",
+      "replies": [],
+      "section": "flavor"
+    },
+    {
+      "id": "x15",
+      "thread": "xinganlide",
+      "pinned": false,
+      "author": "银河星途",
+      "handle": "@galaxy_agency",
+      "verified": true,
+      "time": "2025-02-14",
+      "text": "【官宣】周晏星 × 林安 携手成为「XX香水」限定礼盒代言人，情人节限定，即刻发售。",
+      "likes": "9400",
+      "reposts": "2400",
+      "replies": [],
+      "section": "flavor"
+    },
+    {
+      "id": "x16",
+      "thread": "xinganlide",
+      "pinned": false,
+      "author": "追星使我快乐8000天",
+      "handle": "@追星使我快乐8000天",
+      "verified": false,
+      "time": "2024-11-03",
+      "text": "今天两人又在后台聊了好久，笑得很开心，纯粹发糖不解释",
+      "likes": "2100",
+      "reposts": "290",
+      "replies": [],
+      "section": "flavor"
+    },
+    {
+      "id": "x17",
+      "thread": "xinganlide",
+      "pinned": false,
+      "author": "饭圈大聪明",
+      "handle": "@fanquan_bigsmart",
+      "verified": false,
+      "time": "09-14 15:20",
+      "text": "重新翻了一遍这几年的糖点日期，发现一个以前只当玩笑说的规律，现在越看越不对劲：\n04/18 后台偶遇 → 04/20 气泡水代言官宣\n08/07 候场互动 → 08/09 杂志双封预告\n02/12 情人节连线 → 02/14 香水代言官宣\n几乎每次「自然发糖」后 24-72 小时内，都有商业项目跟着上线。当时我们都只当银河星途会做营销，现在回头看，意义完全不一样了。",
+      "likes": "6700",
+      "reposts": "3200",
+      "clueOnOpen": ["c47"],
+      "replies": [
+        {
+          "author": "只吃一口糖",
+          "text": "以前还开玩笑说『银河星途你们真的很好懂』，没想到是这个意思",
+          "meta": "1900 赞"
+        },
+        {
+          "author": "理智吧唯粉",
+          "text": "所以这些糖到底有几分是真的……",
+          "meta": "1400 赞"
+        },
+        {
+          "author": "星安理得糖点记录",
+          "text": "不敢细想，细想就是CP粉磕的其实是一份排期表",
+          "meta": "2600 赞"
+        }
+      ],
+      "section": "hot"
+    },
+    {
+      "id": "x18",
+      "thread": "xinganlide",
+      "pinned": false,
+      "author": "全网时间戳bot",
+      "handle": "@全网时间戳bot",
+      "verified": false,
+      "time": "09-14 10:05",
+      "text": "整理了一下913晚上「甄选气泡水」品牌直播的后台回放时间戳，Ryan（林安）那段的完整出镜记录：\n23:36丨主持人：『Ryan马上就回来，大家不要走开』\n23:38丨林安重新入镜，跟镜头挥手\n23:42丨镜头扫到侧边机位，林安仍在\n23:48丨最后一次清楚入镜，之后镜头切到主舞台，没有再实拍到他\n纯粹是因为这两天太多人在传林安那晚的行踪，把能验证的部分列出来，别的不清楚。",
+      "likes": "8100",
+      "reposts": "3900",
+      "clueOnOpen": ["c53"],
+      "replies": [
+        {
+          "author": "路人挂壁00",
+          "text": "所以23:48之后他人在哪就没人知道了",
+          "meta": "2200 赞"
+        },
+        {
+          "author": "今天不吵架",
+          "text": "至少23:48之前是实锤在直播现场的",
+          "meta": "1700 赞"
+        }
+      ],
+      "section": "hot"
+    },
+    {
+      "id": "x19",
+      "thread": "xinganlide",
+      "pinned": false,
+      "author": "活动执行小美",
+      "handle": "@活动执行小美",
+      "verified": false,
+      "time": "09-13 23:41",
+      "text": "后台随手拍，今晚真的忙疯了",
+      "likes": "12",
+      "reposts": "0",
+      "imagePrompt": "写实摄影风格，活动后台随手抓拍，前景是手机自拍的构图，能看到手机系统状态栏清晰显示时间『23:41』。背景虚化处，监视器/器材架旁边能辨认出一个熟悉的侧影，穿着当晚品牌直播的统一服装，正是林安。画面业余、随意，典型的工作人员抓拍风格。",
+      "imageCaption": "",
+      "replies": [
+        {
+          "author": "路人乙",
+          "text": "背景那个是Ryan吗",
+          "meta": "89 赞"
+        }
+      ],
+      "section": "flavor"
+    },
+    {
+      "id": "l16",
+      "thread": "linan",
+      "pinned": false,
+      "author": "江临路况播报",
+      "handle": "@江临路况播报",
+      "verified": false,
+      "time": "09-13 20:00",
+      "text": "【路况提示】09-13 23:30 至 09-14 00:10，江临路（近江临公馆段）因夜间管道施工临时封闭，请途经车辆绕行，给您带来不便敬请谅解。",
+      "likes": "6",
+      "reposts": "1",
+      "replies": [],
+      "section": "flavor"
+    },
+    {
+      "id": "l17",
+      "thread": "linan",
+      "pinned": false,
+      "author": "路过看戏的",
+      "handle": "@路过看戏的",
+      "verified": false,
+      "time": "09-13 23:52",
+      "text": "谁家在附近说说什么情况啊，外面暴雨，东门那条路好像堵死了",
+      "likes": "89",
+      "reposts": "4",
+      "replies": [
+        {
+          "author": "刚好在附近",
+          "text": "对，雨太大了，出租车都不太愿意走那边",
+          "meta": "56 赞"
+        }
+      ],
+      "section": "flavor"
+    },
+    {
+      "id": "l18",
+      "thread": "linan",
+      "pinned": false,
+      "author": "银河星途",
+      "handle": "@galaxy_agency",
+      "verified": true,
+      "time": "09-13 18:30",
+      "text": "【活动提示】今晚「甄选气泡水」直播活动结束后，银河艺术中心 → 各方向路线请提前规划，夜间散场车流较大，建议预留充足时间。",
+      "likes": "430",
+      "reposts": "60",
+      "replies": [
+        {
+          "author": "今天也在等直播",
+          "text": "艺术中心到市区正常车程不是半小时都不到吗",
+          "meta": "78 赞"
+        },
+        {
+          "author": "本地老司机",
+          "text": "平时是，散场那会儿不好说，之前堵过快一小时",
+          "meta": "120 赞"
+        }
+      ],
+      "clueOnOpen": ["c54"],
+      "section": "flavor"
     },
     {
       "id": "w39",
