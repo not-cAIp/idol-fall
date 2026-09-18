@@ -187,7 +187,7 @@ function profilePostCard(p) {
     thumb.addEventListener("click", (e) => e.stopPropagation());
     slot.appendChild(thumb);
   }
-  card.querySelectorAll(".fbody a").forEach((a) => a.addEventListener("click", (e) => e.stopPropagation()));
+  card.querySelectorAll(".fbody a, .fbody [data-teboluo-fake-link]").forEach((a) => a.addEventListener("click", (e) => e.stopPropagation()));
   card.querySelector(".ftag")?.addEventListener("click", (e) => {
     e.stopPropagation();
     goTo("forum", { thread: p.tagThread });

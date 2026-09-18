@@ -39,7 +39,7 @@ export function mountTeboluoWidget(container) {
   const wrap = document.createElement("div");
   wrap.className = "teboluo-wrap";
   wrap.innerHTML = `
-    <div class="teboluo-mascot" id="teboluo-mascot">
+    <div class="teboluo-mascot" id="teboluo-mascot"${state.teboluoUnlocked ? "" : " hidden"}>
       <img src="${resolveSrc("/images/teboluo-fullbody.png")}" alt="日记特伯罗" />
       <div class="teboluo-hint">点它试试</div>
     </div>
@@ -48,7 +48,7 @@ export function mountTeboluoWidget(container) {
         <img src="${resolveSrc("/images/teboluo-avatar.png")}" alt="" />
         <div class="ti">
           <div class="n">日记特伯罗</div>
-          <div class="s"><span class="dot"></span>新_PROD的日记精灵</div>
+          <div class="s"><span class="dot"></span>新_PROD的日记特伯罗</div>
         </div>
         <button class="teboluo-close" id="teboluo-close">✕</button>
       </div>
@@ -69,6 +69,26 @@ export function mountTeboluoWidget(container) {
   const closeBtn = wrap.querySelector("#teboluo-close");
 
   let chatOpened = false;
+
+  // np07 帖子里的假链接不是真的外链（不用 <a>，点了不跳转），点一下
+  // 只是让机器人图标出现在页面上——container 是整个主页（挂件 + 帖子
+  // 列表的共同父节点），事件委托在这里绑一次就够，不用管帖子是先渲染
+  // 还是后渲染。已经解锁过的话，这个监听器留着也无所谓，反正找不到
+  // 未解锁的图标可摸。用捕获阶段绑：帖子卡片自己会在假链接上调用
+  // stopPropagation 来防止点了跳进详情页，那是冒泡阶段的操作，捕获
+  // 阶段在它之前就先跑完了，不会被拦到。
+  container.addEventListener(
+    "click",
+    (e) => {
+      if (!e.target.closest("[data-teboluo-fake-link]")) return;
+      if (state.teboluoUnlocked) return;
+      state.teboluoUnlocked = true;
+      save();
+      mascot.hidden = false;
+      mascot.classList.add("is-revealing");
+    },
+    true
+  );
 
   mascot.addEventListener("click", () => {
     panel.hidden = false;

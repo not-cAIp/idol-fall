@@ -247,6 +247,9 @@ body.ending-mode #view {
 .post .text { font-size: 14px; line-height: 1.6; }
 .post .text b, .reply .text b { font-weight: 700; }
 .post .text a, .wfeed-card .fbody a { color: var(--accent); text-decoration: underline; word-break: break-all; }
+/* 假链接——np07 里点了会让日记特伯罗图标出现，但本身不是真的外链，
+   不用 <a>，样式跟真链接一致所以看不出区别。 */
+.fake-link { color: var(--accent); text-decoration: underline; cursor: pointer; }
 
 .replies { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); display: flex; flex-direction: column; gap: 8px; }
 .reply { font-size: 12.5px; color: var(--ink-soft); padding-left: 12px; border-left: 2px solid var(--line); }
@@ -698,6 +701,12 @@ body.ending-mode #view {
   transition: transform .25s ease;
 }
 .teboluo-mascot:hover img { transform: scale(1.06) rotate(-2deg); }
+.teboluo-mascot[hidden] { display: none; }
+.teboluo-mascot.is-revealing img { animation: teboluo-reveal .5s ease-out, teboluo-float 4.2s ease-in-out .5s infinite; }
+@keyframes teboluo-reveal {
+  0% { opacity: 0; transform: scale(.6) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
 .teboluo-hint {
   font-size: 10.5px; color: #8a7561; background: #fffdf9;
   border: 1px solid #f0dcc0; border-radius: 100px; padding: 3px 10px; margin-top: 2px;

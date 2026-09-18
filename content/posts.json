@@ -2897,7 +2897,7 @@
       "handle": "@xinprod_work",
       "verified": false,
       "time": "2020-09-05",
-      "text": "朋友转发过来一个『日记精灵』的邀请链接，点开解锁用了一下，以后应该就可以在这里读取以前写的日记了。",
+      "text": "朋友转发过来一个<span class=\"fake-link\" data-teboluo-fake-link>『日记特伯罗』邀请链接</span>，点开解锁用了一下，以后应该就可以在这里读取以前写的日记了。",
       "likes": "2",
       "reposts": "0",
       "replies": [
