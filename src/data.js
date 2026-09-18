@@ -88,7 +88,7 @@ const KNOWN_AVATARS = {
   "@晏星今天早点睡": "/images/avatar-shenxi-sunflower.jpg",
   "@shiguang_neko": "/images/avatar-shiguang-cat.jpg",
   "@weather0721": "/images/sg06-night-window.jpg",
-  "@linan_ryan": "/images/avatar-linan-official.jpg",
+  "@linan_ryan": "/images/fan-avatar-linan-encore.jpg",
   "@chenyu_official": "/images/avatar-chenyu-manager.jpg",
   "@aurora_fit": "/images/avatar-aurora-brand.jpg",
   "@f4everofficial": "/images/avatar-f4ever-official.png",
