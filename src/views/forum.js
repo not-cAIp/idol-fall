@@ -55,6 +55,14 @@ const TABS_CLICKABLE = ["最新", "精华"];
 const TABS_STATIC = ["安利帖", "图文产出", "绝美舞台", "水贴专区"];
 let activeTab = "最新";
 
+// 点进帖子详情页之前，记一下当时超话+标签页滚动到哪了，key 是
+// "thread:tab"。只有从帖子详情页点"‹ 返回超话"这个具体动作回来时
+// （postDetail.js 传 restoreScroll:true）才会用它把滚动条还原、
+// 然后立刻删掉这条记录——不是"以后每次回这个超话都停在老地方"，
+// 只管这一次"返回"的动作本身。点顶栏首页/搜其他账号进同一个超话
+// 还是照常从顶部开始。
+const scrollMemory = new Map();
+
 // section 通常是个字符串（"hot"/"flavor"），少数帖子（比如 p001）
 // 想同时出现在两个标签页，就写成数组 ["hot","flavor"]——两种写法都要
 // 支持，下面两个判断函数分别对应「该不该出现在精华」「该不该出现在
@@ -72,7 +80,7 @@ function postsForThread(threadSlug, tab) {
     .sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1) || timeSortKey(b.time) - timeSortKey(a.time));
 }
 
-export function renderForum(root, { thread, tab } = {}) {
+export function renderForum(root, { thread, tab, restoreScroll } = {}) {
   const slug = thread && THREADS[thread] ? thread : "yanxing";
   const info = THREADS[slug];
   const clickableTabs = info.onlyLatest ? ["最新"] : TABS_CLICKABLE;
@@ -134,6 +142,18 @@ export function renderForum(root, { thread, tab } = {}) {
 
   renderFeed();
   layout.appendChild(renderRightbar(slug));
+
+  if (restoreScroll) {
+    const key = `${slug}:${activeTab}`;
+    const savedY = scrollMemory.get(key);
+    if (savedY != null) {
+      scrollMemory.delete(key);
+      // goTo() 渲染完这个视图之后还会同步把滚动条归零，这里用
+      // requestAnimationFrame 把还原动作排到那之后再执行，不然会被
+      // 立刻覆盖掉。
+      requestAnimationFrame(() => window.scrollTo(0, savedY));
+    }
+  }
 }
 
 function postCard(p, threadInfo) {
@@ -175,6 +195,9 @@ function postCard(p, threadInfo) {
     e.stopPropagation();
     goTo("forum", { thread: p.thread });
   });
-  card.addEventListener("click", () => goTo("postDetail", { id: p.id, fromTab: activeTab }));
+  card.addEventListener("click", () => {
+    scrollMemory.set(`${p.thread}:${activeTab}`, window.scrollY);
+    goTo("postDetail", { id: p.id, fromTab: activeTab });
+  });
   return card;
 }
