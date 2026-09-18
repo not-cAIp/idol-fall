@@ -5,17 +5,18 @@ import endings from "../content/endings.json";
 
 export { posts, profiles, clues, endings };
 
+// 必须拼写正确才能搜到——只做大小写不敏感的精确匹配，不做子串模糊
+// 匹配。之前有一段"k.includes(q) || q.includes(k)"的兜底，会导致单个
+// 字母/短片段就能命中任何包含它的关键词（比如搜"L"会命中"daniel"），
+// 跟"运动手环"这类泛称故意搜不到账号的设计原则（aurora_official 的
+// searchKeywords 特意不收泛称）直接矛盾，这里删掉。
 export function findProfile(query) {
   const q = query.trim().toLowerCase();
   if (!q) return null;
   return (
     profiles.profiles.find((p) =>
       p.searchKeywords.some((k) => k.toLowerCase() === q)
-    ) ||
-    profiles.profiles.find((p) =>
-      p.searchKeywords.some((k) => k.toLowerCase().includes(q) || q.includes(k.toLowerCase()))
-    ) ||
-    null
+    ) || null
   );
 }
 
