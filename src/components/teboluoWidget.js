@@ -19,6 +19,7 @@ const DIARY = [
   { date: "2024-03-01", text: "朋友介绍了一个后期的活，说是缺人手，先做着看看。" },
   { date: "2024-03-20", text: "第一次坐在监视器后面，感觉很奇怪。习惯了倒也没那么难受，至少还在这一行，不用再交材料了。" },
   { date: "2025-12-08", text: "这次周年企划把我调去负责F4ever这条线的素材了，挺意外的。工牌编号换了新的，随手拍了一张。", badge: true },
+  { date: "2026-01-20", text: "没想到负责这次周年企划的人会是我。当年是我没能站到最后，现在轮到我给他们四个人做周年的东西，说不上什么滋味，只觉得有点讽刺。" },
 ];
 const EMPLOYEE_ID = "P-0416";
 
@@ -163,14 +164,8 @@ export function mountTeboluoWidget(container) {
       badge.innerHTML = `
         <div class="strap"></div>
         <div class="card">
-          <div class="photo"></div>
-          <div class="info">
-            <div class="row1"></div>
-            <div class="id mono">${EMPLOYEE_ID}</div>
-            <div class="sub">STAFF ACCESS CARD</div>
-          </div>
-        </div>
-      `;
+          <img src="${resolveSrc("/images/hexun-prod-id.jpg")}" alt="工牌照片，编号 ${EMPLOYEE_ID}" />
+        </div>`;
       body.appendChild(badge);
     }
 
