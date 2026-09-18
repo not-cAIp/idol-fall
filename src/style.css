@@ -684,3 +684,132 @@ body.ending-mode #view {
   body:not(.desktop-mode) { padding: 0; }
   body:not(.desktop-mode) #phone { height: 100vh; border-radius: 0; border: none; max-width: 100%; }
 }
+
+/* ---- 日记特伯罗挂件（新_PROD 主页右下角，独立于 weibo-scope 的配色）---- */
+.teboluo-wrap { position: relative; }
+.teboluo-mascot {
+  position: fixed; right: 18px; bottom: 18px; z-index: 60;
+  display: flex; flex-direction: column; align-items: center;
+  cursor: pointer; user-select: none;
+}
+.teboluo-mascot img {
+  width: 108px; height: auto; display: block;
+  filter: drop-shadow(0 14px 20px rgba(160, 90, 40, .35));
+  animation: teboluo-float 4.2s ease-in-out infinite;
+  transition: transform .25s ease;
+}
+.teboluo-mascot:hover img { transform: scale(1.06) rotate(-2deg); }
+.teboluo-hint {
+  font-size: 10.5px; color: #8a7561; background: #fffdf9;
+  border: 1px solid #f0dcc0; border-radius: 100px; padding: 3px 10px; margin-top: 2px;
+  opacity: 0; transform: translateY(4px); transition: opacity .2s ease, transform .2s ease;
+  box-shadow: 0 10px 30px -12px rgba(120, 80, 40, .28);
+}
+.teboluo-mascot:hover .teboluo-hint { opacity: 1; transform: translateY(0); }
+@keyframes teboluo-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .teboluo-mascot img { animation: none; }
+}
+
+.teboluo-panel {
+  position: fixed; right: 18px; bottom: 150px;
+  width: 300px; max-width: calc(100vw - 36px); max-height: min(480px, 65vh);
+  background: #fffdf9; border: 1px solid #f0dcc0; border-radius: 16px;
+  box-shadow: 0 10px 30px -12px rgba(120, 80, 40, .28); z-index: 61;
+  display: flex; flex-direction: column; overflow: hidden;
+  transform-origin: bottom right; animation: teboluo-pop .18s ease-out;
+  font-family: "Noto Sans SC", system-ui, sans-serif;
+}
+.teboluo-panel[hidden] { display: none; }
+@keyframes teboluo-pop {
+  from { opacity: 0; transform: scale(.9) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.teboluo-head {
+  display: flex; align-items: center; gap: 9px; padding: 11px 13px;
+  background: linear-gradient(135deg, #ffb27a, #ff6a3d); color: #fff;
+}
+.teboluo-head img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; background: rgba(255,255,255,.2); flex: none; }
+.teboluo-head .ti { flex: 1; min-width: 0; }
+.teboluo-head .n { font-size: 13px; font-weight: 800; }
+.teboluo-head .s { font-size: 9.5px; opacity: .92; display: flex; align-items: center; gap: 4px; }
+.teboluo-head .s .dot { width: 6px; height: 6px; border-radius: 50%; background: #3fbf6f; box-shadow: 0 0 0 2px rgba(255,255,255,.5); }
+.teboluo-close {
+  width: 20px; height: 20px; border-radius: 50%; border: none; background: rgba(255,255,255,.22); color: #fff;
+  cursor: pointer; font-size: 12px; line-height: 1; display: flex; align-items: center; justify-content: center;
+}
+.teboluo-close:hover { background: rgba(255,255,255,.36); }
+
+.teboluo-body {
+  flex: 1; overflow-y: auto; padding: 11px 11px 5px;
+  display: flex; flex-direction: column; gap: 7px; background: #fffdf9;
+}
+.teboluo-row { display: flex; gap: 6px; align-items: flex-end; max-width: 100%; }
+.teboluo-row.me { flex-direction: row-reverse; }
+.teboluo-row img { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; flex: none; }
+.teboluo-bubble {
+  max-width: 74%; padding: 7px 10px; border-radius: 12px; font-size: 12.3px; line-height: 1.55;
+  white-space: pre-wrap; word-break: break-word;
+}
+.teboluo-row.bot .teboluo-bubble { background: #fff1e0; border: 1px solid #f0dcc0; border-bottom-left-radius: 4px; color: #4a3a2c; }
+.teboluo-row.me .teboluo-bubble { background: #ff6a3d; color: #fff; border-bottom-right-radius: 4px; }
+
+.teboluo-date-list { display: flex; flex-direction: column; gap: 5px; margin: 2px 0 2px 26px; max-width: 76%; }
+.teboluo-date-list button {
+  text-align: left; padding: 6px 10px; border-radius: 9px; border: 1px solid #f0dcc0;
+  background: #fffdf9; color: #4a3a2c; font-size: 11.5px; cursor: pointer; font-family: "JetBrains Mono", monospace;
+}
+.teboluo-date-list button:hover { border-color: #ff6a3d; color: #ff6a3d; }
+.teboluo-date-list button.viewed { color: #b8a790; }
+.teboluo-date-list button.viewed::after { content: " · 已读"; font-family: "Noto Sans SC", sans-serif; font-size: 9.5px; }
+
+.teboluo-entry {
+  margin: 2px 0 2px 26px; max-width: 78%; background: #fff1e0; border: 1px solid #f0dcc0;
+  border-radius: 11px; padding: 9px 11px;
+}
+.teboluo-entry .d { font-size: 10px; color: #b8a790; font-family: "JetBrains Mono", monospace; margin-bottom: 4px; }
+.teboluo-entry .t { font-size: 12.3px; line-height: 1.65; color: #4a3a2c; white-space: pre-wrap; }
+.teboluo-nav { display: flex; gap: 7px; margin: 0 0 2px 26px; max-width: 78%; }
+.teboluo-nav button {
+  flex: 1; font-size: 10.5px; padding: 5px 7px; border-radius: 8px; border: 1px solid #f0dcc0;
+  background: #fffdf9; color: #8a7561; cursor: pointer;
+}
+.teboluo-nav button:hover { border-color: #ff6a3d; color: #ff6a3d; }
+.teboluo-nav button:disabled { opacity: .4; cursor: default; }
+
+.teboluo-badge {
+  margin: 4px 0 2px 26px; max-width: 78%; background: #2b2620; border-radius: 11px; padding: 11px;
+  box-shadow: inset 0 0 0 1px #4a4136;
+}
+.teboluo-badge .strap { width: 32px; height: 13px; margin: 0 auto 5px; border-radius: 3px; background: #5b5347; }
+.teboluo-badge .card { background: #f4efe6; border-radius: 7px; padding: 9px; display: flex; gap: 9px; align-items: center; }
+.teboluo-badge .photo {
+  width: 38px; height: 47px; border-radius: 4px; flex: none;
+  background: repeating-linear-gradient(135deg, #cfc7b8, #cfc7b8 4px, #bdb3a0 4px, #bdb3a0 8px);
+  filter: blur(2.2px);
+}
+.teboluo-badge .info { flex: 1; min-width: 0; }
+.teboluo-badge .info .row1 { height: 7px; border-radius: 3px; background: #d8d0c1; width: 70%; filter: blur(1.4px); margin-bottom: 5px; }
+.teboluo-badge .info .id { font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 700; color: #3a332a; letter-spacing: .02em; }
+.teboluo-badge .info .sub { font-size: 8.5px; color: #9c9384; margin-top: 2px; letter-spacing: .04em; }
+
+.teboluo-input-row { display: flex; gap: 7px; padding: 9px; border-top: 1px solid #f0dcc0; background: #fffdf9; }
+.teboluo-input-row input {
+  flex: 1; border: 1px solid #f0dcc0; border-radius: 100px; padding: 8px 13px; font-size: 12.3px;
+  background: #fff1e0; color: #4a3a2c; font-family: inherit;
+}
+.teboluo-input-row input:focus { outline: none; border-color: #ff6a3d; background: #fff; }
+.teboluo-input-row button {
+  width: 33px; height: 33px; border-radius: 50%; border: none; background: #ff6a3d; color: #fff;
+  cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; flex: none;
+}
+.teboluo-input-row button:hover { opacity: .9; }
+
+@media (max-width: 420px) {
+  .teboluo-mascot { right: 12px; bottom: 12px; }
+  .teboluo-mascot img { width: 88px; }
+  .teboluo-panel { right: 8px; left: 8px; width: auto; bottom: 120px; }
+}

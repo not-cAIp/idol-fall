@@ -57,6 +57,10 @@ const defaultState = () => ({
   // 沈溪私信：玩家有没有主动问过"你看到什么了？"——问过之后她的回答
   // 和拾光杯子照片就一直留在这个对话里，不需要重新问一次。
   shenxiAsked: false,
+  // 日记特伯罗挂件（新_PROD 微博主页右下角）：是否已经输入过"查看历史
+  // 日记"触发过历史模式，以及已经点开读过哪些日期，见 teboluoWidget.js。
+  teboluoHistoryTriggered: false,
+  teboluoViewedDates: [],
 });
 
 function load() {

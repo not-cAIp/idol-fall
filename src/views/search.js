@@ -5,6 +5,7 @@ import { goTo } from "../router.js";
 import { renderTopNav, renderLeftNav, renderRightbar } from "../components/weiboChrome.js";
 import { icon, verifiedBadge } from "../components/icons.js";
 import { THREADS } from "./forum.js";
+import { mountTeboluoWidget } from "../components/teboluoWidget.js";
 
 export function renderSearch(root, { profile: profileId, query } = {}) {
   root.className = "weibo-scope";
@@ -100,6 +101,13 @@ export function renderSearch(root, { profile: profileId, query } = {}) {
       const msgBtns = resultEl.querySelectorAll(".wbanner-btn");
       const msgBtn = [...msgBtns].find((b) => b.textContent === "留言");
       if (msgBtn) msgBtn.addEventListener("click", () => goTo("shenxiDm"));
+    }
+
+    // 日记特伯罗挂件只挂在新_PROD这一个主页上，不是通用功能——挂进
+    // resultEl，下次 showProfile() 重写 resultEl.innerHTML 时会连同
+    // 挂件一起清掉，不需要手动卸载。
+    if (profile.id === "xinprod_work") {
+      mountTeboluoWidget(resultEl);
     }
 
     const feedEl = resultEl.querySelector("#profile-feed");
