@@ -167,7 +167,7 @@ function profilePostCard(p) {
     <div class="frow1">
       <div class="favatar" style="background:${avatarFor(p)};"></div>
       <div>
-        <div class="fname">${p.author}${p.verified ? `<span class="verified">${verifiedBadge({ size: 13 })}</span>` : ""}${p.tag ? `<span class="ftag-status">${p.tag}</span>` : ""}</div>
+        <div class="fname">${p.pinned ? '<span class="fpin">置顶</span>' : ""}${p.author}${p.verified ? `<span class="verified">${verifiedBadge({ size: 13 })}</span>` : ""}${p.tag ? `<span class="ftag-status">${p.tag}</span>` : ""}</div>
         <div class="fmeta">${p.time ? `${displayTime(p.time)} · ` : ""}来自 iPhone客户端</div>
       </div>
     </div>
