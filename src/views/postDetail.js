@@ -5,6 +5,7 @@ import { createPhotoThumb } from "../components/photoViewer.js";
 import { renderTopNav, renderRightbar } from "../components/weiboChrome.js";
 import { icon, verifiedBadge } from "../components/icons.js";
 import { THREADS } from "./forum.js";
+import { mountTeboluoWidget } from "../components/teboluoWidget.js";
 
 export function renderPostDetail(root, { id, fromTab } = {}) {
   const p = postById(id);
@@ -65,6 +66,14 @@ export function renderPostDetail(root, { id, fromTab } = {}) {
   }
   post.querySelector("#post-ftag")?.addEventListener("click", () => goTo("forum", { thread: p.thread || p.tagThread }));
   main.appendChild(post);
+
+  // 日记特伯罗挂件不只挂新_PROD主页，他自己任何一条帖子的详情页也要
+  // 挂——玩家点进 np07 假链接解锁之后，翻他别的帖子、或者退回主页，
+  // 图标都应该还在；只有真的离开新_PROD（搜别的账号/回首页）才会因为
+  // 这个 main 没挂载而消失，不需要额外的"离开时清空"逻辑。
+  if (p.profile === "xinprod_work") {
+    mountTeboluoWidget(main);
+  }
 
   if (p.history) {
     const revealed = state.foundClues.includes(p.history.clueId);
