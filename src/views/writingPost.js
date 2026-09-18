@@ -2,7 +2,7 @@ import { state } from "../state.js";
 import { goTo } from "../router.js";
 
 // PT2 选了"实名公开指认"或"写报道不点名"之后，不直接跳结局页，先过
-// 这一段：黑屏 → 睁眼式的眨眼动画 → 写微博界面 → 逐条选项把长微博
+// 这一段：黑屏停一下 → 慢慢变亮（单次淡出，不反复闪烁）→ 写微博界面 → 逐条选项把长微博
 // 一段段续写出来 → 点发送 → 淡出到结局页。私下交给陪你走到最后/
 // 什么都不做这两种不涉及公开发帖，dm.js 里还是直接 goTo("ending")，
 // 不会经过这里。
@@ -440,7 +440,7 @@ export function renderWritingPost(root) {
   blackout.className = "wpost-blackout";
   root.appendChild(blackout);
   blackout.addEventListener("animationend", () => blackout.remove());
-  setTimeout(() => blackout.classList.add("wpost-blink"), 500);
+  setTimeout(() => blackout.classList.add("wpost-blink"), 650);
 
   const script =
     POST_SCRIPTS[state.finalSuspect]?.[state.finalAction] ||

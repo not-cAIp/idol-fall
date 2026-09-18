@@ -386,14 +386,10 @@ body.ending-mode #view {
   position: fixed; inset: 0; z-index: 200;
   background: #000; opacity: 1; pointer-events: none;
 }
-.wpost-blackout.wpost-blink { animation: wpost-blink 1.4s ease-in-out forwards; }
+.wpost-blackout.wpost-blink { animation: wpost-blink 2.2s ease-out forwards; }
 .wpost-blackout.wpost-fadein { animation: wpost-fadein .6s ease-in forwards; }
 @keyframes wpost-blink {
   0%   { opacity: 1; }
-  30%  { opacity: .2; }
-  45%  { opacity: .92; }
-  65%  { opacity: .12; }
-  82%  { opacity: .7; }
   100% { opacity: 0; }
 }
 @keyframes wpost-fadein {
