@@ -6,6 +6,7 @@ import { renderPostDetail } from "./views/postDetail.js";
 import { renderSearch } from "./views/search.js";
 import { renderDm } from "./views/dm.js";
 import { renderShenxiDm } from "./views/shenxiDm.js";
+import { renderWritingPost } from "./views/writingPost.js";
 import { renderEnding } from "./views/ending.js";
 import { markClueFound } from "./state.js";
 import { renderOnboardingNotif } from "./components/onboardingNotif.js";
@@ -16,6 +17,7 @@ registerView("postDetail", renderPostDetail);
 registerView("search", renderSearch);
 registerView("dm", renderDm);
 registerView("shenxiDm", renderShenxiDm);
+registerView("writingPost", renderWritingPost);
 registerView("ending", renderEnding);
 
 // 泡泡是一个独立站点（not-cAIp.github.io/paopao/），读完专属消息后

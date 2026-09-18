@@ -362,6 +362,13 @@ function renderSuspectStep(thread, stepEl) {
   });
 }
 
+// 实名公开指认/写报道不点名这两种处理方式意味着玩家真的要发一条
+// 微博出去——不直接跳结局页，先绕道 writingPost 这个过场（黑屏→
+// 睁眼→写微博界面→逐字成型→发送），把"公开"这个动作本身演出来。
+// 私下交给陪你走到最后/什么都不做这两种不涉及公开发帖，还是直接
+// 进结局页。
+const PUBLIC_POST_ACTIONS = ["public_name", "report_noname"];
+
 function renderActionStep(stepEl) {
   stepEl.innerHTML = "";
   endings.actions.forEach((a) => {
@@ -371,7 +378,7 @@ function renderActionStep(stepEl) {
       state.finalAction = a.id;
       state.finalEnding = computeEndingKey(state.finalSuspect, a.id);
       save();
-      goTo("ending");
+      goTo(PUBLIC_POST_ACTIONS.includes(a.id) ? "writingPost" : "ending");
     });
     stepEl.appendChild(btn);
   });
