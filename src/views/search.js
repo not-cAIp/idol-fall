@@ -7,7 +7,13 @@ import { icon, verifiedBadge } from "../components/icons.js";
 import { THREADS } from "./forum.js";
 import { mountTeboluoWidget } from "../components/teboluoWidget.js";
 
-export function renderSearch(root, { profile: profileId, query } = {}) {
+// 跟 forum.js 的 scrollMemory 是同一个思路：点进帖子详情页之前记住
+// 当时主页滚动到哪了（key 是 profile.id，主页没有"标签页"这一层，
+// 不用像超话那样再拼 tab），只有从详情页点"‹ 返回主页"这个具体动作
+// 回来时才用一次就删，别的进主页方式（重新搜索等）照常从顶部开始。
+const scrollMemory = new Map();
+
+export function renderSearch(root, { profile: profileId, query, restoreScroll } = {}) {
   root.className = "weibo-scope";
   renderTopNav(root);
 
@@ -152,6 +158,15 @@ export function renderSearch(root, { profile: profileId, query } = {}) {
     if (profile) {
       input.value = profile.searchKeywords[0];
       showProfile(profile);
+      if (restoreScroll) {
+        const savedY = scrollMemory.get(profileId);
+        if (savedY != null) {
+          scrollMemory.delete(profileId);
+          // goTo() 渲染完之后还会同步把滚动条归零，还原动作要排到
+          // 那之后才不会被立刻覆盖掉。
+          requestAnimationFrame(() => window.scrollTo(0, savedY));
+        }
+      }
     }
   } else if (query) {
     input.value = query;
@@ -192,7 +207,10 @@ function profilePostCard(p) {
     e.stopPropagation();
     goTo("forum", { thread: p.tagThread });
   });
-  card.addEventListener("click", () => goTo("postDetail", { id: p.id }));
+  card.addEventListener("click", () => {
+    if (p.profile) scrollMemory.set(p.profile, window.scrollY);
+    goTo("postDetail", { id: p.id });
+  });
   return card;
 }
 

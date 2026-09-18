@@ -25,7 +25,7 @@ export function renderPostDetail(root, { id, fromTab } = {}) {
   back.className = "wback-row";
   back.innerHTML = p?.profile ? "‹ 返回主页" : "‹ 返回超话";
   back.addEventListener("click", () => {
-    if (p?.profile) goTo("search", { profile: p.profile });
+    if (p?.profile) goTo("search", { profile: p.profile, restoreScroll: true });
     else goTo("forum", { thread: p?.thread, tab: fromTab, restoreScroll: true });
   });
   main.appendChild(back);
