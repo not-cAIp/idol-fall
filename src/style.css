@@ -375,6 +375,13 @@ body.ending-mode #view {
 .clue-progress { font-family: "JetBrains Mono", monospace; font-size: 15px; color: var(--ink); margin: 10px 0 4px; }
 
 /* ---- 写微博过场（PT2 选了公开处理方式后，发帖前的黑屏/睁眼/打字过场）---- */
+/* 这一页刻意不带顶部导航栏（不能点回搜索），四周压一圈暗角，跟
+   平时逛微博的松散感区分开——这是玩家一个人在写这条决定性的微博，
+   不是随手刷一条。 */
+.wpost-vignette {
+  position: fixed; inset: 0; z-index: 5; pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(10, 8, 6, 0) 50%, rgba(10, 8, 6, .45) 100%);
+}
 .wpost-blackout {
   position: fixed; inset: 0; z-index: 200;
   background: #000; opacity: 1; pointer-events: none;
@@ -396,16 +403,22 @@ body.ending-mode #view {
 .wpost-card { cursor: default; }
 .wpost-head { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
 .wpost-textarea {
-  width: 100%; min-height: 120px; resize: none; border: none; outline: none;
-  font-family: inherit; font-size: 14.5px; line-height: 1.7; color: var(--ink);
-  background: transparent; padding: 0;
+  width: 100%; min-height: 120px; border: none; outline: none;
+  font-family: inherit; font-size: 14.5px; line-height: 1.8; color: var(--ink);
+  background: transparent; padding: 0; white-space: pre-wrap; word-break: break-word;
 }
-.wpost-textarea::placeholder { color: var(--ink-faint); }
-.wpost-textarea.typing { caret-color: var(--accent); }
+.wpost-textarea strong { font-weight: 800; }
+.wpost-placeholder { color: var(--ink-faint); }
+.wpost-textarea.typing::after {
+  content: ""; display: inline-block; width: 2px; height: 1em; margin-left: 1px;
+  background: var(--accent); vertical-align: text-bottom; animation: wpost-caret .8s step-end infinite;
+}
+@keyframes wpost-caret { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 .wpost-suggest-row { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line); }
 .wpost-suggest-chip {
+  display: block; width: 100%; text-align: left; font-family: "JetBrains Mono", monospace;
   background: var(--surface); border: 1px solid var(--accent); color: var(--accent);
-  border-radius: 100px; padding: 7px 16px; font-size: 12.5px; cursor: pointer;
+  border-radius: 8px; padding: 9px 12px; font-size: 12.5px; line-height: 1.5; cursor: pointer;
 }
 .wpost-suggest-chip:hover { background: var(--accent); color: var(--accent-ink); }
 .wpost-suggest-chip:disabled, .wpost-suggest-chip.used {
