@@ -159,7 +159,7 @@ function trendingCard(p) {
   if (p.image || p.imagePrompt) {
     const slot = card.querySelector(".fthumb-slot");
     slot.className = "fthumb";
-    const thumb = createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt, imageCaption: p.imageCaption });
+    const thumb = createPhotoThumb({ src: p.image, imagePrompt: p.imagePrompt });
     thumb.addEventListener("click", (e) => e.stopPropagation());
     slot.appendChild(thumb);
   }

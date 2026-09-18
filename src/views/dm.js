@@ -1,5 +1,5 @@
 import { endings } from "../data.js";
-import { state, save, PT1_CLUE_IDS, canUnlockPt2, canConvictHeXun } from "../state.js";
+import { state, save, canUnlockPt2, canConvictHeXun } from "../state.js";
 import { goTo } from "../router.js";
 import { renderTopNav } from "../components/weiboChrome.js";
 import { icon } from "../components/icons.js";
@@ -35,11 +35,10 @@ export function renderDm(root) {
   thread.className = "bubble-thread";
   panel.appendChild(thread);
 
-  const pt1Found = PT1_CLUE_IDS.filter((id) => state.foundClues.includes(id)).length;
   const pt2Open = canUnlockPt2(state);
 
   if (!pt2Open) {
-    renderPt1(panel, thread, pt1Found);
+    renderPt1(panel, thread);
     return;
   }
 
@@ -108,10 +107,46 @@ const PT1_LOCATION_OPTIONS = [
   { id: "unsure", label: "无法判断" },
 ];
 
-function renderPt1(panel, thread, pt1Found) {
+// PT1 开场对白：玩家第一次进私信、还没通过 PT1 时，先过一段纯叙事的
+// 开场——交代"陪你走到最后"是谁、为什么找玩家、为什么要查，而不是
+// 一上来就是"周晏星是几点之前去世的？"这种硬邦邦的提问。只在
+// state.pt1IntroSeen 为假时出现一次，点了"……好，我试试"才落存档、
+// 才会往下进入三步推理；之后每次回到这个私信都直接跳三步推理。
+const PT1_INTRO_LINES = [
+  "还没睡吧。",
+  "这两天超话已经吵成一锅粥了，一半人信官方通报，一半人不信——你应该也看到了。",
+  "官方说他是心脏的问题，独自一个人，在酒店里。可越查，越觉得这几句话拼不到一起。",
+  "我们认识这么久，我知道你不是见风就是雨的人。所以想拉你一起，把这件事查清楚。",
+  "先别急着下结论，多查查清楚，别搞错了伤到不相干的人。",
+];
+
+function renderPt1Intro(panel, thread) {
+  thread.innerHTML = PT1_INTRO_LINES.map(
+    (line) => `<div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>${line}</div>`
+  ).join("");
+
+  const stepEl = document.createElement("div");
+  stepEl.className = "reply-options";
+  panel.appendChild(stepEl);
+
+  const btn = document.createElement("button");
+  btn.textContent = "……好，我试试";
+  btn.addEventListener("click", () => {
+    state.pt1IntroSeen = true;
+    save();
+    rerenderDm();
+  });
+  stepEl.appendChild(btn);
+}
+
+function renderPt1(panel, thread) {
+  if (!state.pt1IntroSeen) {
+    renderPt1Intro(panel, thread);
+    return;
+  }
+
   thread.innerHTML = `
-    <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>先别急着下结论，多查查清楚，别搞错了伤到不相干的人。</div>
-    <p class="clue-progress mono">PT1 · 目前掌握线索：${pt1Found} / ${PT1_CLUE_IDS.length}</p>
+    <div class="bubble-msg priv"><span class="tag mono">陪你走到最后 · 刚刚</span>先从最基本的开始。</div>
   `;
 
   const stepEl = document.createElement("div");

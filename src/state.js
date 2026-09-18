@@ -51,6 +51,9 @@ const defaultState = () => ({
   deathAfterAnswer: null,
   deathAfterAnswerRaw: null,
   deathLocationAnswer: null,
+  // PT1 开场对白：私信里"陪你走到最后"先讲几句为什么找你、为什么要查，
+  // 而不是一进来就问"周晏星是几点之前去世的"。只播一次，见 dm.js。
+  pt1IntroSeen: false,
   finalSuspect: null,
   finalAction: null,
   finalEnding: null,

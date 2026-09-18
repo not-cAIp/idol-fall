@@ -14,25 +14,23 @@ function photoInnerHtml({ src, imagePrompt }) {
   `;
 }
 
-export function createPhotoThumb({ src, imagePrompt, imageCaption }) {
+export function createPhotoThumb({ src, imagePrompt }) {
   const thumb = document.createElement("div");
   thumb.className = "photo-thumb" + (src ? "" : " is-placeholder");
   thumb.innerHTML = photoInnerHtml({ src, imagePrompt });
-  thumb.addEventListener("click", () => openPhotoViewer({ src, imagePrompt, caption: imageCaption }));
+  thumb.addEventListener("click", () => openPhotoViewer({ src, imagePrompt }));
   return thumb;
 }
 
-export function openPhotoViewer({ src, imagePrompt, caption }) {
+export function openPhotoViewer({ src, imagePrompt }) {
   const overlay = document.createElement("div");
   overlay.className = "photo-overlay";
   overlay.innerHTML = `
     <div class="photo-panel">
       <div class="photo-panel-head">
-        <span class="vh-title">证据照片</span>
         <button class="icon-btn" id="photo-close">${icon("close", { size: 16 })}</button>
       </div>
       <div class="photo-frame">${photoInnerHtml({ src, imagePrompt })}</div>
-      ${caption ? `<p class="photo-caption">${caption}</p>` : ""}
     </div>
   `;
   document.body.appendChild(overlay);

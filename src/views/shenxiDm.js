@@ -40,51 +40,100 @@ export function renderShenxiDm(root) {
   stepEl.className = "reply-options";
   panel.appendChild(stepEl);
 
-  renderThread(thread, stepEl);
+  renderThread(thread, stepEl, false);
 }
 
-function renderThread(thread, stepEl) {
-  thread.innerHTML = `
-    <div class="bubble-msg priv"><span class="tag mono">晏星今天早点睡 · 刚刚</span>说吧，想问什么。</div>
-  `;
+// 完整回复拆成一条条独立气泡，逐条"一句一句"地冒出来，而不是一次性
+// 整段贴出——只在玩家第一次点"你看到什么了？"那一刻播放这个节奏；
+// 已经问过（state.shenxiAsked）之后再回来看，直接把全部内容摆出来，
+// 不用每次重新等动画。
+const SHENXI_REPLY_STEPS = [
+  { text: "老实说，我不知道是谁动的手，我要是知道早报警了。" },
+  { text: "但我觉得拾光肯定跟这件事有关系。" },
+  { text: "就是那个他的前女友。" },
+  { text: "他们都说我是瞎编的。" },
+  { text: "但真不是瞎，我盯了她很久了，之前发的那些我都留着。" },
+  { text: "给你看一张周晏星之前直播我截的，你自己判断。" },
+  { photo: true },
+  { text: "信不信你自己决定，反正我该说的都说了。" },
+];
 
-  if (!state.shenxiAsked) {
-    stepEl.innerHTML = "";
-    const btn = document.createElement("button");
-    btn.textContent = "你看到什么了？";
-    btn.addEventListener("click", () => {
-      state.shenxiAsked = true;
-      save();
-      markClueFound("c43");
-      renderThread(thread, stepEl);
+function appendShenxiStep(thread, step) {
+  if (step.photo) {
+    const photoRow = document.createElement("div");
+    photoRow.className = "bubble-msg priv";
+    photoRow.style.maxWidth = "82%";
+    photoRow.style.padding = "8px";
+    const thumb = createPhotoThumb({
+      src: "/images/p003-shiguang-cup.jpg",
+      imagePrompt: "写实摄影风格，偶像后台化妆间桌面特写。前景是一只米白色保温杯，杯身贴着一枚可爱风格的猫咪贴纸，贴纸下方印着小小的黑色中文『拾光』二字。",
     });
+    photoRow.appendChild(thumb);
+    thread.appendChild(photoRow);
+    return;
+  }
+  const row = document.createElement("div");
+  row.className = "bubble-msg priv";
+  row.innerHTML = `<span class="tag mono">晏星今天早点睡 · 刚刚</span>${step.text}`;
+  thread.appendChild(row);
+}
+
+function renderShenxiReply(thread, animate) {
+  if (!animate) {
+    SHENXI_REPLY_STEPS.forEach((step) => appendShenxiStep(thread, step));
+    return;
+  }
+  let i = 0;
+  const next = () => {
+    if (i >= SHENXI_REPLY_STEPS.length) return;
+    appendShenxiStep(thread, SHENXI_REPLY_STEPS[i]);
+    i += 1;
+    setTimeout(next, 650);
+  };
+  next();
+}
+
+// 三步走："你知道什么 能跟我说说吗"（开场）→ 她说"说吧，想问什么。"
+// → 玩家再问"你看到什么了？" → 她的完整回复逐句冒出来。openerDone
+// 只是渲染态的本地标记，不写存档——每次重新点进这个私信，都从头
+// 走一遍开场问候，很自然；只有"问没问过、拿没拿到线索"这件事
+// （state.shenxiAsked）才需要跨会话记住。
+function renderThread(thread, stepEl, openerDone) {
+  stepEl.innerHTML = "";
+
+  if (state.shenxiAsked) {
+    thread.innerHTML = `
+      <div class="bubble-msg out"><span class="tag mono">你 · 刚刚</span>你知道什么 能跟我说说吗</div>
+      <div class="bubble-msg priv"><span class="tag mono">晏星今天早点睡 · 刚刚</span>说吧，想问什么。</div>
+      <div class="bubble-msg out"><span class="tag mono">你 · 刚刚</span>你看到什么了？</div>
+    `;
+    renderShenxiReply(thread, false);
+    return;
+  }
+
+  if (!openerDone) {
+    thread.innerHTML = "";
+    const btn = document.createElement("button");
+    btn.textContent = "你知道什么 能跟我说说吗";
+    btn.addEventListener("click", () => renderThread(thread, stepEl, true));
     stepEl.appendChild(btn);
     return;
   }
 
-  stepEl.innerHTML = "";
-  thread.innerHTML += `
-    <div class="bubble-msg out"><span class="tag mono">你 · 刚刚</span>你看到什么了？</div>
-    <div class="bubble-msg priv"><span class="tag mono">晏星今天早点睡 · 刚刚</span>老实说，我不知道是谁动的手，我要是知道早报警了。</div>
-    <div class="bubble-msg priv"><span class="tag mono">晏星今天早点睡 · 刚刚</span>但我觉得拾光肯定跟这件事有关系。</div>
-    <div class="bubble-msg priv"><span class="tag mono">晏星今天早点睡 · 刚刚</span>不是瞎说的，我盯了她很久了，之前发的那些我都留着。</div>
-    <div class="bubble-msg priv"><span class="tag mono">晏星今天早点睡 · 刚刚</span>给你看一张，你自己判断。</div>
+  thread.innerHTML = `
+    <div class="bubble-msg out"><span class="tag mono">你 · 刚刚</span>你知道什么 能跟我说说吗</div>
+    <div class="bubble-msg priv"><span class="tag mono">晏星今天早点睡 · 刚刚</span>说吧，想问什么。</div>
   `;
 
-  const photoRow = document.createElement("div");
-  photoRow.className = "bubble-msg priv";
-  photoRow.style.maxWidth = "82%";
-  photoRow.style.padding = "8px";
-  const thumb = createPhotoThumb({
-    src: "/images/p003-shiguang-cup.jpg",
-    imagePrompt: "写实摄影风格，偶像后台化妆间桌面特写。前景是一只米白色保温杯，杯身贴着一枚可爱风格的猫咪贴纸，贴纸下方印着小小的黑色中文『拾光』二字。",
-    imageCaption: "后台桌面截图，杯身贴纸下方印着「拾光」两个字。",
+  const btn = document.createElement("button");
+  btn.textContent = "你看到什么了？";
+  btn.addEventListener("click", () => {
+    state.shenxiAsked = true;
+    save();
+    markClueFound("c43");
+    stepEl.innerHTML = "";
+    thread.innerHTML += `<div class="bubble-msg out"><span class="tag mono">你 · 刚刚</span>你看到什么了？</div>`;
+    renderShenxiReply(thread, true);
   });
-  photoRow.appendChild(thumb);
-  thread.appendChild(photoRow);
-
-  const tail = document.createElement("div");
-  tail.className = "bubble-msg priv";
-  tail.innerHTML = `<span class="tag mono">晏星今天早点睡 · 刚刚</span>信不信你自己决定，反正我该说的都说了。`;
-  thread.appendChild(tail);
+  stepEl.appendChild(btn);
 }
