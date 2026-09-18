@@ -43,6 +43,8 @@ export const THREADS = {
     name: "F4ever超话",
     stats: "68万 帖子 ｜ 890万 粉丝",
     chip: "团体超话",
+    banner: "/images/avatar-f4ever-official.png",
+    avatar: "/images/avatar-f4ever-official.png",
     todayPosts: 2158,
     onlyLatest: true,
     nonClickable: true,
