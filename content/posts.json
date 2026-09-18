@@ -2163,6 +2163,25 @@
       ]
     },
     {
+      "id": "cm10",
+      "profile": "chenyu_memo",
+      "pinned": false,
+      "author": "陈屿的备忘录",
+      "handle": "@cy_notes",
+      "verified": false,
+      "time": "07-22 22:40",
+      "text": "工作手机内存又满了，先云备份一下，省得回头丢了找不回来：<a href=\"https://not-cAIp.github.io/cy-backup/\" target=\"_blank\" rel=\"noopener\">网页链接</a>",
+      "likes": "1",
+      "reposts": "0",
+      "replies": [
+        {
+          "author": "陈屿的备忘录",
+          "text": "顺手记一下，备份是实时同步的，不是存一次就不变了",
+          "meta": "0 赞"
+        }
+      ]
+    },
+    {
       "id": "p024",
       "thread": "yanxing",
       "pinned": false,

@@ -1,6 +1,6 @@
 const STORAGE_KEY = "tafang-anjuan-save";
 
-export const CLUE_TOTAL = 44;
+export const CLUE_TOTAL = 47;
 
 // PT1（死亡时间线）相关的线索子集，用来在私信里单独显示"PT1 进度"，
 // 跟总的 41 条区分开——玩家在推理死亡时间/地点阶段，看到的不该是
