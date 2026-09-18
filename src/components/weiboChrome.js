@@ -90,8 +90,8 @@ export function renderRightbar(activeThread) {
       <div class="witem"><div class="wicon-box">${icon("mail", { size: 18 })}</div><div class="wtxt"><div class="t1">塌房 超话</div><div class="t2">791万阅读</div></div></div>
     </div>
     <div class="wfooter">
-      帮助中心 · 意见反馈 · 关于星潮<br />
-      星潮工作室 出品 · 本页面内容均为虚构
+      帮助中心 · 意见反馈<br />
+      本页面内容均为虚构
     </div>
   `;
   aside.querySelectorAll(".witem[data-thread]").forEach((el) => {
