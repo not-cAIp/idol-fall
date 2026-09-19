@@ -1,10 +1,12 @@
 import { resolveSrc } from "../data.js";
-import { state, save } from "../state.js";
+import { state, save, markClueFound } from "../state.js";
 
 // 日记特伯罗挂件——不是独立站点了，直接挂在新_PROD微博主页右下角。
-// 玩家点机器人图标才会弹出聊天框，首次打开只有寒暄，真正的触发词是
-// "查看历史日记"（兼容几种说法），逐条展开阅读，最后一篇带工牌，
-// 员工ID是 GALAXY WORKSPACE F04 的密码，这里不会主动提示这一点。
+// 玩家点机器人图标才会弹出聊天框，首次打开只有寒暄，两条独立的检索
+// 触发词互不干扰："查看历史日记"（兼容几种说法）逐条展开日记，最后
+// 一篇带工牌，员工ID是 GALAXY WORKSPACE F04 的密码，这里不会主动
+// 提示这一点；"邮件"/"文件"翻出一封 2019 年的旧邮件，原本挂在 ECHO
+// 的林安对接群，现在放回这里，不占用日记的翻页进度。
 const DIARY = [
   { date: "2017-09-12", text: "今天第一次进大练习室。\n\n镜子比学校舞蹈室大好多。旁边那个人跳得特别好，我没敢跟他说话。\n\n跟家里说了要留下来试试，我妈没说不行，只问了一句『如果几年都没结果怎么办』。我说不会的。" },
   { date: "2017-11-03", text: "老师说我这次进步很大，说不定真的能在这批里选上。\n\n家里不算特别支持，但也没拦着，就是每次视频都要问一句『什么时候能定下来』。我说快了。" },
@@ -31,7 +33,16 @@ const DIARY = [
 ];
 const EMPLOYEE_ID = "P-0416";
 
+// 这份邮件原本挂在 ECHO 的林安对接群，靠新_PROD"发错群"带出来——现在
+// 改放回日记精灵这边，靠单独一个触发词"邮件/文件"翻出来，跟"查看历史
+// 日记"是两条独立的检索路径，玩家问哪句都行，不冲突。
+const EMAIL = {
+  label: "邮件 · 2019-05-21",
+  text: "发件人：（另一家公司）艺人发展部\n收件人：H-X-04\n日期：2019-05-21\n\n若决定加入本项目，请于本周五前完成后续手续。之后项目正式封闭人员名单。\n\n——\n\n回复｜H-X-04：\n谢谢老师。我决定继续现在公司的项目，这边应该已经确定了。",
+};
+
 const HISTORY_TRIGGERS = ["查看历史日记", "历史日记", "看以前的日记", "查看以前的日记"];
+const EMAIL_TRIGGERS = ["历史邮件", "查看邮件", "邮件", "历史文件", "查看文件", "文件"];
 const FALLBACKS = [
   "这个我好像听不懂。",
   "我只记得主人让我保管的那些东西。",
@@ -194,6 +205,20 @@ export function mountTeboluoWidget(container) {
     scrollToBottom();
   }
 
+  function revealEmail() {
+    if (!state.teboluoEmailFound) {
+      state.teboluoEmailFound = true;
+      save();
+    }
+    markClueFound("c57");
+    const card = document.createElement("div");
+    card.className = "teboluo-entry";
+    card.innerHTML = `<div class="d">${EMAIL.label}</div><div class="t"></div>`;
+    card.querySelector(".t").textContent = EMAIL.text;
+    body.appendChild(card);
+    scrollToBottom();
+  }
+
   function handleInput(raw) {
     const text = raw.trim();
     if (!text) return;
@@ -214,6 +239,15 @@ export function mountTeboluoWidget(container) {
           addBot("有些东西已经很久没人翻过了。");
         }
         openEntry(resumeIndex());
+      }, 250);
+      return;
+    }
+
+    if (EMAIL_TRIGGERS.some((k) => n.includes(k))) {
+      setTimeout(() => {
+        addBot("邮件？让我找找……");
+        addBot("找到一封，看着是很多年前的。");
+        revealEmail();
       }, 250);
       return;
     }

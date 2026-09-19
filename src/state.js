@@ -70,6 +70,9 @@ const defaultState = () => ({
   teboluoUnlocked: false,
   teboluoHistoryTriggered: false,
   teboluoViewedDates: [],
+  // 日记精灵里单独一条检索路径："邮件"/"文件"翻出 2019 年那封旧邮件，
+  // 跟日记翻页进度互不影响。
+  teboluoEmailFound: false,
 });
 
 function load() {
