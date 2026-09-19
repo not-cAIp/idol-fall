@@ -54,9 +54,34 @@ const SHENXI_REPLY_STEPS = [
   { text: "他们都说我是瞎编的。" },
   { text: "但真不是我造谣，我盯了她很久了，之前发的那些我都留着。" },
   { text: "给你看一张周晏星之前直播我截的，你自己判断。" },
-  { photo: true },
+  { photo: "cup" },
   { text: "信不信你自己决定，反正我该说的都说了。" },
 ];
+
+// 这条追问是从 GALAXY WORKSPACE 的 06_安保 挪过来的——原本是公司内部
+// A02/A03 两份文件（安保巡查照片 + 监控维修申请），现在改成沈溪自己
+// 当晚在楼下蹲到的独立目击，同一件事有两个互不知情的来源，比单靠
+// 一份公司内部文件更立得住。只有先问完"你看到什么了"（state.shenxiAsked）
+// 才会解锁这一步，不是一进私信就能看到。
+const SHENXI_FOLLOWUP_STEPS = [
+  { text: "还有件事，我一直没跟人说过。" },
+  { text: "那天晚上我其实又去蹲了一次，就在楼下。" },
+  { text: "看到一个人穿着黑色工作服从员工通道进去了，没看清脸。" },
+  { photo: "jacket" },
+  { text: "而且那段时间那栋楼有一块监控一直是坏的，之前路过看到过维修通知，说是常规报修。" },
+  { text: "所以就算真出了什么事，那段可能也调不出监控。" },
+  { text: "但也可能就是普通的安保巡逻，我说不准，你自己判断。" },
+];
+
+const SHENXI_PHOTOS = {
+  cup: {
+    src: "/images/p003-shiguang-cup.jpg",
+    imagePrompt: "写实摄影风格，偶像后台化妆间桌面特写。前景是一只米白色保温杯，杯身贴着一枚可爱风格的猫咪贴纸，贴纸下方印着小小的黑色中文『拾光』二字。",
+  },
+  jacket: {
+    imagePrompt: "写实摄影风格，夜间远距离偷拍，住所大厦地下通道入口处，一个穿黑色工作外套的背影正在刷卡，画面昏暗、构图倾斜，能看出是手机长焦仓促抓拍，没有拍到脸。",
+  },
+};
 
 function appendShenxiStep(thread, step) {
   if (step.photo) {
@@ -64,10 +89,7 @@ function appendShenxiStep(thread, step) {
     photoRow.className = "bubble-msg priv";
     photoRow.style.maxWidth = "82%";
     photoRow.style.padding = "8px";
-    const thumb = createPhotoThumb({
-      src: "/images/p003-shiguang-cup.jpg",
-      imagePrompt: "写实摄影风格，偶像后台化妆间桌面特写。前景是一只米白色保温杯，杯身贴着一枚可爱风格的猫咪贴纸，贴纸下方印着小小的黑色中文『拾光』二字。",
-    });
+    const thumb = createPhotoThumb(SHENXI_PHOTOS[step.photo]);
     photoRow.appendChild(thumb);
     thread.appendChild(photoRow);
     return;
@@ -78,15 +100,16 @@ function appendShenxiStep(thread, step) {
   thread.appendChild(row);
 }
 
-function renderShenxiReply(thread, animate) {
+function renderShenxiReply(thread, animate, steps = SHENXI_REPLY_STEPS, onDone) {
   if (!animate) {
-    SHENXI_REPLY_STEPS.forEach((step) => appendShenxiStep(thread, step));
+    steps.forEach((step) => appendShenxiStep(thread, step));
+    if (onDone) onDone();
     return;
   }
   let i = 0;
   const next = () => {
-    if (i >= SHENXI_REPLY_STEPS.length) return;
-    appendShenxiStep(thread, SHENXI_REPLY_STEPS[i]);
+    if (i >= steps.length) { if (onDone) onDone(); return; }
+    appendShenxiStep(thread, steps[i]);
     i += 1;
     setTimeout(next, 650);
   };
@@ -108,6 +131,12 @@ function renderThread(thread, stepEl, openerDone) {
       <div class="bubble-msg out"><span class="tag mono">你 · 刚刚</span>你看到什么了？</div>
     `;
     renderShenxiReply(thread, false);
+    if (state.shenxiFollowupAsked) {
+      thread.innerHTML += `<div class="bubble-msg out"><span class="tag mono">你 · 刚刚</span>那天晚上你还看到什么吗？</div>`;
+      renderShenxiReply(thread, false, SHENXI_FOLLOWUP_STEPS);
+    } else {
+      renderFollowupButton(thread, stepEl);
+    }
     return;
   }
 
@@ -133,7 +162,22 @@ function renderThread(thread, stepEl, openerDone) {
     markClueFound("c43");
     stepEl.innerHTML = "";
     thread.innerHTML += `<div class="bubble-msg out"><span class="tag mono">你 · 刚刚</span>你看到什么了？</div>`;
-    renderShenxiReply(thread, true);
+    renderShenxiReply(thread, true, SHENXI_REPLY_STEPS, () => renderFollowupButton(thread, stepEl));
+  });
+  stepEl.appendChild(btn);
+}
+
+function renderFollowupButton(thread, stepEl) {
+  stepEl.innerHTML = "";
+  const btn = document.createElement("button");
+  btn.textContent = "那天晚上你还看到什么吗？";
+  btn.addEventListener("click", () => {
+    state.shenxiFollowupAsked = true;
+    save();
+    markClueFound("c40");
+    stepEl.innerHTML = "";
+    thread.innerHTML += `<div class="bubble-msg out"><span class="tag mono">你 · 刚刚</span>那天晚上你还看到什么吗？</div>`;
+    renderShenxiReply(thread, true, SHENXI_FOLLOWUP_STEPS);
   });
   stepEl.appendChild(btn);
 }

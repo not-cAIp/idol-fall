@@ -113,10 +113,25 @@ export function mountTeboluoWidget(container) {
     addBot("想找什么的话，可以直接告诉我。");
     if (state.teboluoHistoryTriggered) {
       setTimeout(() => {
-        addBot("上次翻到一半吧？要不要接着看？");
-        addDateList();
+        addBot("上次翻到一半吧？接着往下看。");
+        openEntry(resumeIndex());
       }, 300);
     }
+  }
+
+  // 不再一次性列出全部日期给玩家自己跳着点——找到哪年哪天变成"一则一则
+  // 往下翻"，只能按顺序推进，中途关掉聊天窗口重进也从上次看到的那篇
+  // 接着开始，不会退回起点，但也不能直接跳到后面还没看过的篇章。
+  function resumeIndex() {
+    // 用"已读过的日期里，在 DIARY 顺序中最靠后的那一篇"而不是数组最后
+    // 一个元素——旧存档（改版前允许跳着点）里 viewedDates 的顺序不一定
+    // 跟 DIARY 顺序一致，这样才能稳妥地接到玩家实际读到的最远处。
+    let best = -1;
+    state.teboluoViewedDates.forEach((date) => {
+      const idx = DIARY.findIndex((d) => d.date === date);
+      if (idx > best) best = idx;
+    });
+    return best >= 0 ? best : 0;
   }
 
   function scrollToBottom() {
@@ -140,20 +155,6 @@ export function mountTeboluoWidget(container) {
     scrollToBottom();
   }
 
-  function addDateList() {
-    const list = document.createElement("div");
-    list.className = "teboluo-date-list";
-    DIARY.forEach((d, i) => {
-      const btn = document.createElement("button");
-      btn.textContent = d.date;
-      if (state.teboluoViewedDates.includes(d.date)) btn.classList.add("viewed");
-      btn.addEventListener("click", () => openEntry(i));
-      list.appendChild(btn);
-    });
-    body.appendChild(list);
-    scrollToBottom();
-  }
-
   function openEntry(i) {
     const d = DIARY[i];
     if (!state.teboluoViewedDates.includes(d.date)) {
@@ -162,7 +163,7 @@ export function mountTeboluoWidget(container) {
     }
     const card = document.createElement("div");
     card.className = "teboluo-entry";
-    card.innerHTML = `<div class="d">${d.date}</div><div class="t"></div>`;
+    card.innerHTML = `<div class="d">${d.date}<span class="teboluo-idx"> · 第 ${i + 1} / ${DIARY.length} 篇</span></div><div class="t"></div>`;
     card.querySelector(".t").textContent = d.text;
     body.appendChild(card);
 
@@ -202,12 +203,17 @@ export function mountTeboluoWidget(container) {
     const n = normalize(text);
 
     if (HISTORY_TRIGGERS.some((k) => n.includes(k.replace(/\s/g, "")))) {
+      const alreadyTriggered = state.teboluoHistoryTriggered;
       state.teboluoHistoryTriggered = true;
       save();
       setTimeout(() => {
-        addBot("找到了。");
-        addBot("有些东西已经很久没人翻过了。");
-        addDateList();
+        if (alreadyTriggered) {
+          addBot("接着上次翻到的地方往下看。");
+        } else {
+          addBot("找到了。");
+          addBot("有些东西已经很久没人翻过了。");
+        }
+        openEntry(resumeIndex());
       }, 250);
       return;
     }

@@ -818,20 +818,12 @@ body.ending-mode #view {
 .teboluo-row.bot .teboluo-bubble { background: #fff1e0; border: 1px solid #f0dcc0; border-bottom-left-radius: 4px; color: #4a3a2c; }
 .teboluo-row.me .teboluo-bubble { background: #ff6a3d; color: #fff; border-bottom-right-radius: 4px; }
 
-.teboluo-date-list { display: flex; flex-direction: column; gap: 5px; margin: 2px 0 2px 26px; max-width: 76%; }
-.teboluo-date-list button {
-  text-align: left; padding: 6px 10px; border-radius: 9px; border: 1px solid #f0dcc0;
-  background: #fffdf9; color: #4a3a2c; font-size: 11.5px; cursor: pointer; font-family: "JetBrains Mono", monospace;
-}
-.teboluo-date-list button:hover { border-color: #ff6a3d; color: #ff6a3d; }
-.teboluo-date-list button.viewed { color: #b8a790; }
-.teboluo-date-list button.viewed::after { content: " · 已读"; font-family: "Noto Sans SC", sans-serif; font-size: 9.5px; }
-
 .teboluo-entry {
   margin: 2px 0 2px 26px; max-width: 78%; background: #fff1e0; border: 1px solid #f0dcc0;
   border-radius: 11px; padding: 9px 11px;
 }
 .teboluo-entry .d { font-size: 10px; color: #b8a790; font-family: "JetBrains Mono", monospace; margin-bottom: 4px; }
+.teboluo-entry .d .teboluo-idx { color: #d9c3a3; }
 .teboluo-entry .t { font-size: 12.3px; line-height: 1.65; color: #4a3a2c; white-space: pre-wrap; }
 .teboluo-nav { display: flex; gap: 7px; margin: 0 0 2px 26px; max-width: 78%; }
 .teboluo-nav button {
