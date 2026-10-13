@@ -78,7 +78,7 @@ export function renderSearch(root, { profile: profileId, query, restoreScroll } 
     if (profile.clueOnFound) markClueFound(profile.clueOnFound);
 
     resultEl.innerHTML = `
-      <div class="wbanner" style="min-height:170px;background:linear-gradient(135deg,#2b3242,#171b22);">
+      <div class="wbanner" style="min-height:170px;background:${profile.bannerImage ? `linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.55)), url(${resolveSrc(profile.bannerImage)}) center/cover` : (profile.bannerGradient || "linear-gradient(135deg,#2b3242,#171b22)")};">
         <div class="wbanner-top">
           <button class="wbanner-btn primary">＋关注</button>
           <button class="wbanner-btn">留言</button>
