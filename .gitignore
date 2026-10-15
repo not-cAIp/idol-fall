@@ -2,3 +2,16 @@ node_modules
 dist
 .DS_Store
 Photos
+
+# 同级的独立项目，各自有自己的 git 仓库，不属于 idol-fall 这个仓库
+/AURORA/
+/ECHO/
+/NEXUS/
+/Galaxy Workspace/
+/泡泡/
+/陈屿手机/
+/_backup_*/
+
+# 本机工具的临时/本地配置
+.claude/worktrees/
+/idol-fall/.claude/
